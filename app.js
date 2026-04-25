@@ -78,6 +78,36 @@ let missCountThisGame = 0;
 const DEFAULT_CANVAS_W = 640;
 const DEFAULT_CANVAS_H = 480;
 
+/** プロジェクト直下に `shoot.mp3` / `hit.mp3` / `miss.mp3` を置く */
+const shootSound = new Audio("shoot.mp3");
+const hitSound = new Audio("hit.mp3");
+const missSound = new Audio("miss.mp3");
+
+/** 正解/ミス時の画面フラッシュ */
+/** @type {"green" | "red" | null} */
+let flashColor = null;
+let flashTimer = 0;
+
+/**
+ * 再生失敗（未配置・ユーザー操作前など）を握りつぶす
+ * @param {HTMLAudioElement | null | undefined} a
+ */
+function playSfx(a) {
+  if (!a) return;
+  a.currentTime = 0;
+  a.volume = 0.45;
+  void a.play().catch(() => {});
+}
+
+/**
+ * 緑/赤の半透明オーバーレイ（gameLoop 末尾で描画・減算）
+ * @param {"green" | "red"} color
+ */
+function triggerFlash(color) {
+  flashColor = color;
+  flashTimer = 10;
+}
+
 function getCanvasW() {
   return canvas && canvas.width > 0 ? canvas.width : DEFAULT_CANVAS_W;
 }
@@ -766,6 +796,8 @@ function resetGameState() {
   keys = { left: false, right: false, fire: false };
   isDragging = false;
   pendingTouchFire = false;
+  flashColor = null;
+  flashTimer = 0;
 }
 
 /**
@@ -1136,6 +1168,7 @@ function gameLoop() {
       bullets.push({ x: shipX, y: shipBottomY - bulletYOff, vy: bulletVy });
       fireCooldown = 12;
       if (pendingTouchFire) pendingTouchFire = false;
+      playSfx(shootSound);
     }
 
     bullets.forEach((b) => {
@@ -1158,6 +1191,13 @@ function gameLoop() {
         if (hitCircle(t, b.x, b.y)) {
           hitThisFrame = true;
           bullets = [];
+          if (t.isCorrect) {
+            playSfx(hitSound);
+            triggerFlash("green");
+          } else {
+            playSfx(missSound);
+            triggerFlash("red");
+          }
           feedbackState = { target: t, ok: t.isCorrect, t0: performance.now() };
           break;
         }
@@ -1171,6 +1211,8 @@ function gameLoop() {
         (t) => t.isCorrect && t.cy - t.r > H + 4
       );
       if (off && currentQuestionWord) {
+        playSfx(missSound);
+        triggerFlash("red");
         addMistakeWord(currentQuestionWord.word);
         missCountThisGame += 1;
         if (MAX_MISTAKES > 0 && missCountThisGame >= MAX_MISTAKES) {
@@ -1193,6 +1235,18 @@ function gameLoop() {
 
   // キャンバス上の出題語は毎フレーム currentQuestionWord から（DOM 参照ミスと切り分け可能）
   drawGameQuestionWordCanvasOverlay();
+
+  if (flashTimer > 0) {
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.fillStyle =
+      flashColor === "green"
+        ? "rgba(0, 255, 0, 0.3)"
+        : "rgba(255, 0, 0, 0.3)";
+    ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+    flashTimer -= 1;
+  }
 
   if (gameActive) {
     gameLoopId = requestAnimationFrame(gameLoop);
