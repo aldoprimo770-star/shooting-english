@@ -45,6 +45,10 @@ let gameLoopId = null;
 let gameActive = false;
 /** スマホ用 touch リスナーは canvas に1回だけ */
 let gameTouchControlsBound = false;
+/** 指を動かしたスワイプ。true のあいだは「タップ発射」しない */
+let isDragging = false;
+/** タップ終了（スワイプでない）のとき1フレ（クールダウン後）で発射 */
+let pendingTouchFire = false;
 /** 画面回転・リサイズ用（デバウンス） */
 let gameCanvasResizeTimer = 0;
 let shipX = 0;
@@ -744,6 +748,8 @@ function resetGameState() {
   shipX = getCanvasW() / 2;
   fireCooldown = 0;
   keys = { left: false, right: false, fire: false };
+  isDragging = false;
+  pendingTouchFire = false;
 }
 
 /**
@@ -768,10 +774,12 @@ function wireGameTouchControls() {
   gameTouchControlsBound = true;
 
   el.addEventListener(
-    "touchmove",
+    "touchstart",
     (e) => {
       if (!gameActive || feedbackState != null || isTransitioning) return;
       e.preventDefault();
+      isDragging = false;
+      pendingTouchFire = false;
       const t = e.touches[0];
       if (t) setShipXFromClientX(t.clientX);
     },
@@ -779,11 +787,11 @@ function wireGameTouchControls() {
   );
 
   el.addEventListener(
-    "touchstart",
+    "touchmove",
     (e) => {
       if (!gameActive || feedbackState != null || isTransitioning) return;
       e.preventDefault();
-      keys.fire = true;
+      isDragging = true;
       const t = e.touches[0];
       if (t) setShipXFromClientX(t.clientX);
     },
@@ -792,20 +800,15 @@ function wireGameTouchControls() {
 
   el.addEventListener("touchend", (e) => {
     e.preventDefault();
-    keys.fire = false;
+    if (gameActive && feedbackState == null && !isTransitioning && !isDragging) {
+      pendingTouchFire = true;
+    }
+    isDragging = false;
   });
   el.addEventListener("touchcancel", () => {
-    keys.fire = false;
+    isDragging = true;
+    pendingTouchFire = false;
   });
-
-  // 指がキャンバス外で離れても発射の押しっぱなしにしない
-  document.addEventListener(
-    "touchend",
-    () => {
-      if (gameActive) keys.fire = false;
-    },
-    { capture: true, passive: true }
-  );
 }
 
 function startGame() {
@@ -1114,11 +1117,12 @@ function gameLoop() {
     shipX = Math.max(m, Math.min(W - m, shipX));
 
     if (fireCooldown > 0) fireCooldown -= 1;
-    if (keys.fire && fireCooldown <= 0) {
+    if ((keys.fire || pendingTouchFire) && fireCooldown <= 0) {
       const bulletYOff = 32 * (H / DEFAULT_CANVAS_H);
       const bulletVy = -9.5 * (H / DEFAULT_CANVAS_H);
       bullets.push({ x: shipX, y: shipBottomY - bulletYOff, vy: bulletVy });
       fireCooldown = 12;
+      if (pendingTouchFire) pendingTouchFire = false;
     }
 
     bullets.forEach((b) => {
