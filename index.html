@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>英単語スペースシューティング</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="stars" aria-hidden="true"></div>
+
+  <!-- ① ホーム -->
+  <section id="screen-home" class="screen active">
+    <h1 class="title">英単語スペースシューティング</h1>
+    <p class="subtitle">宇宙で英単語を覚えよう</p>
+    <div class="progress-block">
+      <span>進捗</span>
+      <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+      <span id="progress-text">0%</span>
+    </div>
+    <div class="btn-row">
+      <button type="button" class="btn primary" id="btn-start">スタート</button>
+      <button type="button" class="btn secondary" id="btn-review">復習モード</button>
+    </div>
+  </section>
+
+  <!-- ② 学習 -->
+  <section id="screen-learn" class="screen">
+    <header class="screen-header">
+      <button type="button" class="btn ghost" id="btn-learn-home">ホーム</button>
+      <span class="learn-counter" id="learn-counter"></span>
+      <button type="button" class="btn accent" id="btn-to-game">シューティングへ</button>
+    </header>
+    <div class="card learn-card">
+      <p class="label">英単語</p>
+      <div class="speak-line">
+        <p id="learn-word" class="learn-word speakable" tabindex="0" title="クリックで発音">—</p>
+        <button type="button" class="btn-speak" id="btn-speak-word" title="発音" aria-label="英単語を聞く">🔊</button>
+      </div>
+      <p class="label">意味</p>
+      <p id="learn-meaning" class="learn-meaning">—</p>
+      <p class="label">例文</p>
+      <div class="speak-line example-line">
+        <p id="learn-example" class="learn-example">—</p>
+        <button type="button" class="btn-speak" id="btn-speak-example" title="発音" aria-label="例文を聞く">🔊</button>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn secondary" id="btn-next">次へ</button>
+        <button type="button" class="btn primary" id="btn-learned">覚えた</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ③ シューティング -->
+  <section id="screen-game" class="screen">
+    <header class="game-hud">
+      <button type="button" class="btn ghost small" id="btn-game-home">ホーム</button>
+      <div class="hud-center">
+        <p class="hud-label">出題</p>
+        <div class="hud-word-row">
+          <p id="game-question-word" class="hud-word" tabindex="0" title="クリックで発音" aria-live="polite" data-question="">—</p>
+          <button type="button" class="btn-speak small" id="btn-speak-game" aria-label="出題英単語を聞く">🔊</button>
+          <button type="button" class="btn ghost small hud-mute" id="btn-game-mute" title="出題の英語の読み上げをオフにする" aria-pressed="false">音を消す</button>
+        </div>
+        <!-- 進行状況: 現在/最大 ※app.js SHOOT_QUESTIONS(10)・updateGameHud -->
+        <p class="hud-question-line" id="hud-question-line" aria-live="polite">
+          問題 <strong id="hud-question-now">1</strong> / <strong id="hud-question-max">10</strong>
+        </p>
+      </div>
+      <div class="hud-stats">
+        <span>スコア <strong id="hud-score">0</strong></span>
+        <!-- ミス上限: app.js の MAX_MISTAKES が 0 より大きいときだけ表示 -->
+        <span class="hud-miss" id="hud-miss-wrap" hidden>ミス <strong id="hud-miss-count">0</strong></span>
+      </div>
+    </header>
+    <canvas id="game-canvas" width="640" height="480" aria-label="シューティングゲーム"></canvas>
+    <p class="hint">← → 移動　スペースで発射（スマホ: 指で移動・タップで発射）</p>
+  </section>
+
+  <!-- ④ リザルト -->
+  <section id="screen-result" class="screen">
+    <h2 class="title small">リザルト</h2>
+    <div class="card result-card">
+      <p>スコア: <strong id="result-score">0</strong></p>
+      <p>正答率: <strong id="result-accuracy">0%</strong></p>
+      <p class="label">間違えた単語</p>
+      <ul id="result-mistakes" class="mistake-list"></ul>
+    </div>
+    <div class="btn-row">
+      <button type="button" class="btn primary" id="btn-result-home">ホームへ</button>
+    </div>
+  </section>
+
+  <!-- ⑤ 復習 -->
+  <section id="screen-review" class="screen">
+    <header class="screen-header">
+      <button type="button" class="btn ghost" id="btn-review-home">ホーム</button>
+    </header>
+    <div id="review-empty" class="card hidden">
+      <p>復習する単語はありません。シューティングで間違えた単語がここに入ります。</p>
+    </div>
+    <div id="review-quiz" class="card review-card hidden">
+      <p class="label">英単語</p>
+      <div class="speak-line review-word-row">
+        <p id="review-word" class="learn-word speakable" tabindex="0" title="クリックで発音">—</p>
+        <button type="button" class="btn-speak" id="btn-speak-review" aria-label="英単語を聞く">🔊</button>
+      </div>
+      <p class="label">正しい意味を選んでください</p>
+      <div id="review-choices" class="review-choices"></div>
+    </div>
+  </section>
+
+  <!-- file:// でも全語彙を使うため words-embed（words.json 同期）。HTTP では常に words.json 優先 -->
+  <script src="words-embed.js?v=2" defer></script>
+  <script src="app.js?v=26" defer></script>
+</body>
+</html>
