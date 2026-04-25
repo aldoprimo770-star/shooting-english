@@ -51,7 +51,18 @@ function loadObtainedAliens() {
     const raw = localStorage.getItem(ALIENS_STORAGE_KEY);
     if (raw == null || raw === "") return [];
     const p = JSON.parse(raw);
-    return Array.isArray(p) ? p : [];
+    if (!Array.isArray(p)) return [];
+    /** 文字列idと数値idの混在で重複登録されていた分を1件に正規化 */
+    const byId = new Map();
+    for (const x of p) {
+      if (!x || typeof x !== "object") continue;
+      const id = Number(/** @type {AlienCard} */ (x).id);
+      if (Number.isNaN(id)) continue;
+      if (!byId.has(id)) byId.set(id, { ...x, id });
+    }
+    const uniques = Array.from(byId.values());
+    // 1プレイ1枚仕様: 古い不整合（多数行）を1枚に丸める
+    return uniques.slice(0, 1);
   } catch {
     return [];
   }
@@ -59,6 +70,7 @@ function loadObtainedAliens() {
 
 /** @type {AlienCard[]} */
 let obtainedAliens = loadObtainedAliens();
+saveAliens();
 
 function saveAliens() {
   try {
@@ -69,18 +81,24 @@ function saveAliens() {
 }
 
 /**
- * 同じ id の宇宙人は1枚まで（push はここ以外禁止）
+ * 1プレイに宇宙人は最大1枚。id は数値で統一（localStorage 由来の "1" と 1 の二重登録を防ぐ）
+ * push はここ以外禁止
  * @param {AlienCard} alien
+ * @returns {boolean} 追加したら true
  */
 function addAlien(alien) {
-  if (!alien || typeof alien.id !== "number") return;
-  console.log("取得前:", obtainedAliens.length);
-  const exists = obtainedAliens.find((a) => a.id === alien.id);
-  if (!exists) {
-    obtainedAliens.push({ ...alien });
-    saveAliens();
+  if (!alien) return false;
+  if (obtainedAliens.length >= 1) return false;
+  const id = Number(alien.id);
+  if (Number.isNaN(id)) return false;
+  const def = aliens.find((x) => Number(x.id) === id);
+  const row = def ? { ...def, id } : { ...alien, id };
+  if (obtainedAliens.some((a) => Number(/** @type {AlienCard} */(a).id) === id)) {
+    return false;
   }
-  console.log("取得後:", obtainedAliens.length);
+  obtainedAliens.push(/** @type {AlienCard} */ (row));
+  saveAliens();
+  return true;
 }
 
 /**
@@ -118,10 +136,11 @@ function getRandomAlien() {
  * @returns {AlienCard}
  */
 function resolveAlienForDisplay(a) {
-  const def = aliens.find((x) => x.id === a.id);
-  if (def) return { ...def };
+  const id = Number(/** @type {AlienCard} */(a).id);
+  const def = aliens.find((x) => Number(x.id) === id);
+  if (def) return { ...def, id };
   return {
-    id: a.id,
+    id: Number.isNaN(id) ? 0 : id,
     name: a.name != null && String(a.name) ? String(a.name) : "？",
     rarity: a.rarity != null ? String(a.rarity) : "?",
     img: a.img && String(a.img) ? String(a.img) : ALIEN_IMG_DEFAULT,
@@ -1051,24 +1070,38 @@ function endGame(opts) {
     const list = document.getElementById("result-aliens");
     if (list) {
       list.innerHTML = "";
-      obtainedAliens.forEach((raw) => {
+      const only =
+        Array.isArray(obtainedAliens) && obtainedAliens.length
+          ? [obtainedAliens[0]]
+          : [];
+      only.forEach((raw) => {
         const a = resolveAlienForDisplay(
           /** @type {Partial<AlienCard> & { id: number }} */ (raw)
         );
         const card = document.createElement("div");
         card.className = "alien-card";
         card.setAttribute("data-rarity", a.rarity);
-        const n = escapeHtml(a.name);
-        const d = escapeHtml(a.desc);
-        const r = escapeHtml(a.rarity);
-        const im = escapeHtml(a.img);
-        card.innerHTML = `
-    <div class="alien-name">${n}</div>
-    <img src="${im}" class="alien-img" alt="${n}"
-         onerror="this.onerror=null;this.src='images/default.png'">
-    <div class="alien-rarity">レア度: ${r}</div>
-    <div class="alien-desc">${d}</div>
-  `;
+        const nameEl = document.createElement("div");
+        nameEl.className = "alien-name";
+        nameEl.textContent = a.name;
+        const img = document.createElement("img");
+        img.className = "alien-img";
+        img.alt = a.name;
+        img.onerror = function () {
+          this.onerror = null;
+          this.src = ALIEN_IMG_DEFAULT;
+        };
+        img.src = a.img || ALIEN_IMG_DEFAULT;
+        const rare = document.createElement("div");
+        rare.className = "alien-rarity";
+        rare.textContent = "レア度: " + a.rarity;
+        const desc = document.createElement("div");
+        desc.className = "alien-desc";
+        desc.textContent = a.desc;
+        card.appendChild(nameEl);
+        card.appendChild(img);
+        card.appendChild(rare);
+        card.appendChild(desc);
         list.appendChild(card);
       });
     }
@@ -1086,6 +1119,7 @@ function endGame(opts) {
       gq.removeAttribute("data-question");
     }
   }
+  saveAliens();
   showScreen("result");
 }
 
@@ -1111,7 +1145,7 @@ function onHitTarget(t) {
     userData.cumulativeCorrect = (userData.cumulativeCorrect || 0) + 1;
     saveUserData();
     updateProgressUI();
-    if (Math.random() < 0.3) {
+    if (obtainedAliens.length < 1 && Math.random() < 0.3) {
       const alien = getRandomAlien();
       if (alien) addAlien(alien);
     }
