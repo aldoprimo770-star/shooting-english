@@ -78,10 +78,76 @@ let missCountThisGame = 0;
 const DEFAULT_CANVAS_W = 640;
 const DEFAULT_CANVAS_H = 480;
 
-/** プロジェクト直下に `shoot.mp3` / `hit.mp3` / `miss.mp3` を置く */
+/** 発射音: プロジェクト直下に `shoot.mp3` を置く（任意） */
 const shootSound = new Audio("shoot.mp3");
-const hitSound = new Audio("hit.mp3");
-const missSound = new Audio("miss.mp3");
+
+/** 命中時の正解/不正解は Web Audio で再現（ファイル不要・常に別音） */
+/** @type {AudioContext | null} */
+let sfxHitAudioCtx = null;
+
+/**
+ * @returns {AudioContext}
+ */
+function getHitSfxAudioContext() {
+  if (!sfxHitAudioCtx) {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (Ctx) sfxHitAudioCtx = new Ctx();
+  }
+  return /** @type {AudioContext} */ (sfxHitAudioCtx);
+}
+
+/**
+ * 命中時: 正解は明るい3音、不正解は低い「ブブッ」と不協和
+ * @param {boolean} isCorrect
+ */
+function playHitResultSound(isCorrect) {
+  const ctx = getHitSfxAudioContext();
+  if (!ctx) return;
+  if (ctx.state === "suspended") {
+    void ctx.resume();
+  }
+  const t0 = ctx.currentTime;
+  const vol = 0.14;
+
+  if (isCorrect) {
+    const freqs = [523.25, 659.25, 783.99];
+    const dur = 0.09;
+    freqs.forEach((hz, i) => {
+      const start = t0 + i * 0.05;
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.type = "sine";
+      o.frequency.setValueAtTime(hz, start);
+      o.connect(g);
+      g.connect(ctx.destination);
+      g.gain.setValueAtTime(0, start);
+      g.gain.linearRampToValueAtTime(vol, start + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, start + dur);
+      o.start(start);
+      o.stop(start + dur);
+    });
+  } else {
+    const o1 = ctx.createOscillator();
+    const o2 = ctx.createOscillator();
+    const g = ctx.createGain();
+    o1.type = "sawtooth";
+    o2.type = "square";
+    o1.frequency.setValueAtTime(200, t0);
+    o1.frequency.exponentialRampToValueAtTime(100, t0 + 0.2);
+    o2.frequency.setValueAtTime(202, t0);
+    o2.frequency.exponentialRampToValueAtTime(99, t0 + 0.2);
+    o1.connect(g);
+    o2.connect(g);
+    g.connect(ctx.destination);
+    g.gain.setValueAtTime(0, t0);
+    g.gain.linearRampToValueAtTime(vol * 0.55, t0 + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.18);
+    o1.start(t0);
+    o2.start(t0);
+    o1.stop(t0 + 0.2);
+    o2.stop(t0 + 0.2);
+  }
+}
 
 /** 正解/ミス時の画面フラッシュ */
 /** @type {"green" | "red" | null} */
@@ -1192,10 +1258,10 @@ function gameLoop() {
           hitThisFrame = true;
           bullets = [];
           if (t.isCorrect) {
-            playSfx(hitSound);
+            playHitResultSound(true);
             triggerFlash("green");
           } else {
-            playSfx(missSound);
+            playHitResultSound(false);
             triggerFlash("red");
           }
           feedbackState = { target: t, ok: t.isCorrect, t0: performance.now() };
@@ -1211,7 +1277,7 @@ function gameLoop() {
         (t) => t.isCorrect && t.cy - t.r > H + 4
       );
       if (off && currentQuestionWord) {
-        playSfx(missSound);
+        playHitResultSound(false);
         triggerFlash("red");
         addMistakeWord(currentQuestionWord.word);
         missCountThisGame += 1;
