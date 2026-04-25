@@ -68,6 +68,33 @@ function saveAliens() {
   }
 }
 
+/**
+ * 同じ id の宇宙人は1枚まで（push はここ以外禁止）
+ * @param {AlienCard} alien
+ */
+function addAlien(alien) {
+  if (!alien || typeof alien.id !== "number") return;
+  console.log("取得前:", obtainedAliens.length);
+  const exists = obtainedAliens.find((a) => a.id === alien.id);
+  if (!exists) {
+    obtainedAliens.push({ ...alien });
+    saveAliens();
+  }
+  console.log("取得後:", obtainedAliens.length);
+}
+
+/**
+ * カード innerHTML 用（属性・本文のエスケープ）
+ * @param {string} str
+ */
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 function getRandomAlien() {
   const rand = Math.random();
   if (rand < 0.7) {
@@ -963,6 +990,7 @@ function startGame() {
     console.warn("現在の 20 語ブロックに単語が足りず、10 問出せません。");
     return;
   }
+  obtainedAliens = [];
   const quizList = shuffleArray([...block]).slice(0, SHOOT_QUESTIONS);
   resetGameState();
   // QuizEngine.init はこの1箇所からのみ（nextQuestion / gameLoop 等では呼ばない）
@@ -1030,29 +1058,17 @@ function endGame(opts) {
         const card = document.createElement("div");
         card.className = "alien-card";
         card.setAttribute("data-rarity", a.rarity);
-        const nameEl = document.createElement("div");
-        nameEl.className = "alien-name";
-        nameEl.textContent = a.name;
-        const img = document.createElement("img");
-        img.className = "alien-img";
-        console.log("画像パス:", a.img);
-        img.alt = a.name;
-        img.onerror = function () {
-          this.onerror = null;
-          if (this.src.indexOf("default.png") >= 0) return;
-          this.src = ALIEN_IMG_DEFAULT;
-        };
-        img.src = a.img;
-        const rare = document.createElement("div");
-        rare.className = "alien-rarity";
-        rare.textContent = "レア度: " + a.rarity;
-        const desc = document.createElement("div");
-        desc.className = "alien-desc";
-        desc.textContent = a.desc;
-        card.appendChild(nameEl);
-        card.appendChild(img);
-        card.appendChild(rare);
-        card.appendChild(desc);
+        const n = escapeHtml(a.name);
+        const d = escapeHtml(a.desc);
+        const r = escapeHtml(a.rarity);
+        const im = escapeHtml(a.img);
+        card.innerHTML = `
+    <div class="alien-name">${n}</div>
+    <img src="${im}" class="alien-img" alt="${n}"
+         onerror="this.onerror=null;this.src='images/default.png'">
+    <div class="alien-rarity">レア度: ${r}</div>
+    <div class="alien-desc">${d}</div>
+  `;
         list.appendChild(card);
       });
     }
@@ -1075,6 +1091,10 @@ function endGame(opts) {
 
 /** 出題打ち切り（仕様上の showResult）。リザルト画面表示は endGame 本体 */
 function showResult() {
+  const list = document.getElementById("result-aliens");
+  if (list) {
+    list.innerHTML = "";
+  }
   endGame({ advanceVocabBlock: true });
 }
 
@@ -1093,10 +1113,7 @@ function onHitTarget(t) {
     updateProgressUI();
     if (Math.random() < 0.3) {
       const alien = getRandomAlien();
-      if (alien) {
-        obtainedAliens.push(alien);
-        saveAliens();
-      }
+      if (alien) addAlien(alien);
     }
   } else {
     if (currentQuestionWord) {
