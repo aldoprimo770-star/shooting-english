@@ -423,3 +423,415 @@ body {
 .hidden {
   display: none !important;
 }
+
+/* ========== 子ども向け・遊び心（星・惑星・宇宙人イメージ装飾）========== */
+:root {
+  --fun-candy: #ffcc6e;
+  --fun-mint: #6ce0c8;
+  --fun-berry: #ff7eb3;
+  --fun-card: rgba(28, 32, 58, 0.92);
+}
+
+.screen--fun {
+  position: relative;
+  overflow: hidden;
+}
+
+.screen--fun .screen-content,
+.screen--fun .screen-content--game {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.screen-content--game {
+  flex: 1;
+  min-height: 0;
+  justify-content: flex-start;
+}
+
+/* 装飾レイヤー */
+.screen-decor {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+}
+
+.decor-blob,
+.decor-blob--result,
+.decor-blob--1,
+.decor-blob--2 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(0);
+  opacity: 0.5;
+  animation: decor-breathe 5s ease-in-out infinite;
+}
+
+.decor-blob--1 {
+  width: 180px;
+  height: 180px;
+  top: 8%;
+  right: 5%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 120, 200, 0.22) 0%,
+    transparent 70%
+  );
+}
+
+.decor-blob--2 {
+  width: 200px;
+  height: 200px;
+  bottom: 5%;
+  left: -2%;
+  background: radial-gradient(
+    circle,
+    rgba(100, 200, 255, 0.18) 0%,
+    transparent 70%
+  );
+  animation-delay: 1.5s;
+}
+
+.decor-blob--result {
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 55%;
+  background: radial-gradient(
+    ellipse 90% 80% at 50% 0%,
+    rgba(124, 92, 255, 0.18) 0%,
+    transparent 65%
+  );
+  border-radius: 0;
+  opacity: 0.7;
+  animation: decor-breathe 4s ease-in-out infinite;
+}
+
+@keyframes decor-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 0.7;
+  }
+}
+
+.decor-floating {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  height: 110px;
+  margin: 0 auto 0.25rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+  gap: 0.5rem;
+}
+
+.screen-decor--home .decor-svg {
+  display: block;
+  flex-shrink: 0;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
+}
+
+.screen-decor--home .decor-ufo {
+  animation: decor-bob 3.2s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+
+.screen-decor--home .decor-saturn {
+  animation: decor-bob 3.6s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+.screen-decor--home .decor-svg:not(.decor-ufo):not(.decor-saturn) {
+  animation: decor-bob 2.8s ease-in-out infinite;
+  opacity: 0.9;
+}
+
+@keyframes decor-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* 学習・復習の軽装飾 */
+.screen-decor--subtle {
+  z-index: 0;
+}
+
+.decor-emoji {
+  position: absolute;
+  font-size: 2.25rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  animation: decor-bob 2.4s ease-in-out infinite;
+  opacity: 0.85;
+}
+
+.decor-emoji--tl {
+  top: 0.5rem;
+  left: 0.25rem;
+  animation-delay: 0.3s;
+}
+
+.decor-emoji--tr {
+  top: 0.5rem;
+  right: 0.25rem;
+  animation-delay: 0.6s;
+}
+
+/* ゲーム上端の小さな星（#screen-game 全体の背面に重ねる） */
+.screen-decor--game {
+  z-index: 0;
+  overflow: visible;
+}
+
+.game-spark {
+  position: absolute;
+  top: 0.35rem;
+  color: var(--fun-candy);
+  font-size: 1.1rem;
+  opacity: 0.6;
+  animation: spark-tw 2s ease-in-out infinite;
+}
+
+.game-spark--a {
+  left: 2%;
+  animation-delay: 0s;
+}
+
+.game-spark--b {
+  right: 2%;
+  color: var(--fun-mint);
+  animation-delay: 0.7s;
+}
+
+@keyframes spark-tw {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.1) rotate(8deg);
+  }
+}
+
+/* リザルト：ロケット＋星 */
+.decor-rocket-wrap {
+  position: absolute;
+  right: 5%;
+  top: 0;
+  z-index: 0;
+  animation: decor-bob 3.5s ease-in-out infinite;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.result-stars {
+  position: absolute;
+  left: 5%;
+  top: 0.5rem;
+  color: var(--fun-candy);
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 20px rgba(255, 200, 100, 0.6);
+  animation: star-pop 1.2s ease-out 1, decor-bob 2.4s ease-in-out infinite 1.2s;
+}
+
+.result-stars span {
+  color: #fff6;
+  font-size: 0.8em;
+  vertical-align: 0.15em;
+}
+
+@keyframes star-pop {
+  0% {
+    transform: scale(0) rotate(0);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.15) rotate(12deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 0.9;
+  }
+}
+
+/* タイプ・カード */
+.title--fun,
+.screen--fun .result-title,
+.screen--fun h1.title--fun,
+.screen--fun h2.title--fun {
+  font-weight: 800;
+  font-family: "Segoe UI", "Hiragino Maru Gothic ProN", "Yu Gothic UI", "M PLUS 1p",
+    "Meiryo", system-ui, sans-serif;
+  letter-spacing: 0.04em;
+  background: linear-gradient(100deg, var(--accent) 0%, #b8a0ff 45%, var(--fun-berry) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+}
+
+@supports not (background-clip: text) {
+  .title--fun,
+  .result-title,
+  .screen--fun h1,
+  .screen--fun h2 {
+    -webkit-text-fill-color: var(--text);
+    color: var(--accent);
+    background: none;
+  }
+}
+
+.subtitle--fun,
+.result-kids-msg {
+  font-size: 1.05rem;
+  color: var(--fun-candy);
+  text-align: center;
+  margin: 0 0 0.5rem;
+  line-height: 1.5;
+  font-weight: 600;
+  text-shadow: 0 0 12px rgba(255, 200, 100, 0.25);
+}
+
+.subtitle--fun {
+  color: #b8c8ff;
+  max-width: 20em;
+  margin: 0 0 1.5rem;
+}
+
+.card--fun {
+  background: var(--fun-card);
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  box-shadow: 0 8px 36px rgba(40, 20, 80, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.card--fun::after {
+  content: "";
+  position: absolute;
+  top: 0.6rem;
+  right: 0.75rem;
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(
+    circle,
+    rgba(200, 220, 255, 0.1) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.progress-block--fun {
+  background: linear-gradient(135deg, rgba(30, 40, 80, 0.45), rgba(20, 25, 50, 0.35));
+  border-radius: 16px;
+  padding: 0.75rem 1rem 0.85rem;
+  border: 1px solid rgba(108, 240, 255, 0.2);
+  max-width: 340px;
+  margin-bottom: 1.75rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.progress-bar--fun {
+  background: rgba(0, 0, 0, 0.25);
+  height: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+}
+
+.progress-block--fun .progress-fill {
+  background: linear-gradient(
+    90deg,
+    #7c5cff,
+    var(--fun-mint),
+    var(--fun-berry)
+  );
+}
+
+.btn--fun {
+  border-radius: 16px;
+  font-weight: 700;
+  padding: 0.75rem 1.35rem;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn--fun:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.btn--fun.btn.secondary {
+  background: linear-gradient(135deg, rgba(255, 200, 255, 0.1), rgba(200, 220, 255, 0.08));
+  border: 2px solid rgba(200, 220, 255, 0.25);
+}
+
+#screen-game.screen--fun {
+  padding-top: 0.9rem;
+}
+
+#screen-game.screen--fun .screen-content--game {
+  padding: 0 0.5rem 1.5rem;
+  gap: 0.4rem;
+}
+
+#screen-game.screen--fun .game-hud,
+#screen-game.screen--fun #game-canvas,
+#screen-game.screen--fun .hint {
+  z-index: 1;
+  position: relative;
+}
+
+#screen-game.screen--fun .hint {
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .decor-floating {
+    max-width: 100%;
+  }
+
+  .decor-rocket-wrap {
+    right: 0;
+    top: 0.25rem;
+  }
+
+  .decor-rocket-wrap .decor-rocket {
+    width: 72px;
+    height: auto;
+  }
+
+  .result-stars {
+    font-size: 2rem;
+    left: 2%;
+  }
+}

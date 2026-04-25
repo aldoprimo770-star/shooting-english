@@ -4,34 +4,74 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>英単語スペースシューティング</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=1" />
 </head>
 <body>
   <div id="stars" aria-hidden="true"></div>
 
   <!-- ① ホーム -->
-  <section id="screen-home" class="screen active">
-    <h1 class="title">英単語スペースシューティング</h1>
-    <p class="subtitle">宇宙で英単語を覚えよう</p>
-    <div class="progress-block">
-      <span>進捗</span>
-      <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
-      <span id="progress-text">0%</span>
+  <section id="screen-home" class="screen screen--fun active">
+    <div class="screen-decor screen-decor--home" aria-hidden="true">
+      <div class="decor-blob decor-blob--1"></div>
+      <div class="decor-blob decor-blob--2"></div>
+      <div class="decor-floating">
+        <svg class="decor-svg" viewBox="0 0 200 100" width="200" height="100" focusable="false" aria-hidden="true">
+          <ellipse cx="100" cy="50" rx="32" ry="10" fill="#3a3f55" stroke="#5a6a8a" stroke-width="1.2"/>
+          <rect x="85" y="32" width="30" height="20" rx="4" fill="#5a5cff" stroke="#8af" stroke-width="0.8"/>
+          <rect x="92" y="28" width="6" height="6" fill="#5a5cff" rx="1"/>
+          <rect x="102" y="28" width="6" height="6" fill="#5a5cff" rx="1"/>
+          <circle cx="100" cy="20" r="2" fill="rgba(200,255,200,0.5)">
+            <animate attributeName="cy" values="20;12;20" dur="2.5s" repeatCount="indefinite" />
+          </circle>
+        </svg>
+        <svg class="decor-svg decor-ufo" viewBox="0 0 100 100" width="64" height="64" focusable="false" aria-hidden="true">
+          <path d="M50 45 L60 20 L40 20 Z" fill="none" stroke="#6cf" stroke-width="1.2" opacity="0.4"/>
+          <path d="M20 50 Q50 35 80 50" fill="#2a2d45" stroke="#6cf" stroke-width="1.2"/>
+          <rect x="35" y="48" width="30" height="12" rx="6" fill="rgba(100,200,255,0.2)" stroke="rgba(150,220,255,0.4)"/>
+          <circle cx="50" cy="54" r="4" fill="rgba(255,255,200,0.7)">
+            <animate attributeName="fill" values="rgba(255,255,200,0.7);rgba(255,255,255,0.95);rgba(255,255,200,0.7)" dur="2s" repeatCount="indefinite" />
+          </circle>
+        </svg>
+        <svg class="decor-svg decor-saturn" viewBox="0 0 90 90" width="80" height="80" focusable="false" aria-hidden="true">
+          <circle cx="45" cy="45" r="22" fill="url(#pg)" />
+          <ellipse cx="45" cy="45" rx="40" ry="8" fill="none" stroke="rgba(200,200,255,0.3)" transform="rotate(-20 45 45)" stroke-width="1.2"/>
+          <defs>
+            <linearGradient id="pg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#c8a8ff" />
+              <stop offset="1" stop-color="#4a2a6a" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
     </div>
-    <div class="btn-row">
-      <button type="button" class="btn primary" id="btn-start">スタート</button>
-      <button type="button" class="btn secondary" id="btn-review">復習モード</button>
+    <div class="screen-content">
+      <h1 class="title title--fun">英単語スペースシューティング</h1>
+      <p class="subtitle subtitle--fun">宇宙の仲間と一緒に　英単語を覚えよう！</p>
+      <div class="progress-block progress-block--fun">
+        <span>進捗</span>
+        <div class="progress-bar progress-bar--fun"><div id="progress-fill" class="progress-fill"></div></div>
+        <span id="progress-text">0%</span>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn primary btn--fun" id="btn-start">しゅーっとスタート</button>
+        <button type="button" class="btn secondary btn--fun" id="btn-review">復習モード</button>
+      </div>
     </div>
   </section>
 
   <!-- ② 学習 -->
-  <section id="screen-learn" class="screen">
+  <section id="screen-learn" class="screen screen--fun">
+    <div class="screen-decor screen-decor--subtle" aria-hidden="true">
+      <div class="decor-emoji decor-emoji--tl">🪐</div>
+      <div class="decor-emoji decor-emoji--tr">🌙</div>
+    </div>
+    <div class="screen-content">
     <header class="screen-header">
       <button type="button" class="btn ghost" id="btn-learn-home">ホーム</button>
       <span class="learn-counter" id="learn-counter"></span>
       <button type="button" class="btn accent" id="btn-to-game">シューティングへ</button>
     </header>
-    <div class="card learn-card">
+    <div class="card learn-card card--fun">
       <p class="label">英単語</p>
       <div class="speak-line">
         <p id="learn-word" class="learn-word speakable" tabindex="0" title="クリックで発音">—</p>
@@ -49,10 +89,16 @@
         <button type="button" class="btn primary" id="btn-learned">覚えた</button>
       </div>
     </div>
+    </div>
   </section>
 
   <!-- ③ シューティング -->
-  <section id="screen-game" class="screen">
+  <section id="screen-game" class="screen screen--fun">
+    <div class="screen-decor screen-decor--game" aria-hidden="true">
+      <span class="game-spark game-spark--a" aria-hidden="true">✦</span>
+      <span class="game-spark game-spark--b" aria-hidden="true">✦</span>
+    </div>
+    <div class="screen-content screen-content--game">
     <header class="game-hud">
       <button type="button" class="btn ghost small" id="btn-game-home">ホーム</button>
       <div class="hud-center">
@@ -62,44 +108,72 @@
           <button type="button" class="btn-speak small" id="btn-speak-game" aria-label="出題英単語を聞く">🔊</button>
           <button type="button" class="btn ghost small hud-mute" id="btn-game-mute" title="出題の英語の読み上げをオフにする" aria-pressed="false">音を消す</button>
         </div>
-        <!-- 進行状況: 現在/最大 ※app.js SHOOT_QUESTIONS(10)・updateGameHud -->
         <p class="hud-question-line" id="hud-question-line" aria-live="polite">
           問題 <strong id="hud-question-now">1</strong> / <strong id="hud-question-max">10</strong>
         </p>
       </div>
       <div class="hud-stats">
         <span>スコア <strong id="hud-score">0</strong></span>
-        <!-- ミス上限: app.js の MAX_MISTAKES が 0 より大きいときだけ表示 -->
         <span class="hud-miss" id="hud-miss-wrap" hidden>ミス <strong id="hud-miss-count">0</strong></span>
       </div>
     </header>
     <canvas id="game-canvas" width="640" height="480" aria-label="シューティングゲーム"></canvas>
     <p class="hint">← → 移動　スペースで発射（スマホ: 指で移動・タップで発射）</p>
+    </div>
   </section>
 
   <!-- ④ リザルト -->
-  <section id="screen-result" class="screen">
-    <h2 class="title small">リザルト</h2>
-    <div class="card result-card">
+  <section id="screen-result" class="screen screen--fun">
+    <div class="screen-decor screen-decor--result" aria-hidden="true">
+      <div class="decor-blob decor-blob--result"></div>
+      <div class="decor-rocket-wrap">
+        <svg class="decor-rocket" viewBox="0 0 100 120" width="100" focusable="false" aria-hidden="true">
+          <path d="M50 5 L60 50 L50 100 L40 50 Z" fill="url(#rk)"/>
+          <rect x="46" y="2" width="8" height="6" rx="1" fill="#4af"/>
+          <polygon points="30,50 5,60 5,40" fill="rgba(100,200,255,0.2)"/>
+          <polygon points="70,50 95,60 95,40" fill="rgba(100,200,255,0.2)"/>
+          <ellipse cx="50" cy="100" rx="6" ry="4" fill="#ff6c8a" opacity="0.7">
+            <animate attributeName="ry" values="4;6;4" dur="0.3s" repeatCount="indefinite" />
+          </ellipse>
+          <defs>
+            <linearGradient id="rk" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#a8b0ff" />
+              <stop offset="1" stop-color="#3a2a6a" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="result-stars" aria-hidden="true">★<span>★</span>★</div>
+    </div>
+    <div class="screen-content">
+      <h2 class="title small title--fun result-title">リザルト</h2>
+      <p class="result-kids-msg">今日も　お疲れさま！</p>
+    <div class="card result-card card--fun">
       <p>スコア: <strong id="result-score">0</strong></p>
       <p>正答率: <strong id="result-accuracy">0%</strong></p>
       <p class="label">間違えた単語</p>
       <ul id="result-mistakes" class="mistake-list"></ul>
     </div>
     <div class="btn-row">
-      <button type="button" class="btn primary" id="btn-result-home">ホームへ</button>
+      <button type="button" class="btn primary btn--fun" id="btn-result-home">ホームへ もどる</button>
+    </div>
     </div>
   </section>
 
   <!-- ⑤ 復習 -->
-  <section id="screen-review" class="screen">
+  <section id="screen-review" class="screen screen--fun">
+    <div class="screen-decor screen-decor--subtle" aria-hidden="true">
+      <div class="decor-emoji decor-emoji--tl">🚀</div>
+      <div class="decor-emoji decor-emoji--tr">🌟</div>
+    </div>
+    <div class="screen-content">
     <header class="screen-header">
       <button type="button" class="btn ghost" id="btn-review-home">ホーム</button>
     </header>
-    <div id="review-empty" class="card hidden">
+    <div id="review-empty" class="card card--fun hidden">
       <p>復習する単語はありません。シューティングで間違えた単語がここに入ります。</p>
     </div>
-    <div id="review-quiz" class="card review-card hidden">
+    <div id="review-quiz" class="card review-card card--fun hidden">
       <p class="label">英単語</p>
       <div class="speak-line review-word-row">
         <p id="review-word" class="learn-word speakable" tabindex="0" title="クリックで発音">—</p>
@@ -108,10 +182,10 @@
       <p class="label">正しい意味を選んでください</p>
       <div id="review-choices" class="review-choices"></div>
     </div>
+    </div>
   </section>
 
-  <!-- file:// でも全語彙を使うため words-embed（words.json 同期）。HTTP では常に words.json 優先 -->
   <script src="words-embed.js?v=2" defer></script>
-  <script src="app.js?v=37" defer></script>
+  <script src="app.js?v=38" defer></script>
 </body>
 </html>
