@@ -610,6 +610,23 @@ function wireGameWordSpeech(wordStr) {
 }
 
 /**
+ * 白＋黒縁取り（stroke → fill）でラベル描画。暗い背景でも判読しやすい
+ * @param {string} text
+ * @param {number} x
+ * @param {number} y
+ */
+function drawOutlinedLabel(text, x, y) {
+  const s = getCanvasW() / DEFAULT_CANVAS_W;
+  ctx.lineJoin = "round";
+  ctx.miterLimit = 2;
+  ctx.strokeStyle = "black";
+  ctx.lineWidth = Math.max(2, 4 * s);
+  ctx.fillStyle = "white";
+  ctx.strokeText(text, x, y);
+  ctx.fillText(text, x, y);
+}
+
+/**
  * 出題英単語の表示を currentQuestionWord から毎フレーム再描画（DOM 更新の取りこぼし対策）
  */
 function drawGameQuestionWordCanvasOverlay() {
@@ -618,10 +635,9 @@ function drawGameQuestionWordCanvasOverlay() {
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   const fontPx = Math.max(16, Math.floor(getCanvasW() / 22));
   ctx.font = `${fontPx}px "Segoe UI", Meiryo, sans-serif`;
-  ctx.fillStyle = "rgba(210, 225, 255, 0.92)";
   ctx.textAlign = "left";
   ctx.textBaseline = "top";
-  ctx.fillText("単語: " + currentQuestionWord.word, 10, 12);
+  drawOutlinedLabel("単語: " + currentQuestionWord.word, 10, 12);
   ctx.restore();
 }
 
@@ -1008,9 +1024,6 @@ function drawPlanet(t) {
   ctx.lineWidth = 1;
   ctx.stroke();
 
-  ctx.fillStyle = inFb
-    ? (ok ? "#0a0a0a" : "#1a0a0a")
-    : "#0a0a1a";
   const fontPx = Math.max(12, Math.floor(getCanvasW() / 20));
   ctx.font = `${fontPx}px "Segoe UI", Meiryo, sans-serif`;
   ctx.textAlign = "center";
@@ -1022,7 +1035,7 @@ function drawPlanet(t) {
   const lineH = fontPx * 1.15;
   const mid = lines.length === 1 ? fontPx * 0.25 : 0;
   lines.forEach((line, j) => {
-    ctx.fillText(line, t.cx, t.cy + j * lineH + mid);
+    drawOutlinedLabel(line, t.cx, t.cy + j * lineH + mid);
   });
   ctx.textAlign = "left";
 }
