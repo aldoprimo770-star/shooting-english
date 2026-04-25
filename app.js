@@ -7,6 +7,8 @@
  */
 
 const STORAGE_KEY = "englishShootingUserData";
+/** 宇宙人カード（獲得一覧） */
+const ALIENS_STORAGE_KEY = "aliens";
 const SPEECH_LOCALE = "en-US";
 const FEEDBACK_MS = 480; // 撃破後、正誤の色表示時間
 /**
@@ -14,6 +16,55 @@ const FEEDBACK_MS = 480; // 撃破後、正誤の色表示時間
  * （完成条件の「10問以上プレイ」は、通常は MAX_MISTAKES=0 で満たす想定）
  */
 const MAX_MISTAKES = 0;
+
+/**
+ * @typedef {{ id: number, name: string, rarity: "N" | "R" | "SR" }} AlienCard
+ */
+const aliens = [
+  { id: 1, name: "モコモコ星人", rarity: "N" },
+  { id: 2, name: "ピョンピョン星人", rarity: "N" },
+  { id: 3, name: "コロコロ星人", rarity: "N" },
+  { id: 31, name: "フレイム星人", rarity: "R" },
+  { id: 32, name: "アクア星人", rarity: "R" },
+  { id: 46, name: "ギャラクシー星人", rarity: "SR" },
+];
+
+function loadObtainedAliens() {
+  try {
+    const raw = localStorage.getItem(ALIENS_STORAGE_KEY);
+    if (raw == null || raw === "") return [];
+    const p = JSON.parse(raw);
+    return Array.isArray(p) ? p : [];
+  } catch {
+    return [];
+  }
+}
+
+/** @type {AlienCard[]} */
+let obtainedAliens = loadObtainedAliens();
+
+function saveAliens() {
+  try {
+    localStorage.setItem(ALIENS_STORAGE_KEY, JSON.stringify(obtainedAliens));
+  } catch {
+    // 容量超過・プライベートモード等
+  }
+}
+
+function getRandomAlien() {
+  const rand = Math.random();
+  if (rand < 0.7) {
+    const n = aliens.filter((a) => a.rarity === "N");
+    if (n.length) return n[Math.floor(Math.random() * n.length)];
+  } else if (rand < 0.95) {
+    const r = aliens.filter((a) => a.rarity === "R");
+    if (r.length) return r[Math.floor(Math.random() * r.length)];
+  } else {
+    const sr = aliens.find((a) => a.rarity === "SR");
+    if (sr) return sr;
+  }
+  return aliens[0];
+}
 
 /** @typedef {{ word: string, meaning: string, example: string, level: number, meaning_kana?: string }} Word */
 
@@ -932,6 +983,18 @@ function endGame(opts) {
     });
   }
 
+  {
+    const list = document.getElementById("result-aliens");
+    if (list) {
+      list.innerHTML = "";
+      obtainedAliens.forEach((a) => {
+        const li = document.createElement("li");
+        li.textContent = a.name + " (" + a.rarity + ")";
+        list.appendChild(li);
+      });
+    }
+  }
+
   if (sessionHits > userData.score) {
     userData.score = sessionHits;
     saveUserData();
@@ -965,6 +1028,13 @@ function onHitTarget(t) {
     userData.cumulativeCorrect = (userData.cumulativeCorrect || 0) + 1;
     saveUserData();
     updateProgressUI();
+    if (Math.random() < 0.3) {
+      const alien = getRandomAlien();
+      if (alien) {
+        obtainedAliens.push(alien);
+        saveAliens();
+      }
+    }
   } else {
     if (currentQuestionWord) {
       addMistakeWord(currentQuestionWord.word);
