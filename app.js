@@ -9,6 +9,8 @@
 const STORAGE_KEY = "englishShootingUserData";
 /** 宇宙人カード（獲得一覧） */
 const ALIENS_STORAGE_KEY = "aliens";
+/** 画像欠損・読み込み失敗時（`images/default.png`） */
+const ALIEN_IMG_DEFAULT = "images/default.png";
 const SPEECH_LOCALE = "en-US";
 const FEEDBACK_MS = 480; // 撃破後、正誤の色表示時間
 /**
@@ -25,14 +27,14 @@ const aliens = [
     id: 1,
     name: "モコモコ星人",
     rarity: "N",
-    img: "images/moko.png",
+    img: "images/mokomoko.png",
     desc: "ふわふわでやさしい宇宙人",
   },
   {
     id: 2,
     name: "ピョンピョン星人",
     rarity: "N",
-    img: "images/pyon.png",
+    img: "images/pyonpyon.png",
     desc: "ジャンプが得意",
   },
   {
@@ -95,7 +97,7 @@ function resolveAlienForDisplay(a) {
     id: a.id,
     name: a.name != null && String(a.name) ? String(a.name) : "？",
     rarity: a.rarity != null ? String(a.rarity) : "?",
-    img: a.img && String(a.img) ? String(a.img) : "images/moko.png",
+    img: a.img && String(a.img) ? String(a.img) : ALIEN_IMG_DEFAULT,
     desc: a.desc && String(a.desc) ? String(a.desc) : "古い保存データ",
   };
 }
@@ -1033,8 +1035,14 @@ function endGame(opts) {
         nameEl.textContent = a.name;
         const img = document.createElement("img");
         img.className = "alien-img";
-        img.src = a.img;
+        console.log("画像パス:", a.img);
         img.alt = a.name;
+        img.onerror = function () {
+          this.onerror = null;
+          if (this.src.indexOf("default.png") >= 0) return;
+          this.src = ALIEN_IMG_DEFAULT;
+        };
+        img.src = a.img;
         const rare = document.createElement("div");
         rare.className = "alien-rarity";
         rare.textContent = "レア度: " + a.rarity;
