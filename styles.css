@@ -685,9 +685,9 @@ body {
 .screen--fun h1.title--fun,
 .screen--fun h2.title--fun {
   font-weight: 800;
-  font-family: "Segoe UI", "Hiragino Maru Gothic ProN", "Yu Gothic UI", "M PLUS 1p",
-    "Meiryo", system-ui, sans-serif;
-  letter-spacing: 0.04em;
+  font-family: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", "Yu Gothic UI Rounded", "Hiragino Kaku Gothic ProN",
+    "Meiryo", "Segoe UI", system-ui, sans-serif;
+  letter-spacing: 0.06em;
   background: linear-gradient(100deg, var(--accent) 0%, #b8a0ff 45%, var(--fun-berry) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -869,7 +869,8 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.35);
   text-shadow: 0 0 20px rgba(255, 220, 100, 0.9);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-  font-family: "Segoe UI", "Hiragino Maru Gothic ProN", system-ui, sans-serif;
+  font-family: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", "Yu Gothic UI Rounded", "Meiryo", system-ui,
+    sans-serif;
 }
 
 #screen-home .home-sparkles {
