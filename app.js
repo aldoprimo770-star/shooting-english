@@ -9,9 +9,21 @@
 const STORAGE_KEY = "englishShootingUserData";
 /** 宇宙人カード（獲得一覧） */
 const ALIENS_STORAGE_KEY = "aliens";
-/** 画像欠損・読み込み失敗時（`images/default.png`） */
-const ALIEN_IMG_DEFAULT = "images/default.png";
 const SPEECH_LOCALE = "en-US";
+
+/**
+ * 埋め込み用 SVG（外部ファイル不要・`file://` でも表示可能）
+ * @param {string} svg
+ * @returns {string}
+ */
+function alienSvgDataUri(svg) {
+  return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg.trim());
+}
+
+/** 失敗時・汎用シルエット（同梱の PNG に依存しない） */
+const ALIEN_IMG_DEFAULT = alienSvgDataUri(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label=""><ellipse cx="50" cy="50" rx="35" ry="40" fill="#3a3d52" stroke="#6c7090" stroke-width="2"/><circle cx="40" cy="45" r="7" fill="#c8ccdd"/><circle cx="60" cy="45" r="7" fill="#c8ccdd"/><path d="M38 70 Q50 78 62 70" fill="none" stroke="#889" stroke-width="1.5"/></svg>'
+);
 const FEEDBACK_MS = 480; // 撃破後、正誤の色表示時間
 /**
  * ミス制限: 0 = 制限なし。5 など正の数にすると、画面外落下＋誤答の累計でゲームオーバー
@@ -27,21 +39,30 @@ const aliens = [
     id: 1,
     name: "モコモコ星人",
     rarity: "N",
-    img: "images/mokomoko.png",
+    /** 同梱の PNG は未使用。SVG をデータ URI 化（ふわふわ体＋大きな目） */
+    img: alienSvgDataUri(
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label=""><defs><radialGradient id="a1" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="#b8c8ff"/><stop offset="1" stop-color="#5a6c9a"/></radialGradient></defs><path d="M50 12 C20 12 5 40 5 60 C5 80 30 95 50 95 C70 95 95 80 95 60 C95 40 80 12 50 12Z" fill="url(#a1)" stroke="#3a4a6a" stroke-width="1.2"/><circle cx="36" cy="50" r="10" fill="#fff"/><circle cx="36" cy="50" r="4" fill="#2a2a3a"/><circle cx="64" cy="50" r="10" fill="#fff"/><circle cx="64" cy="50" r="4" fill="#2a2a3a"/><ellipse cx="50" cy="70" rx="6" ry="3" fill="#2a2a3a" opacity="0.35"/></svg>'
+    ),
     desc: "ふわふわでやさしい宇宙人",
   },
   {
     id: 2,
     name: "ピョンピョン星人",
     rarity: "N",
-    img: "images/pyonpyon.png",
+    /** 小柄・脚長でジャンプの合図 */
+    img: alienSvgDataUri(
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label=""><ellipse cx="50" cy="48" rx="28" ry="26" fill="#7ddea8" stroke="#2a8a5a" stroke-width="1.5"/><line x1="35" y1="68" x2="20" y2="92" stroke="#2a8a5a" stroke-width="5" stroke-linecap="round"/><line x1="65" y1="68" x2="80" y2="92" stroke="#2a8a5a" stroke-width="5" stroke-linecap="round"/><circle cx="40" cy="45" r="6" fill="#fff"/><circle cx="40" cy="45" r="2" fill="#222"/><circle cx="60" cy="45" r="6" fill="#fff"/><circle cx="60" cy="45" r="2" fill="#222"/></svg>'
+    ),
     desc: "ジャンプが得意",
   },
   {
     id: 31,
     name: "フレイム星人",
     rarity: "R",
-    img: "images/flame.png",
+    /** 炎色グラデ＋小さな炎飾り */
+    img: alienSvgDataUri(
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label=""><defs><linearGradient id="f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffad66"/><stop offset="0.5" stop-color="#ff5a1a"/><stop offset="1" stop-color="#b02000"/></linearGradient></defs><ellipse cx="50" cy="58" rx="30" ry="34" fill="url(#f)" stroke="#802000" stroke-width="1.2"/><path d="M50 18 C58 32 50 40 50 50 C40 40 50 32 50 18Z" fill="#ffdd88"/><circle cx="40" cy="55" r="7" fill="#fffc"/><circle cx="40" cy="55" r="2.5" fill="#401800"/><circle cx="60" cy="55" r="7" fill="#fffc"/><circle cx="60" cy="55" r="2.5" fill="#401800"/></svg>'
+    ),
     desc: "炎をあやつる",
   },
 ];
