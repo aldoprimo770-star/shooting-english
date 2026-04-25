@@ -18,15 +18,30 @@ const FEEDBACK_MS = 480; // 撃破後、正誤の色表示時間
 const MAX_MISTAKES = 0;
 
 /**
- * @typedef {{ id: number, name: string, rarity: "N" | "R" | "SR" }} AlienCard
+ * @typedef {{ id: number, name: string, rarity: string, img: string, desc: string }} AlienCard
  */
 const aliens = [
-  { id: 1, name: "モコモコ星人", rarity: "N" },
-  { id: 2, name: "ピョンピョン星人", rarity: "N" },
-  { id: 3, name: "コロコロ星人", rarity: "N" },
-  { id: 31, name: "フレイム星人", rarity: "R" },
-  { id: 32, name: "アクア星人", rarity: "R" },
-  { id: 46, name: "ギャラクシー星人", rarity: "SR" },
+  {
+    id: 1,
+    name: "モコモコ星人",
+    rarity: "N",
+    img: "images/moko.png",
+    desc: "ふわふわでやさしい宇宙人",
+  },
+  {
+    id: 2,
+    name: "ピョンピョン星人",
+    rarity: "N",
+    img: "images/pyon.png",
+    desc: "ジャンプが得意",
+  },
+  {
+    id: 31,
+    name: "フレイム星人",
+    rarity: "R",
+    img: "images/flame.png",
+    desc: "炎をあやつる",
+  },
 ];
 
 function loadObtainedAliens() {
@@ -55,15 +70,34 @@ function getRandomAlien() {
   const rand = Math.random();
   if (rand < 0.7) {
     const n = aliens.filter((a) => a.rarity === "N");
-    if (n.length) return n[Math.floor(Math.random() * n.length)];
+    if (n.length) return { ...n[Math.floor(Math.random() * n.length)] };
   } else if (rand < 0.95) {
     const r = aliens.filter((a) => a.rarity === "R");
-    if (r.length) return r[Math.floor(Math.random() * r.length)];
+    if (r.length) return { ...r[Math.floor(Math.random() * r.length)] };
   } else {
     const sr = aliens.find((a) => a.rarity === "SR");
-    if (sr) return sr;
+    if (sr) return { ...sr };
   }
-  return aliens[0];
+  const r2 = aliens.filter((a) => a.rarity === "R");
+  if (r2.length) return { ...r2[Math.floor(Math.random() * r2.length)] };
+  return { ...aliens[0] };
+}
+
+/**
+ * 古い localStorage など id のみのデータに img/desc を補完
+ * @param {Partial<AlienCard> & { id: number }} a
+ * @returns {AlienCard}
+ */
+function resolveAlienForDisplay(a) {
+  const def = aliens.find((x) => x.id === a.id);
+  if (def) return { ...def };
+  return {
+    id: a.id,
+    name: a.name != null && String(a.name) ? String(a.name) : "？",
+    rarity: a.rarity != null ? String(a.rarity) : "?",
+    img: a.img && String(a.img) ? String(a.img) : "images/moko.png",
+    desc: a.desc && String(a.desc) ? String(a.desc) : "古い保存データ",
+  };
 }
 
 /** @typedef {{ word: string, meaning: string, example: string, level: number, meaning_kana?: string }} Word */
@@ -987,10 +1021,31 @@ function endGame(opts) {
     const list = document.getElementById("result-aliens");
     if (list) {
       list.innerHTML = "";
-      obtainedAliens.forEach((a) => {
-        const li = document.createElement("li");
-        li.textContent = a.name + " (" + a.rarity + ")";
-        list.appendChild(li);
+      obtainedAliens.forEach((raw) => {
+        const a = resolveAlienForDisplay(
+          /** @type {Partial<AlienCard> & { id: number }} */ (raw)
+        );
+        const card = document.createElement("div");
+        card.className = "alien-card";
+        card.setAttribute("data-rarity", a.rarity);
+        const nameEl = document.createElement("div");
+        nameEl.className = "alien-name";
+        nameEl.textContent = a.name;
+        const img = document.createElement("img");
+        img.className = "alien-img";
+        img.src = a.img;
+        img.alt = a.name;
+        const rare = document.createElement("div");
+        rare.className = "alien-rarity";
+        rare.textContent = "レア度: " + a.rarity;
+        const desc = document.createElement("div");
+        desc.className = "alien-desc";
+        desc.textContent = a.desc;
+        card.appendChild(nameEl);
+        card.appendChild(img);
+        card.appendChild(rare);
+        card.appendChild(desc);
+        list.appendChild(card);
       });
     }
   }
