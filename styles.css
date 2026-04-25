@@ -315,7 +315,7 @@ body {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 640px;
+  max-width: none;
   gap: 0.5rem;
   flex-wrap: wrap;
   margin-bottom: 0.5rem;
@@ -361,10 +361,10 @@ body {
 }
 
 #game-canvas {
-  /* スマホ幅にフィット（解像度は app.js CANVAS_W/H） */
+  /* スマホ幅にフィット（解像度は app.js getGameCanvasPixelSize） */
   display: block;
   width: 100%;
-  max-width: 640px;
+  max-width: none;
   height: auto;
   margin: 0 auto;
   touch-action: none; /* 縦スクロールと干渉しないようブラウザジェスチャを止める */

@@ -45,6 +45,8 @@ let gameLoopId = null;
 let gameActive = false;
 /** スマホ用 touch リスナーは canvas に1回だけ */
 let gameTouchControlsBound = false;
+/** 画面回転・リサイズ用（デバウンス） */
+let gameCanvasResizeTimer = 0;
 let shipX = 0;
 let keys = { left: false, right: false, fire: false };
 let fireCooldown = 0;
@@ -68,8 +70,73 @@ let currentQuestionWord = null;
 let questionCount = 0;
 /** このプレイ中の「ミス」合計（誤射＋正解未撃墜＝正解の落下） */
 let missCountThisGame = 0;
-const CANVAS_W = 640;
-const CANVAS_H = 480;
+/** デスクトップ等でベース解像度が必要なときの参照（スマホは主に `canvas.width/height`） */
+const DEFAULT_CANVAS_W = 640;
+const DEFAULT_CANVAS_H = 480;
+
+function getCanvasW() {
+  return canvas && canvas.width > 0 ? canvas.width : DEFAULT_CANVAS_W;
+}
+function getCanvasH() {
+  return canvas && canvas.height > 0 ? canvas.height : DEFAULT_CANVAS_H;
+}
+
+/**
+ * バッファ解像度（`canvas.width/height`）。極端に横長は負荷と横伸びを抑える
+ */
+function getGameCanvasPixelSize() {
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  return {
+    w: Math.max(320, Math.min(Math.floor(w), 2000)),
+    h: Math.max(200, Math.floor(h * 0.7)),
+  };
+}
+
+/**
+ * `canvas` の width/height を更新。プレイ中にサイズが変わるときは弾・敵・自機Xをスケール
+ */
+function applyGameCanvasDimensions() {
+  const el = document.getElementById("game-canvas");
+  if (!el) return;
+  const { w: newW, h: newH } = getGameCanvasPixelSize();
+  const ow = el.width;
+  const oh = el.height;
+  if (
+    gameActive &&
+    ow > 0 &&
+    oh > 0 &&
+    (newW !== ow || newH !== oh)
+  ) {
+    const sx = newW / ow;
+    const sy = newH / oh;
+    shipX *= sx;
+    bullets.forEach((b) => {
+      b.x *= sx;
+      b.y *= sy;
+    });
+    targets.forEach((t) => {
+      t.cx *= sx;
+      t.cy *= sy;
+      t.r = Math.max(12, t.r * (sx + sy) * 0.5);
+    });
+  }
+  el.width = newW;
+  el.height = newH;
+}
+
+/**
+ * シューティング画面表示中のリサイズ・回転
+ */
+function onWindowResizeGameCanvas() {
+  if (!document.getElementById("screen-game")?.classList.contains("active")) {
+    return;
+  }
+  applyGameCanvasDimensions();
+  if (canvas) {
+    ctx = /** @type {CanvasRenderingContext2D} */ (canvas.getContext("2d"));
+  }
+}
 
 /**
  * nextQuestion 実行中〜解放までの出題遷移ロック。同一フレ内の再入を抑止。
@@ -545,11 +612,12 @@ function drawGameQuestionWordCanvasOverlay() {
   if (!ctx || !currentQuestionWord) return;
   ctx.save();
   ctx.setTransform(1, 0, 0, 1, 0, 0);
-  ctx.font = "14px 'Segoe UI', Meiryo, sans-serif";
+  const fontPx = Math.max(16, Math.floor(getCanvasW() / 22));
+  ctx.font = `${fontPx}px "Segoe UI", Meiryo, sans-serif`;
   ctx.fillStyle = "rgba(210, 225, 255, 0.92)";
   ctx.textAlign = "left";
   ctx.textBaseline = "top";
-  ctx.fillText("単語: " + currentQuestionWord.word, 10, 20);
+  ctx.fillText("単語: " + currentQuestionWord.word, 10, 12);
   ctx.restore();
 }
 
@@ -625,8 +693,12 @@ function nextQuestion() {
     console.log("選択肢:", choices);
 
     const cols = 4;
-    const slotW = CANVAS_W / cols;
-    const r = 28;
+    const cw = getCanvasW();
+    const ch = getCanvasH();
+    const slotW = cw / cols;
+    const r = Math.max(22, Math.min(56, Math.floor(cw / 20)));
+    const yBoost = 50 * (ch / DEFAULT_CANVAS_H);
+    const yRand = 70 * (ch / DEFAULT_CANVAS_H);
     const correctM = String(currentWord.meaning);
     choices.forEach((m, i) => {
       const meaningStr = String(m);
@@ -634,14 +706,15 @@ function nextQuestion() {
       const col = i % cols;
       const baseCx = slotW * col + slotW / 2;
       const hue = (Math.random() * 40 + (col * 23 + 180)) % 360;
+      const vy = (0.3 + Math.random() * 0.22) * (ch / DEFAULT_CANVAS_H);
       targets.push({
         cx: baseCx,
-        cy: -r - 50 - Math.random() * 70,
+        cy: -r - yBoost - Math.random() * yRand,
         r,
         meaning: meaningStr,
         isCorrect,
         word: currentWord.word,
-        vy: 0.3 + Math.random() * 0.22,
+        vy,
         hue,
       });
     });
@@ -668,21 +741,23 @@ function resetGameState() {
   targets = [];
   feedbackState = null;
   parallaxY = 0;
-  shipX = CANVAS_W / 2;
+  shipX = getCanvasW() / 2;
   fireCooldown = 0;
   keys = { left: false, right: false, fire: false };
 }
 
 /**
- * 表示上のスケール（CSS width）と内部解像度（640px）の差を補正。
+ * 表示上のスケール（CSS）と内部解像度（`canvas.width`）の差を補正。
  * @param {number} clientX
  */
 function setShipXFromClientX(clientX) {
   if (!canvas) return;
   const rect = canvas.getBoundingClientRect();
   const w = rect.width || 1;
-  const x = ((clientX - rect.left) / w) * CANVAS_W;
-  shipX = Math.max(24, Math.min(CANVAS_W - 24, x));
+  const W = getCanvasW();
+  const m = Math.max(20, W * 0.04);
+  const x = ((clientX - rect.left) / w) * W;
+  shipX = Math.max(m, Math.min(W - m, x));
 }
 
 // ===== スマホ: 指で自機Xを合わせ、タップで keys.fire（キーボードと併用）
@@ -742,9 +817,8 @@ function startGame() {
   }
 
   canvas = document.getElementById("game-canvas");
-  ctx = canvas.getContext("2d");
-  canvas.width = CANVAS_W;
-  canvas.height = CANVAS_H;
+  applyGameCanvasDimensions();
+  ctx = /** @type {CanvasRenderingContext2D} */ (canvas.getContext("2d"));
   wireGameTouchControls();
   const block = getBlockWords();
   if (block.length < SHOOT_QUESTIONS) {
@@ -855,20 +929,23 @@ function onHitTarget(t) {
 
 /** 円と弾（点）の当たり */
 function hitCircle(t, bx, by) {
-  return Math.hypot(bx - t.cx, by - t.cy) < t.r + 6;
+  const pad = 6 * (getCanvasW() / DEFAULT_CANVAS_W);
+  return Math.hypot(bx - t.cx, by - t.cy) < t.r + pad;
 }
 
 /**
  * パララックス用の流れる星
  */
 function drawSpaceBackground() {
+  const W = getCanvasW();
+  const H = getCanvasH();
   ctx.fillStyle = "#030212";
-  ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+  ctx.fillRect(0, 0, W, H);
   const t = parallaxY;
   for (let i = 0; i < 100; i++) {
-    const sx = (i * 47 + 13) % (CANVAS_W + 1);
-    const base = (i * 23) % (CANVAS_H + 1);
-    const y = (base + t * (0.2 + (i % 3) * 0.2)) % (CANVAS_H + 1);
+    const sx = (i * 47 + 13) % (W + 1);
+    const base = (i * 23) % (H + 1);
+    const y = (base + t * (0.2 + (i % 3) * 0.2)) % (H + 1);
     const a = 0.25 + Math.sin(i * 0.7 + t * 0.05) * 0.35;
     const sz = 1 + (i % 3) * 0.5;
     ctx.fillStyle = `rgba(220, 235, 255, ${a})`;
@@ -931,29 +1008,35 @@ function drawPlanet(t) {
   ctx.fillStyle = inFb
     ? (ok ? "#0a0a0a" : "#1a0a0a")
     : "#0a0a1a";
-  ctx.font = "12px 'Segoe UI', Meiryo, sans-serif";
+  const fontPx = Math.max(12, Math.floor(getCanvasW() / 20));
+  ctx.font = `${fontPx}px "Segoe UI", Meiryo, sans-serif`;
   ctx.textAlign = "center";
-  const lines = t.meaning.length > 10
-    ? [t.meaning.slice(0, 9), t.meaning.slice(9)]
-    : [t.meaning];
-  const mid = lines.length === 1 ? 4 : 0;
+  const maxChars = fontPx > 20 ? 8 : 9;
+  const lines =
+    t.meaning.length > maxChars + 1
+      ? [t.meaning.slice(0, maxChars), t.meaning.slice(maxChars)]
+      : [t.meaning];
+  const lineH = fontPx * 1.15;
+  const mid = lines.length === 1 ? fontPx * 0.25 : 0;
   lines.forEach((line, j) => {
-    ctx.fillText(line, t.cx, t.cy + j * 12 + mid);
+    ctx.fillText(line, t.cx, t.cy + j * lineH + mid);
   });
   ctx.textAlign = "left";
 }
 
 function drawBullet(b) {
-  const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, 10);
+  const br = 10 * (getCanvasW() / DEFAULT_CANVAS_W);
+  const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, br);
   g.addColorStop(0, "rgba(255, 255, 200, 1)");
   g.addColorStop(0.45, "rgba(255, 200, 80, 0.4)");
   g.addColorStop(1, "rgba(255, 100, 40, 0)");
   ctx.beginPath();
-  ctx.arc(b.x, b.y, 10, 0, Math.PI * 2);
+  ctx.arc(b.x, b.y, br, 0, Math.PI * 2);
   ctx.fillStyle = g;
   ctx.fill();
+  const core = 2.5 * (getCanvasW() / DEFAULT_CANVAS_W);
   ctx.beginPath();
-  ctx.arc(b.x, b.y, 2.5, 0, Math.PI * 2);
+  ctx.arc(b.x, b.y, core, 0, Math.PI * 2);
   ctx.fillStyle = "#ffffcc";
   ctx.fill();
 }
@@ -1011,8 +1094,12 @@ function drawRocket(x, groundY) {
 function gameLoop() {
   if (!gameActive) return;
 
-  const bottomPad = 46;
-  const shipBottomY = CANVAS_H - bottomPad;
+  const W = getCanvasW();
+  const H = getCanvasH();
+  const m = Math.max(20, W * 0.04);
+  const baseSpeed = 5.2 * (W / DEFAULT_CANVAS_W);
+  const bottomPad = Math.max(40, Math.min(70, H * 0.1));
+  const shipBottomY = H - bottomPad;
   const frozen = feedbackState != null;
 
   if (frozen) {
@@ -1022,13 +1109,15 @@ function gameLoop() {
       onHitTarget(t0);
     }
   } else {
-    if (keys.left) shipX -= 5.2;
-    if (keys.right) shipX += 5.2;
-    shipX = Math.max(24, Math.min(CANVAS_W - 24, shipX));
+    if (keys.left) shipX -= baseSpeed;
+    if (keys.right) shipX += baseSpeed;
+    shipX = Math.max(m, Math.min(W - m, shipX));
 
     if (fireCooldown > 0) fireCooldown -= 1;
     if (keys.fire && fireCooldown <= 0) {
-      bullets.push({ x: shipX, y: shipBottomY - 32, vy: -9.5 });
+      const bulletYOff = 32 * (H / DEFAULT_CANVAS_H);
+      const bulletVy = -9.5 * (H / DEFAULT_CANVAS_H);
+      bullets.push({ x: shipX, y: shipBottomY - bulletYOff, vy: bulletVy });
       fireCooldown = 12;
     }
 
@@ -1062,7 +1151,7 @@ function gameLoop() {
     if (!hitThisFrame && !isTransitioning) {
       // 正解の惑星が画面下へ（＝未撃墜）→ ミスとして1問完結し、次へ（即ゲームオーバーはしない）
       const off = targets.find(
-        (t) => t.isCorrect && t.cy - t.r > CANVAS_H + 4
+        (t) => t.isCorrect && t.cy - t.r > H + 4
       );
       if (off && currentQuestionWord) {
         addMistakeWord(currentQuestionWord.word);
@@ -1337,6 +1426,16 @@ function wireEvents() {
 
   window.addEventListener("keydown", onKeyDown);
   window.addEventListener("keyup", onKeyUp);
+
+  window.addEventListener("resize", () => {
+    if (gameCanvasResizeTimer) {
+      clearTimeout(gameCanvasResizeTimer);
+    }
+    gameCanvasResizeTimer = setTimeout(() => {
+      gameCanvasResizeTimer = 0;
+      onWindowResizeGameCanvas();
+    }, 100);
+  });
 }
 
 (async function init() {
