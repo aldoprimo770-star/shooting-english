@@ -815,6 +815,239 @@ body {
   text-align: center;
 }
 
+/* トップ（ホーム）: 明るい雰囲囲＋キラ星＋かわいい宇宙人 */
+#screen-home {
+  min-height: 100vh;
+}
+
+#screen-home.screen--fun {
+  --fun-card: rgba(32, 38, 70, 0.88);
+}
+
+#screen-home .home-ambient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    175deg,
+    #3a1a4a 0%,
+    #0d1838 32%,
+    #102860 60%,
+    #1a4080 100%
+  );
+  opacity: 0.7;
+  mix-blend-mode: screen;
+}
+
+#screen-home .decor-blob--1,
+#screen-home .decor-blob--2 {
+  background: radial-gradient(
+    circle,
+    rgba(255, 200, 255, 0.4) 0%,
+    rgba(120, 220, 255, 0.15) 50%,
+    transparent 70%
+  );
+  opacity: 0.7;
+  filter: blur(0.5px);
+}
+
+#screen-home .home-school {
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: none;
+  margin: 0 0 0.35rem;
+  padding: 0.4rem 1.25rem;
+  border-radius: 999px;
+  background: linear-gradient(
+    100deg,
+    rgba(255, 200, 120, 0.3),
+    rgba(180, 220, 255, 0.35)
+  );
+  color: #fff6e0;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  text-shadow: 0 0 20px rgba(255, 220, 100, 0.9);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  font-family: "Segoe UI", "Hiragino Maru Gothic ProN", system-ui, sans-serif;
+}
+
+#screen-home .home-sparkles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+#screen-home .home-sparkles i {
+  position: absolute;
+  display: block;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 4px 2px rgba(255, 255, 255, 0.6),
+    0 0 10px 3px rgba(200, 230, 255, 0.45);
+  animation: home-twinkle 2.4s ease-in-out infinite;
+  opacity: 0.85;
+}
+
+#screen-home .home-sparkles i::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #fff, transparent);
+  transform: translate(-50%, -50%) rotate(45deg);
+  opacity: 0.4;
+  animation: home-spark-rotate 2.4s linear infinite;
+}
+
+@keyframes home-twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.7);
+  }
+  25%,
+  75% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes home-spark-rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+}
+
+#screen-home .home-sparkles i:nth-child(1) {
+  top: 6%;
+  left: 4%;
+  animation-delay: 0.1s;
+  width: 2px;
+  height: 2px;
+}
+#screen-home .home-sparkles i:nth-child(2) {
+  top: 3%;
+  left: 20%;
+  animation-delay: 0.6s;
+}
+#screen-home .home-sparkles i:nth-child(3) {
+  top: 12%;
+  right: 12%;
+  animation-delay: 1.1s;
+  width: 2px;
+  height: 2px;
+}
+#screen-home .home-sparkles i:nth-child(4) {
+  top: 2%;
+  right: 2%;
+  animation-delay: 0.3s;
+  width: 2px;
+  height: 2px;
+}
+#screen-home .home-sparkles i:nth-child(5) {
+  top: 20%;
+  left: 2%;
+  animation-delay: 1.6s;
+}
+#screen-home .home-sparkles i:nth-child(6) {
+  top: 28%;
+  right: 8%;
+  animation-delay: 0.9s;
+  width: 2px;
+  height: 2px;
+}
+#screen-home .home-sparkles i:nth-child(7) {
+  top: 6%;
+  left: 50%;
+  animation-delay: 1.3s;
+}
+#screen-home .home-sparkles i:nth-child(8) {
+  top: 45%;
+  left: 0;
+  animation-delay: 0.2s;
+}
+#screen-home .home-sparkles i:nth-child(9) {
+  top: 38%;
+  right: 0;
+  animation-delay: 1.8s;
+  width: 2px;
+  height: 2px;
+}
+#screen-home .home-sparkles i:nth-child(10) {
+  top: 8%;
+  left: 32%;
+  animation-delay: 0.8s;
+}
+#screen-home .home-sparkles i:nth-child(11) {
+  top: 18%;
+  right: 28%;
+  animation-delay: 0.4s;
+}
+#screen-home .home-sparkles i:nth-child(12) {
+  top: 55%;
+  right: 5%;
+  animation-delay: 1.4s;
+  width: 2px;
+  height: 2px;
+}
+#screen-home .home-sparkles i:nth-child(13) {
+  top: 2%;
+  left: 12%;
+  animation-delay: 1.9s;
+  width: 2px;
+  height: 2px;
+}
+#screen-home .home-sparkles i:nth-child(14) {
+  top: 3%;
+  right: 20%;
+  animation-delay: 0.7s;
+}
+#screen-home .home-sparkles i:nth-child(15) {
+  top: 14%;
+  right: 45%;
+  animation-delay: 1.2s;
+  width: 2px;
+  height: 2px;
+}
+
+#screen-home .decor-cute-alien {
+  position: absolute;
+  left: 2%;
+  bottom: 8%;
+  z-index: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 16px rgba(0, 200, 180, 0.35));
+  animation: home-alien-bob 3.2s ease-in-out infinite;
+  opacity: 0.95;
+}
+
+@keyframes home-alien-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+  50% {
+    transform: translateY(-6px) rotate(1.5deg);
+  }
+}
+
+#screen-home .decor-cute-alien .svg-alien {
+  display: block;
+}
+
 @media (max-width: 480px) {
   .decor-floating {
     max-width: 100%;
@@ -833,5 +1066,14 @@ body {
   .result-stars {
     font-size: 2rem;
     left: 2%;
+  }
+
+  #screen-home .decor-cute-alien {
+    max-width: 30vw;
+  }
+
+  #screen-home .decor-cute-alien .svg-alien {
+    max-width: 100%;
+    height: auto;
   }
 }
