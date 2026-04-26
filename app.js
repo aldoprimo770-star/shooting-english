@@ -818,6 +818,53 @@ function saveUserData() {
   }
 }
 
+/**
+ * ホーム星マップ用（目標正解数と表示名。累計正解 `userData.cumulativeCorrect` と照合）
+ * @type {readonly { name: string, goal: number }[]}
+ */
+const STAR_MAP_PLANETS = Object.freeze([
+  { name: "スタート", goal: 0 },
+  { name: "モクモク星", goal: 50 },
+  { name: "ピカピカ星", goal: 100 },
+  { name: "ペコペコ星", goal: 150 },
+  { name: "フワフワ星", goal: 200 },
+  { name: "ガタガタ星", goal: 250 },
+  { name: "コロコロ星", goal: 300 },
+  { name: "キラキラ星", goal: 350 },
+  { name: "ドタバタ星", goal: 400 },
+]);
+
+/**
+ * 星マップ（積算正解数に応じて到達表示・次の目標を強調）
+ * @param {number} totalCorrect
+ */
+function renderStarMap(totalCorrect) {
+  const map = document.getElementById("star-map");
+  if (!map) return;
+  map.innerHTML = "";
+  let nextMarked = false;
+  for (const p of STAR_MAP_PLANETS) {
+    const node = document.createElement("div");
+    node.className = "planet-node";
+    const cleared = totalCorrect >= p.goal;
+    if (cleared) {
+      node.classList.add("cleared");
+    }
+    if (!nextMarked && !cleared) {
+      node.classList.add("planet-node--next");
+      nextMarked = true;
+    }
+    const dot = document.createElement("div");
+    dot.className = "planet-dot";
+    const name = document.createElement("div");
+    name.className = "planet-name";
+    name.textContent = p.name;
+    node.appendChild(dot);
+    node.appendChild(name);
+    map.appendChild(node);
+  }
+}
+
 function updateProgressUI() {
   const total = words.length || 1;
   const c =
@@ -832,6 +879,7 @@ function updateProgressUI() {
   if (elText) {
     elText.textContent = `正解累計 ${c} 回 ・ 目安 ${pct}% ／ 語彙 ${total} 語`;
   }
+  renderStarMap(c);
 }
 
 function wordByKey(w) {
@@ -1475,6 +1523,7 @@ function endGame(opts) {
       gq.removeAttribute("data-question");
     }
   }
+  updateProgressUI();
   showScreen("result");
 }
 
@@ -2048,6 +2097,7 @@ function wireEvents() {
     stopEnglishSpeech();
     if (gameLoopId) cancelAnimationFrame(gameLoopId);
     gameLoopId = null;
+    updateProgressUI();
     showScreen("home");
   });
   document.getElementById("btn-result-home").addEventListener("click", () => {

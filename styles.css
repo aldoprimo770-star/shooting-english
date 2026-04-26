@@ -776,6 +776,86 @@ body {
   );
 }
 
+/* 星マップ（累計正解の進行） */
+.star-map {
+  display: flex;
+  overflow-x: auto;
+  padding: 10px 6px 14px;
+  gap: 20px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 0 1.25rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-color: rgba(108, 240, 255, 0.35) rgba(0, 0, 0, 0.2);
+}
+
+.star-map:focus-visible {
+  outline: 2px solid rgba(108, 240, 255, 0.5);
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+
+.planet-node {
+  text-align: center;
+  min-width: 64px;
+  flex: 0 0 auto;
+}
+
+.planet-node .planet-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(100, 110, 140, 0.7);
+  margin: 0 auto 0.35rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  transition: background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.cleared .planet-dot {
+  background: #fff59d;
+  border-color: rgba(255, 240, 120, 0.85);
+  box-shadow: 0 0 12px rgba(255, 220, 100, 0.9), 0 0 20px rgba(255, 200, 60, 0.35);
+}
+
+.planet-node--next .planet-dot {
+  background: rgba(124, 92, 255, 0.4);
+  border-color: var(--fun-mint, #5af0c8);
+  box-shadow: 0 0 0 3px rgba(90, 240, 200, 0.35);
+  animation: star-map-pulse 2s ease-in-out infinite;
+}
+
+.cleared.planet-node--next .planet-dot {
+  animation: none;
+}
+
+@keyframes star-map-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 2px rgba(90, 240, 200, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(90, 240, 200, 0.55);
+  }
+}
+
+.planet-name {
+  font-size: 10px;
+  color: rgba(232, 236, 255, 0.92);
+  line-height: 1.2;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  max-width: 72px;
+  margin: 0 auto;
+}
+
+.cleared .planet-name {
+  color: #fff8c0;
+}
+
+.planet-node--next .planet-name {
+  color: var(--fun-mint, #5af0c8);
+}
+
 .btn--fun {
   border-radius: 16px;
   font-weight: 700;
