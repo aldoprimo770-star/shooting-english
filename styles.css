@@ -1024,15 +1024,41 @@ body {
   height: 2px;
 }
 
-#screen-home .decor-cute-alien {
+#screen-home .home-alien-with-msg {
   position: absolute;
   left: 2%;
   bottom: 8%;
   z-index: 0;
   pointer-events: none;
-  filter: drop-shadow(0 4px 16px rgba(0, 200, 180, 0.35));
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: min(94vw, 28rem);
   animation: home-alien-bob 3.2s ease-in-out infinite;
+}
+
+#screen-home .decor-cute-alien {
+  position: relative;
+  left: auto;
+  bottom: auto;
+  flex-shrink: 0;
+  filter: drop-shadow(0 4px 16px rgba(0, 200, 180, 0.35));
   opacity: 0.95;
+}
+
+#screen-home .home-planet-teaser {
+  margin: 0;
+  font-family: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", "Yu Gothic UI Rounded", "Meiryo", system-ui,
+    sans-serif;
+  font-size: clamp(0.8rem, 3.2vw, 1.05rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  color: #fff8e8;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45), 0 0 14px rgba(140, 210, 255, 0.35);
+  flex: 1;
+  min-width: 0;
 }
 
 @keyframes home-alien-bob {
@@ -1069,13 +1095,22 @@ body {
     left: 2%;
   }
 
-  #screen-home .decor-cute-alien {
-    max-width: 30vw;
+  #screen-home .home-alien-with-msg {
+    max-width: min(96vw, 100%);
+    gap: 0.45rem;
   }
 
-  #screen-home .decor-cute-alien .svg-alien {
+  #screen-home .home-alien-with-msg .decor-cute-alien {
+    max-width: 28vw;
+  }
+
+  #screen-home .home-alien-with-msg .decor-cute-alien .svg-alien {
     max-width: 100%;
     height: auto;
+  }
+
+  #screen-home .home-planet-teaser {
+    font-size: clamp(0.72rem, 3.5vw, 0.95rem);
   }
 }
 

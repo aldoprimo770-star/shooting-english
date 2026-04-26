@@ -10,21 +10,22 @@
     href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="styles.css?v=4" />
+  <link rel="stylesheet" href="styles.css?v=5" />
 </head>
 <body>
   <div id="stars" aria-hidden="true"></div>
 
   <!-- ① ホーム -->
   <section id="screen-home" class="screen screen--fun active">
-    <div class="screen-decor screen-decor--home" aria-hidden="true">
-      <div class="home-ambient"></div>
+    <div class="screen-decor screen-decor--home">
+      <div class="home-ambient" aria-hidden="true"></div>
       <div class="home-sparkles" aria-hidden="true">
         <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
       </div>
-      <div class="decor-blob decor-blob--1"></div>
-      <div class="decor-blob decor-blob--2"></div>
-      <div class="decor-cute-alien" aria-hidden="true">
+      <div class="decor-blob decor-blob--1" aria-hidden="true"></div>
+      <div class="decor-blob decor-blob--2" aria-hidden="true"></div>
+      <div class="home-alien-with-msg">
+        <div class="decor-cute-alien" aria-hidden="true">
         <svg viewBox="0 0 120 130" width="100" height="110" class="svg-alien" focusable="false" aria-hidden="true">
           <defs>
             <linearGradient id="ag" x1="0" y1="0" x2="0" y2="1">
@@ -58,8 +59,10 @@
             </g>
           </g>
         </svg>
+        </div>
+        <p class="home-planet-teaser">50問正解するごとに惑星に行けるよ</p>
       </div>
-      <div class="decor-floating">
+      <div class="decor-floating" aria-hidden="true">
         <svg class="decor-svg" viewBox="0 0 200 100" width="200" height="100" focusable="false" aria-hidden="true">
           <ellipse cx="100" cy="50" rx="32" ry="10" fill="#3a3f55" stroke="#5a6a8a" stroke-width="1.2"/>
           <rect x="85" y="32" width="30" height="20" rx="4" fill="#5a5cff" stroke="#8af" stroke-width="0.8"/>
