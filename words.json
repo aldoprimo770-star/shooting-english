@@ -2098,5 +2098,705 @@
     "meaning_kana": "てーぷ",
     "example": "I use tape on the box.",
     "level": 5
+  },
+  {
+    "word": "son",
+    "meaning": "息子",
+    "meaning_kana": "むすこ",
+    "example": "My father talks with my son.",
+    "level": 5
+  },
+  {
+    "word": "daughter",
+    "meaning": "娘",
+    "meaning_kana": "むすめ",
+    "example": "My daughter likes cats.",
+    "level": 5
+  },
+  {
+    "word": "January",
+    "meaning": "1月",
+    "meaning_kana": "いちがつ",
+    "example": "January is cold here.",
+    "level": 5
+  },
+  {
+    "word": "February",
+    "meaning": "2月",
+    "meaning_kana": "にがつ",
+    "example": "February is short.",
+    "level": 5
+  },
+  {
+    "word": "March",
+    "meaning": "3月",
+    "meaning_kana": "さんがつ",
+    "example": "School starts in March.",
+    "level": 5
+  },
+  {
+    "word": "April",
+    "meaning": "4月",
+    "meaning_kana": "しがつ",
+    "example": "April has many flowers.",
+    "level": 5
+  },
+  {
+    "word": "May",
+    "meaning": "5月",
+    "meaning_kana": "ごがつ",
+    "example": "May is warm in Tokyo.",
+    "level": 5
+  },
+  {
+    "word": "June",
+    "meaning": "6月",
+    "meaning_kana": "ろくがつ",
+    "example": "Rain falls in June.",
+    "level": 5
+  },
+  {
+    "word": "July",
+    "meaning": "7月",
+    "meaning_kana": "しちがつ",
+    "example": "We swim in July.",
+    "level": 5
+  },
+  {
+    "word": "August",
+    "meaning": "8月",
+    "meaning_kana": "はちがつ",
+    "example": "August is very hot.",
+    "level": 5
+  },
+  {
+    "word": "September",
+    "meaning": "9月",
+    "meaning_kana": "くがつ",
+    "example": "School starts in September.",
+    "level": 5
+  },
+  {
+    "word": "October",
+    "meaning": "10月",
+    "meaning_kana": "じゅうがつ",
+    "example": "October leaves turn red.",
+    "level": 5
+  },
+  {
+    "word": "November",
+    "meaning": "11月",
+    "meaning_kana": "じゅういちがつ",
+    "example": "November is windy.",
+    "level": 5
+  },
+  {
+    "word": "December",
+    "meaning": "12月",
+    "meaning_kana": "じゅうにがつ",
+    "example": "December is the last month.",
+    "level": 5
+  },
+  {
+    "word": "wife",
+    "meaning": "妻",
+    "meaning_kana": "つま",
+    "example": "His wife cooks well.",
+    "level": 5
+  },
+  {
+    "word": "husband",
+    "meaning": "夫",
+    "meaning_kana": "おっと",
+    "example": "Her husband works hard.",
+    "level": 5
+  },
+  {
+    "word": "child",
+    "meaning": "子ども",
+    "meaning_kana": "こども",
+    "example": "The child plays outside.",
+    "level": 5
+  },
+  {
+    "word": "parent",
+    "meaning": "親",
+    "meaning_kana": "おや",
+    "example": "Every parent loves their child.",
+    "level": 5
+  },
+  {
+    "word": "spring",
+    "meaning": "春",
+    "meaning_kana": "はる",
+    "example": "Flowers bloom in spring.",
+    "level": 5
+  },
+  {
+    "word": "summer",
+    "meaning": "夏",
+    "meaning_kana": "なつ",
+    "example": "We swim in summer.",
+    "level": 5
+  },
+  {
+    "word": "autumn",
+    "meaning": "秋",
+    "meaning_kana": "あき",
+    "example": "Leaves fall in autumn.",
+    "level": 5
+  },
+  {
+    "word": "winter",
+    "meaning": "冬",
+    "meaning_kana": "ふゆ",
+    "example": "Snow falls in winter.",
+    "level": 5
+  },
+  {
+    "word": "hour",
+    "meaning": "1時間",
+    "meaning_kana": "いちじかん",
+    "example": "I study for one hour.",
+    "level": 5
+  },
+  {
+    "word": "minute",
+    "meaning": "分",
+    "meaning_kana": "ふん",
+    "example": "Wait a minute, please.",
+    "level": 5
+  },
+  {
+    "word": "week",
+    "meaning": "週",
+    "meaning_kana": "しゅう",
+    "example": "I see him every week.",
+    "level": 5
+  },
+  {
+    "word": "month",
+    "meaning": "一か月",
+    "meaning_kana": "いっかげつ",
+    "example": "This project takes one month.",
+    "level": 5
+  },
+  {
+    "word": "year",
+    "meaning": "年",
+    "meaning_kana": "とし",
+    "example": "Happy new year!",
+    "level": 5
+  },
+  {
+    "word": "potato",
+    "meaning": "じゃがいも",
+    "meaning_kana": "じゃがいも",
+    "example": "I like potato soup.",
+    "level": 5
+  },
+  {
+    "word": "tomato",
+    "meaning": "トマト",
+    "meaning_kana": "とまと",
+    "example": "The tomato is red.",
+    "level": 5
+  },
+  {
+    "word": "onion",
+    "meaning": "玉ねぎ",
+    "meaning_kana": "たまねぎ",
+    "example": "I cut an onion.",
+    "level": 5
+  },
+  {
+    "word": "carrot",
+    "meaning": "にんじん",
+    "meaning_kana": "にんじん",
+    "example": "Rabbits eat carrots.",
+    "level": 5
+  },
+  {
+    "word": "strawberry",
+    "meaning": "いちご",
+    "meaning_kana": "いちご",
+    "example": "The strawberry is sweet.",
+    "level": 5
+  },
+  {
+    "word": "peach",
+    "meaning": "桃",
+    "meaning_kana": "もも",
+    "example": "This peach is soft.",
+    "level": 5
+  },
+  {
+    "word": "lemon",
+    "meaning": "レモン",
+    "meaning_kana": "れもん",
+    "example": "The lemon is sour.",
+    "level": 5
+  },
+  {
+    "word": "melon",
+    "meaning": "メロン",
+    "meaning_kana": "めろん",
+    "example": "I eat melon in summer.",
+    "level": 5
+  },
+  {
+    "word": "yogurt",
+    "meaning": "ヨーグルト",
+    "meaning_kana": "よーぐると",
+    "example": "I eat yogurt for breakfast.",
+    "level": 5
+  },
+  {
+    "word": "refrigerator",
+    "meaning": "冷蔵庫",
+    "meaning_kana": "れいぞうこ",
+    "example": "Milk is in the refrigerator.",
+    "level": 5
+  },
+  {
+    "word": "television",
+    "meaning": "テレビ",
+    "meaning_kana": "てれび",
+    "example": "I watch television at night.",
+    "level": 5
+  },
+  {
+    "word": "computer",
+    "meaning": "パソコン",
+    "meaning_kana": "ぱそこん",
+    "example": "I use a computer at school.",
+    "level": 5
+  },
+  {
+    "word": "internet",
+    "meaning": "インターネット",
+    "meaning_kana": "いんたーねっと",
+    "example": "I search on the internet.",
+    "level": 5
+  },
+  {
+    "word": "robot",
+    "meaning": "ロボット",
+    "meaning_kana": "ろぼっと",
+    "example": "The robot moves its arm.",
+    "level": 5
+  },
+  {
+    "word": "museum",
+    "meaning": "博物館",
+    "meaning_kana": "はくぶつかん",
+    "example": "We visit the museum.",
+    "level": 5
+  },
+  {
+    "word": "cinema",
+    "meaning": "映画館",
+    "meaning_kana": "えいがかん",
+    "example": "We go to the cinema on Saturday.",
+    "level": 5
+  },
+  {
+    "word": "airport",
+    "meaning": "空港",
+    "meaning_kana": "くうこう",
+    "example": "The plane is at the airport.",
+    "level": 5
+  },
+  {
+    "word": "bridge",
+    "meaning": "橋",
+    "meaning_kana": "はし",
+    "example": "The bridge is long.",
+    "level": 5
+  },
+  {
+    "word": "taxi",
+    "meaning": "タクシー",
+    "meaning_kana": "たくしー",
+    "example": "We take a taxi home.",
+    "level": 5
+  },
+  {
+    "word": "boat",
+    "meaning": "ボート",
+    "meaning_kana": "ぼーと",
+    "example": "A boat is on the lake.",
+    "level": 5
+  },
+  {
+    "word": "chopsticks",
+    "meaning": "箸",
+    "meaning_kana": "はし",
+    "example": "I eat rice with chopsticks.",
+    "level": 5
+  },
+  {
+    "word": "deer",
+    "meaning": "鹿",
+    "meaning_kana": "しか",
+    "example": "A deer runs in the forest.",
+    "level": 5
+  },
+  {
+    "word": "snake",
+    "meaning": "蛇",
+    "meaning_kana": "へび",
+    "example": "A snake is long.",
+    "level": 5
+  },
+  {
+    "word": "fox",
+    "meaning": "狐",
+    "meaning_kana": "きつね",
+    "example": "A fox is clever.",
+    "level": 5
+  },
+  {
+    "word": "whale",
+    "meaning": "鯨",
+    "meaning_kana": "くじら",
+    "example": "A whale is huge.",
+    "level": 5
+  },
+  {
+    "word": "dolphin",
+    "meaning": "イルカ",
+    "meaning_kana": "いるか",
+    "example": "A dolphin jumps high.",
+    "level": 5
+  },
+  {
+    "word": "turtle",
+    "meaning": "亀",
+    "meaning_kana": "かめ",
+    "example": "A turtle walks slowly.",
+    "level": 5
+  },
+  {
+    "word": "frog",
+    "meaning": "カエル",
+    "meaning_kana": "かえる",
+    "example": "A frog lives near water.",
+    "level": 5
+  },
+  {
+    "word": "insect",
+    "meaning": "昆虫",
+    "meaning_kana": "こんちゅう",
+    "example": "An insect is small.",
+    "level": 5
+  },
+  {
+    "word": "butterfly",
+    "meaning": "蝶",
+    "meaning_kana": "ちょう",
+    "example": "A butterfly is pretty.",
+    "level": 5
+  },
+  {
+    "word": "exercise",
+    "meaning": "運動",
+    "meaning_kana": "うんどう",
+    "example": "Exercise is good for you.",
+    "level": 5
+  },
+  {
+    "word": "festival",
+    "meaning": "祭り",
+    "meaning_kana": "まつり",
+    "example": "The festival is fun.",
+    "level": 5
+  },
+  {
+    "word": "Christmas",
+    "meaning": "クリスマス",
+    "meaning_kana": "くりすます",
+    "example": "Christmas is in December.",
+    "level": 5
+  },
+  {
+    "word": "point",
+    "meaning": "点",
+    "meaning_kana": "てん",
+    "example": "Draw a point on the paper.",
+    "level": 5
+  },
+  {
+    "word": "straight",
+    "meaning": "まっすぐな",
+    "meaning_kana": "まっすぐな",
+    "example": "This line is straight.",
+    "level": 5
+  },
+  {
+    "word": "circle",
+    "meaning": "円",
+    "meaning_kana": "えん",
+    "example": "Draw a circle here.",
+    "level": 5
+  },
+  {
+    "word": "curtain",
+    "meaning": "カーテン",
+    "meaning_kana": "かーてん",
+    "example": "Close the curtain, please.",
+    "level": 5
+  },
+  {
+    "word": "pillow",
+    "meaning": "枕",
+    "meaning_kana": "まくら",
+    "example": "I sleep on a soft pillow.",
+    "level": 5
+  },
+  {
+    "word": "blanket",
+    "meaning": "毛布",
+    "meaning_kana": "もうふ",
+    "example": "A blanket is warm.",
+    "level": 5
+  },
+  {
+    "word": "stairs",
+    "meaning": "階段",
+    "meaning_kana": "かいだん",
+    "example": "I walk up the stairs.",
+    "level": 5
+  },
+  {
+    "word": "elevator",
+    "meaning": "エレベーター",
+    "meaning_kana": "えれべーたー",
+    "example": "We ride the elevator.",
+    "level": 5
+  },
+  {
+    "word": "escalator",
+    "meaning": "エスカレーター",
+    "meaning_kana": "えすかれーたー",
+    "example": "The escalator is busy.",
+    "level": 5
+  },
+  {
+    "word": "zebra",
+    "meaning": "シマウマ",
+    "meaning_kana": "しまうま",
+    "example": "A zebra has stripes.",
+    "level": 5
+  },
+  {
+    "word": "koala",
+    "meaning": "コアラ",
+    "meaning_kana": "こあら",
+    "example": "A koala sleeps in a tree.",
+    "level": 5
+  },
+  {
+    "word": "camel",
+    "meaning": "ラクダ",
+    "meaning_kana": "らくだ",
+    "example": "A camel lives in the desert.",
+    "level": 5
+  },
+  {
+    "word": "sunglasses",
+    "meaning": "サングラス",
+    "meaning_kana": "さんぐらす",
+    "example": "I wear sunglasses in summer.",
+    "level": 5
+  },
+  {
+    "word": "watch",
+    "meaning": "腕時計",
+    "meaning_kana": "うでどけい",
+    "example": "My watch shows the time.",
+    "level": 5
+  },
+  {
+    "word": "sugar",
+    "meaning": "砂糖",
+    "meaning_kana": "さとう",
+    "example": "I put sugar in tea.",
+    "level": 5
+  },
+  {
+    "word": "salt",
+    "meaning": "塩",
+    "meaning_kana": "しお",
+    "example": "Salt is white.",
+    "level": 5
+  },
+  {
+    "word": "pepper",
+    "meaning": "胡椒",
+    "meaning_kana": "こしょう",
+    "example": "I add pepper to soup.",
+    "level": 5
+  },
+  {
+    "word": "candle",
+    "meaning": "ろうそく",
+    "meaning_kana": "ろうそく",
+    "example": "The candle is bright.",
+    "level": 5
+  },
+  {
+    "word": "octopus",
+    "meaning": "タコ",
+    "meaning_kana": "たこ",
+    "example": "An octopus has eight legs.",
+    "level": 5
+  },
+  {
+    "word": "crab",
+    "meaning": "カニ",
+    "meaning_kana": "かに",
+    "example": "A crab walks sideways.",
+    "level": 5
+  },
+  {
+    "word": "shark",
+    "meaning": "サメ",
+    "meaning_kana": "さめ",
+    "example": "A shark swims fast.",
+    "level": 5
+  },
+  {
+    "word": "finger",
+    "meaning": "指",
+    "meaning_kana": "ゆび",
+    "example": "I hurt my finger.",
+    "level": 5
+  },
+  {
+    "word": "shoulder",
+    "meaning": "肩",
+    "meaning_kana": "かた",
+    "example": "My bag is on my shoulder.",
+    "level": 5
+  },
+  {
+    "word": "knee",
+    "meaning": "膝",
+    "meaning_kana": "ひざ",
+    "example": "I fall on my knee.",
+    "level": 5
+  },
+  {
+    "word": "elbow",
+    "meaning": "肘",
+    "meaning_kana": "ひじ",
+    "example": "I bend my elbow.",
+    "level": 5
+  },
+  {
+    "word": "wrist",
+    "meaning": "手首",
+    "meaning_kana": "てくび",
+    "example": "My wrist hurts.",
+    "level": 5
+  },
+  {
+    "word": "bat",
+    "meaning": "コウモリ",
+    "meaning_kana": "こうもり",
+    "example": "A bat flies at night.",
+    "level": 5
+  },
+  {
+    "word": "lizard",
+    "meaning": "トカゲ",
+    "meaning_kana": "とかげ",
+    "example": "A lizard is on the rock.",
+    "level": 5
+  },
+  {
+    "word": "snail",
+    "meaning": "カタツムリ",
+    "meaning_kana": "かたつむり",
+    "example": "A snail is slow.",
+    "level": 5
+  },
+  {
+    "word": "wolf",
+    "meaning": "オオカミ",
+    "meaning_kana": "おおかみ",
+    "example": "A wolf howls at night.",
+    "level": 5
+  },
+  {
+    "word": "spider",
+    "meaning": "クモ",
+    "meaning_kana": "くも",
+    "example": "A spider makes a web.",
+    "level": 5
+  },
+  {
+    "word": "coconut",
+    "meaning": "ココナッツ",
+    "meaning_kana": "ここなっつ",
+    "example": "A coconut is hard.",
+    "level": 5
+  },
+  {
+    "word": "pineapple",
+    "meaning": "パイナップル",
+    "meaning_kana": "ぱいなっぷる",
+    "example": "Pineapple is sweet.",
+    "level": 5
+  },
+  {
+    "word": "mushroom",
+    "meaning": "きのこ",
+    "meaning_kana": "きのこ",
+    "example": "I find a mushroom.",
+    "level": 5
+  },
+  {
+    "word": "corn",
+    "meaning": "とうもろこし",
+    "meaning_kana": "とうもろこし",
+    "example": "Corn is yellow.",
+    "level": 5
+  },
+  {
+    "word": "cabbage",
+    "meaning": "キャベツ",
+    "meaning_kana": "きゃべつ",
+    "example": "Cabbage is green.",
+    "level": 5
+  },
+  {
+    "word": "eggplant",
+    "meaning": "なす",
+    "meaning_kana": "なす",
+    "example": "I cook eggplant.",
+    "level": 5
+  },
+  {
+    "word": "cucumber",
+    "meaning": "きゅうり",
+    "meaning_kana": "きゅうり",
+    "example": "Cucumber is cool.",
+    "level": 5
+  },
+  {
+    "word": "garlic",
+    "meaning": "にんにく",
+    "meaning_kana": "にんにく",
+    "example": "Garlic smells strong.",
+    "level": 5
+  },
+  {
+    "word": "peanut",
+    "meaning": "ピーナッツ",
+    "meaning_kana": "ぴーなっつ",
+    "example": "A peanut is small.",
+    "level": 5
   }
 ]
