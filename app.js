@@ -76,6 +76,8 @@ let bullets = [];
 let currentQuestionWord = null;
 /** 出題中の通し番号（1問目で1）。リザルト分母用 ※ 出題元は常に QuizEngine のみ */
 let questionCount = 0;
+/** 今回のプレイ開始時にブロック順で確保した語キーの本数（10問完走時に shootOffset に加算） */
+let shootBlockKeySpanThisGame = 0;
 /** このプレイ中の「ミス」合計（誤射＋正解未撃墜＝正解の落下） */
 let missCountThisGame = 0;
 /** デスクトップ等でベース解像度が必要なときの参照（スマホは主に `canvas.width/height`） */
@@ -614,8 +616,15 @@ function wordByKey(w) {
 }
 
 const VOCAB_ROUNDS_KEY = "englishShootingVocabRounds";
-/** 全語を重複なく使い切るための順序と、今何番目の 20 語ブロックか */
-let vocabRounds = { shuffledOrder: /** @type {string[]} */ ([]), blockIndex: 0 };
+/**
+ * 全語を重複なく使い切るための順序と、今何番目の 20 語ブロックか。
+ * shootOffsetInBlock … 現在ブロック内でシューティングに既に使い切った語数（次回はここから最大10語）
+ */
+let vocabRounds = {
+  shuffledOrder: /** @type {string[]} */ ([]),
+  blockIndex: 0,
+  shootOffsetInBlock: 0,
+};
 
 function buildShuffledOrderKeys() {
   return shuffleArray(words.map((w) => w.word));
@@ -629,7 +638,7 @@ function saveVocabRounds() {
 
 function initVocabRounds() {
   if (!words.length) {
-    vocabRounds = { shuffledOrder: [], blockIndex: 0 };
+    vocabRounds = { shuffledOrder: [], blockIndex: 0, shootOffsetInBlock: 0 };
     return;
   }
   const keySet = new Set(words.map((w) => w.word));
@@ -644,10 +653,14 @@ function initVocabRounds() {
         p.shuffledOrder.every((k) => keySet.has(k)) &&
         new Set(p.shuffledOrder).size === words.length
       ) {
+        const offRaw = p.shootOffsetInBlock;
+        const off = Math.max(0, Math.floor(Number(offRaw)) || 0);
         vocabRounds = {
           shuffledOrder: p.shuffledOrder,
           blockIndex: Math.max(0, Math.floor(Number(p.blockIndex)) || 0),
+          shootOffsetInBlock: off,
         };
+        normalizeShootOffsetForCurrentBlock();
         return;
       }
     }
@@ -655,8 +668,54 @@ function initVocabRounds() {
   vocabRounds = {
     shuffledOrder: buildShuffledOrderKeys(),
     blockIndex: 0,
+    shootOffsetInBlock: 0,
   };
   saveVocabRounds();
+}
+
+/**
+ * shootOffsetInBlock が現在ブロック長を超えている場合は次ブロックへ繰り越す（保存データの整合用）
+ */
+function normalizeShootOffsetForCurrentBlock() {
+  if (!words.length || !vocabRounds.shuffledOrder.length) return;
+  let o = Math.max(0, Math.floor(vocabRounds.shootOffsetInBlock || 0));
+  let guard = 0;
+  const maxSteps = Math.max(words.length, LEARN_BLOCK_SIZE) + 8;
+  while (guard++ < maxSteps) {
+    const keys = getBlockWordKeys();
+    const len = keys.length;
+    if (!len) {
+      vocabRounds.shootOffsetInBlock = 0;
+      saveVocabRounds();
+      return;
+    }
+    if (o < len) break;
+    o -= len;
+    advanceVocabBlock();
+  }
+  vocabRounds.shootOffsetInBlock = o;
+  saveVocabRounds();
+}
+
+/**
+ * シューティング用：現在ブロックの未出部分から最大 SHOOT_QUESTIONS 語。
+ * keySpan はブロック内キー順で進める長さ（語オブジェクトが欠けてもオフセットと一致させる）
+ * @returns {{ words: Word[], keySpan: number }}
+ */
+function getNextShootQuizWordSpan() {
+  if (!words.length) return { words: [], keySpan: 0 };
+  normalizeShootOffsetForCurrentBlock();
+  const keys = getBlockWordKeys();
+  if (!keys.length) return { words: [], keySpan: 0 };
+  const o = Math.max(0, Math.floor(vocabRounds.shootOffsetInBlock || 0));
+  const rest = keys.slice(o);
+  if (!rest.length) return { words: [], keySpan: 0 };
+  const take = Math.min(SHOOT_QUESTIONS, rest.length);
+  const keyChunk = rest.slice(0, take);
+  const wlist = keyChunk
+    .map((k) => wordByKey(k))
+    .filter(/** @returns {w is Word} */ (w) => w != null);
+  return { words: wlist, keySpan: keyChunk.length };
 }
 
 function getBlockWordKeys() {
@@ -1066,13 +1125,21 @@ function startGame() {
   applyGameCanvasDimensions();
   ctx = /** @type {CanvasRenderingContext2D} */ (canvas.getContext("2d"));
   wireGameTouchControls();
-  const block = getBlockWords();
-  if (block.length < SHOOT_QUESTIONS) {
-    console.warn("現在の 20 語ブロックに単語が足りず、10 問出せません。");
+  if (!vocabRounds.shuffledOrder.length) initVocabRounds();
+  normalizeShootOffsetForCurrentBlock();
+  const span = getNextShootQuizWordSpan();
+  if (!span.words.length) {
+    console.warn("シューティング用の単語が取得できません。");
     return;
   }
-  const quizList = shuffleArray([...block]).slice(0, SHOOT_QUESTIONS);
+  if (span.keySpan < SHOOT_QUESTIONS) {
+    console.warn(
+      `現在のブロックの残りは ${span.keySpan} 語のため、このプレイは ${span.words.length} 問です。`
+    );
+  }
   resetGameState();
+  shootBlockKeySpanThisGame = span.keySpan;
+  const quizList = shuffleArray(span.words);
   // QuizEngine.init はこの1箇所からのみ（nextQuestion / gameLoop 等では呼ばない）
   QuizEngine.init(quizList);
   document.getElementById("hud-score").textContent = "0";
@@ -1101,7 +1168,22 @@ function endGame(opts) {
     questionCount > 0 &&
     questionCount === QuizEngine.list.length
   ) {
-    advanceVocabBlock();
+    let newOff =
+      Math.max(0, Math.floor(vocabRounds.shootOffsetInBlock || 0)) +
+      shootBlockKeySpanThisGame;
+    const maxSteps = Math.max(words.length, LEARN_BLOCK_SIZE) + 8;
+    let guard = 0;
+    while (guard++ < maxSteps) {
+      const keys = getBlockWordKeys();
+      const len = keys.length;
+      if (!len) break;
+      if (newOff < len) break;
+      newOff -= len;
+      advanceVocabBlock();
+    }
+    vocabRounds.shootOffsetInBlock = newOff;
+    saveVocabRounds();
+    shootBlockKeySpanThisGame = 0;
   }
   if (gameLoopId) {
     cancelAnimationFrame(gameLoopId);
