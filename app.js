@@ -21,13 +21,23 @@ const MAX_MISTAKES = 0;
 /** @type {Word[]} */
 let words = [];
 
-/** @type {{ learnedWords: string[], mistakeWords: string[], score: number, cumulativeCorrect: number }} */
+/**
+ * @type {{
+ *   learnedWords: string[],
+ *   mistakeWords: string[],
+ *   score: number,
+ *   cumulativeCorrect: number,
+ *   arrivalPlanetsVisited: number[]
+ * }}
+ * arrivalPlanetsVisited: 到着で訪問した `ARRIVAL_PLANETS` インデックス。星マップ表示と到着表示で一致
+ */
 let userData = {
   learnedWords: [],
   mistakeWords: [],
   score: 0,
   /** シューティングで正解（正しい意味を撃破）した累積回数。進捗表示の主指標。 */
   cumulativeCorrect: 0,
+  arrivalPlanetsVisited: [],
 };
 
 let learnIndex = 0;
@@ -415,12 +425,12 @@ function commitPlanetArrivalState(st) {
 }
 
 /**
- * 到着オーバーレイを開くたびに 1 件進める。一周すると新しいシャッフルへ（直前と同じ惑星から始めないよう再抽選）
- * @returns {number}
+ * 次の到着1回分の直前のキュー状態（消費前）。`read` も `memory` も無いときは初回用にシャッフルを生成
+ * @returns {{ order: number[], pos: number } | null}
  */
-function consumeNextArrivalPlanetIndex() {
+function obtainArrivalStateBeforeNextConsume() {
   const n = ARRIVAL_PLANETS.length;
-  if (n <= 0) return 0;
+  if (n <= 0) return null;
   /** @type {{ order: number[], pos: number } | null} */
   let st = null;
   if (planetArrivalQueueMemory && isValidArrivalQueueState(planetArrivalQueueMemory, n)) {
@@ -444,6 +454,83 @@ function consumeNextArrivalPlanetIndex() {
     st.order = ord;
     st.pos = 0;
   }
+  return st;
+}
+
+/**
+ * 次回の到着で表示する惑星インデックス（消費しない）。周回直前（pos>=n）やキュー未初期化のときは null
+ * @returns {number | null}
+ */
+function peekNextArrivalPlanetIndex() {
+  const n = ARRIVAL_PLANETS.length;
+  if (n <= 0) return null;
+  let st;
+  if (planetArrivalQueueMemory && isValidArrivalQueueState(planetArrivalQueueMemory, n)) {
+    st = { order: planetArrivalQueueMemory.order.slice(), pos: planetArrivalQueueMemory.pos };
+  } else {
+    const fromLs = readPlanetArrivalStateFromLocalStorage();
+    if (!fromLs) {
+      return null;
+    }
+    st = { order: fromLs.order.map((x) => Number(x)), pos: fromLs.pos | 0 };
+  }
+  if (st.pos >= n) {
+    return null;
+  }
+  return st.order[st.pos];
+}
+
+/**
+ * 到着で実際に表示した惑星のインデックスを保存（星マップと揃える）
+ * @param {number} idx
+ */
+function recordArrivalPlanetVisited(idx) {
+  const n = ARRIVAL_PLANETS.length;
+  if (n <= 0 || !Number.isInteger(idx) || idx < 0 || idx >= n) return;
+  const a = userData.arrivalPlanetsVisited;
+  if (a.includes(idx)) return;
+  a.push(idx);
+  a.sort((u, v) => u - v);
+  saveUserData();
+}
+
+/**
+ * 旧版で到着履歴を保存していなかった端末向け: 現在のキューから「今週分」で到着済みインデックスを補完
+ * （`st.order[0]..[pos-1]` が到着実績）
+ */
+function backfillArrivalVisitsFromStoredQueue() {
+  const n = ARRIVAL_PLANETS.length;
+  if (n <= 0) return;
+  let st;
+  if (planetArrivalQueueMemory && isValidArrivalQueueState(planetArrivalQueueMemory, n)) {
+    st = { order: planetArrivalQueueMemory.order.slice(), pos: planetArrivalQueueMemory.pos };
+  } else {
+    const fromLs = readPlanetArrivalStateFromLocalStorage();
+    if (!fromLs) return;
+    st = { order: fromLs.order.map((x) => Number(x)), pos: fromLs.pos | 0 };
+  }
+  const before = userData.arrivalPlanetsVisited.length;
+  for (let i = 0; i < st.pos; i += 1) {
+    const idx = st.order[i];
+    if (Number.isInteger(idx) && idx >= 0 && idx < n && !userData.arrivalPlanetsVisited.includes(idx)) {
+      userData.arrivalPlanetsVisited.push(idx);
+    }
+  }
+  if (userData.arrivalPlanetsVisited.length > before) {
+    userData.arrivalPlanetsVisited.sort((a, b) => a - b);
+    saveUserData();
+  }
+}
+
+/**
+ * 到着オーバーレイを開くたびに 1 件進める。一周すると新しいシャッフルへ（直前と同じ惑星から始めないよう再抽選）
+ * @returns {number}
+ */
+function consumeNextArrivalPlanetIndex() {
+  const st = obtainArrivalStateBeforeNextConsume();
+  if (!st) {
+    return 0;
+  }
   const idx = st.order[st.pos];
   st.pos += 1;
   commitPlanetArrivalState(st);
@@ -458,6 +545,7 @@ function openPlanetArrivalOverlay(_totalCorrect) {
   const idx = consumeNextArrivalPlanetIndex();
   const p = ARRIVAL_PLANETS[idx];
   if (!p) return;
+  recordArrivalPlanetVisited(idx);
   const overlay = document.getElementById("planet-arrival-overlay");
   if (!overlay) return;
   const h = document.getElementById("planet-arrival-headline");
@@ -782,6 +870,18 @@ function loadUserData() {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
+      const nPlanets = ARRIVAL_PLANETS.length;
+      const rawArrival = parsed.arrivalPlanetsVisited;
+      const arrivalVis =
+        Array.isArray(rawArrival) && nPlanets > 0
+          ? [
+              ...new Set(
+                rawArrival
+                  .map((x) => Number(x))
+                  .filter((i) => Number.isInteger(i) && i >= 0 && i < nPlanets)
+              ),
+            ].sort((a, b) => a - b)
+          : [];
       userData = {
         learnedWords: Array.isArray(parsed.learnedWords) ? parsed.learnedWords : [],
         mistakeWords: Array.isArray(parsed.mistakeWords) ? parsed.mistakeWords : [],
@@ -790,6 +890,7 @@ function loadUserData() {
           typeof parsed.cumulativeCorrect === "number" && parsed.cumulativeCorrect >= 0
             ? Math.floor(parsed.cumulativeCorrect)
             : 0,
+        arrivalPlanetsVisited: arrivalVis,
       };
     }
   } catch (e) {
@@ -819,50 +920,57 @@ function saveUserData() {
 }
 
 /**
- * ホーム星マップ用（目標正解数と表示名。累計正解 `userData.cumulativeCorrect` と照合）
- * @type {readonly { name: string, goal: number }[]}
+ * 星マップ（`ARRIVAL_PLANETS` と同じ並び。点灯は到着表示と `userData.arrivalPlanetsVisited` で一致）
  */
-const STAR_MAP_PLANETS = Object.freeze([
-  { name: "スタート", goal: 0 },
-  { name: "モクモク星", goal: 50 },
-  { name: "ピカピカ星", goal: 100 },
-  { name: "ペコペコ星", goal: 150 },
-  { name: "フワフワ星", goal: 200 },
-  { name: "ガタガタ星", goal: 250 },
-  { name: "コロコロ星", goal: 300 },
-  { name: "キラキラ星", goal: 350 },
-  { name: "ドタバタ星", goal: 400 },
-]);
-
-/**
- * 星マップ（積算正解数に応じて到達表示・次の目標を強調）
- * @param {number} totalCorrect
- */
-function renderStarMap(totalCorrect) {
+function renderStarMap() {
   const map = document.getElementById("star-map");
   if (!map) return;
+  const visited = new Set(userData.arrivalPlanetsVisited || []);
+  const n = ARRIVAL_PLANETS.length;
+  const fromQueue = peekNextArrivalPlanetIndex();
+  /** キュー不明時: 集めていない先頭。それ以外は `fromQueue`（2周目の再訪もその惑星に「次」） */
+  let firstNotVisited = -1;
+  for (let k = 0; k < n; k += 1) {
+    if (!visited.has(k)) {
+      firstNotVisited = k;
+      break;
+    }
+  }
   map.innerHTML = "";
-  let nextMarked = false;
-  for (const p of STAR_MAP_PLANETS) {
+  {
+    const node = document.createElement("div");
+    node.className = "planet-node cleared";
+    const dot = document.createElement("div");
+    dot.className = "planet-dot";
+    const name = document.createElement("div");
+    name.className = "planet-name";
+    name.textContent = "スタート";
+    node.appendChild(dot);
+    node.appendChild(name);
+    map.appendChild(node);
+  }
+  ARRIVAL_PLANETS.forEach((p, i) => {
     const node = document.createElement("div");
     node.className = "planet-node";
-    const cleared = totalCorrect >= p.goal;
-    if (cleared) {
+    if (visited.has(i)) {
       node.classList.add("cleared");
     }
-    if (!nextMarked && !cleared) {
+    if (fromQueue != null) {
+      if (i === fromQueue) {
+        node.classList.add("planet-node--next");
+      }
+    } else if (firstNotVisited >= 0 && i === firstNotVisited) {
       node.classList.add("planet-node--next");
-      nextMarked = true;
     }
     const dot = document.createElement("div");
     dot.className = "planet-dot";
     const name = document.createElement("div");
     name.className = "planet-name";
-    name.textContent = p.name;
+    name.textContent = p.planetName;
     node.appendChild(dot);
     node.appendChild(name);
     map.appendChild(node);
-  }
+  });
 }
 
 function updateProgressUI() {
@@ -879,7 +987,7 @@ function updateProgressUI() {
   if (elText) {
     elText.textContent = `正解累計 ${c} 回 ・ 目安 ${pct}% ／ 語彙 ${total} 語`;
   }
-  renderStarMap(c);
+  renderStarMap();
 }
 
 function wordByKey(w) {
@@ -2067,6 +2175,7 @@ function wireEvents() {
 
   document.getElementById("btn-start").addEventListener("click", () => {
     loadUserData();
+    backfillArrivalVisitsFromStoredQueue();
     updateProgressUI();
     goLearn();
   });
@@ -2123,6 +2232,7 @@ function wireEvents() {
 (async function init() {
   await loadWords();
   loadUserData();
+  backfillArrivalVisitsFromStoredQueue();
   alignLearnedWordsToVocab();
   initVocabRounds();
   updateProgressUI();
