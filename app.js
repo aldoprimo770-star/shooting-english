@@ -89,6 +89,11 @@ const ARRIVAL_MILESTONE = 50;
 /** 惑星到着の出順（未出を使い切ってから再シャッフル） */
 const PLANET_ARRIVAL_QUEUE_KEY = "englishShootingPlanetArrivalQueue";
 /**
+ * 惑星到着キュー（`localStorage` 書き込み失敗時もセッション中はここに進行を保持し、同じ惑星の連発を防ぐ）
+ * @type {{ order: number[], pos: number } | null}
+ */
+let planetArrivalQueueMemory = null;
+/**
  * @typedef {{ planetName: string, alienName: string, profile: string, artHtml: string }} ArrivalPlanet
  */
 const ARRIVAL_PLANETS = /** @type {ArrivalPlanet[]} */ ([
@@ -358,6 +363,58 @@ function shufflePlanetArrivalIndices() {
 }
 
 /**
+ * @param {unknown} p
+ * @param {number} n
+ * @returns {p is { order: number[], pos: number }}
+ */
+function isValidArrivalQueueState(p, n) {
+  if (
+    !p ||
+    typeof p !== "object" ||
+    !Array.isArray(/** @type {any} */ (p).order) ||
+    /** @type {any} */ (p).order.length !== n ||
+    typeof /** @type {any} */ (p).pos !== "number" ||
+    /** @type {any} */ (p).pos < 0 ||
+    /** @type {any} */ (p).pos > n
+  ) {
+    return false;
+  }
+  const o = /** @type {{ order: unknown[], pos: number }} */ (p).order;
+  if (new Set(o.map((x) => Number(x))).size !== n) return false;
+  return o.every((x) => {
+    const k = Number(x);
+    return Number.isInteger(k) && k >= 0 && k < n;
+  });
+}
+
+/**
+ * @returns {{ order: number[], pos: number } | null}
+ */
+function readPlanetArrivalStateFromLocalStorage() {
+  const n = ARRIVAL_PLANETS.length;
+  if (n <= 0) return null;
+  try {
+    const raw = localStorage.getItem(PLANET_ARRIVAL_QUEUE_KEY);
+    if (!raw) return null;
+    const p = JSON.parse(raw);
+    if (!isValidArrivalQueueState(p, n)) return null;
+    return { order: p.order.map((x) => Number(x)), pos: p.pos | 0 };
+  } catch (_) {
+    return null;
+  }
+}
+
+/**
+ * @param {{ order: number[], pos: number }} st
+ */
+function commitPlanetArrivalState(st) {
+  planetArrivalQueueMemory = { order: st.order.slice(), pos: st.pos };
+  try {
+    localStorage.setItem(PLANET_ARRIVAL_QUEUE_KEY, JSON.stringify(st));
+  } catch (_) {}
+}
+
+/**
  * 到着オーバーレイを開くたびに 1 件進める。一周すると新しいシャッフルへ（直前と同じ惑星から始めないよう再抽選）
  * @returns {number}
  */
@@ -366,29 +423,16 @@ function consumeNextArrivalPlanetIndex() {
   if (n <= 0) return 0;
   /** @type {{ order: number[], pos: number } | null} */
   let st = null;
-  try {
-    const raw = localStorage.getItem(PLANET_ARRIVAL_QUEUE_KEY);
-    if (raw) {
-      const p = JSON.parse(raw);
-      if (
-        p &&
-        Array.isArray(p.order) &&
-        p.order.length === n &&
-        typeof p.pos === "number" &&
-        p.pos >= 0 &&
-        p.pos <= n &&
-        new Set(p.order.map((x) => Number(x))).size === n &&
-        p.order.every((x) => {
-          const k = Number(x);
-          return Number.isInteger(k) && k >= 0 && k < n;
-        })
-      ) {
-        st = { order: p.order.map((x) => Number(x)), pos: p.pos | 0 };
-      }
-    }
-  } catch (_) {}
-  if (!st) {
-    st = { order: shufflePlanetArrivalIndices(), pos: 0 };
+  if (planetArrivalQueueMemory && isValidArrivalQueueState(planetArrivalQueueMemory, n)) {
+    st = {
+      order: planetArrivalQueueMemory.order.slice(),
+      pos: planetArrivalQueueMemory.pos,
+    };
+  } else {
+    st = readPlanetArrivalStateFromLocalStorage() || {
+      order: shufflePlanetArrivalIndices(),
+      pos: 0,
+    };
   }
   if (st.pos >= n) {
     const lastPlanet = st.order[n - 1];
@@ -402,9 +446,7 @@ function consumeNextArrivalPlanetIndex() {
   }
   const idx = st.order[st.pos];
   st.pos += 1;
-  try {
-    localStorage.setItem(PLANET_ARRIVAL_QUEUE_KEY, JSON.stringify(st));
-  } catch (_) {}
+  commitPlanetArrivalState(st);
   return idx;
 }
 
