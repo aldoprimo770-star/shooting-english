@@ -84,8 +84,10 @@ let missCountThisGame = 0;
 const DEFAULT_CANVAS_W = 640;
 const DEFAULT_CANVAS_H = 480;
 
-/** 累計正解が 50,100,150… のときに表示（2種を交互）。120語想定でまずは2惑星 */
+/** 累計正解が 50,100,150… のときに表示（6惑星をシャッフル順で一周するまで重複なし） */
 const ARRIVAL_MILESTONE = 50;
+/** 惑星到着の出順（未出を使い切ってから再シャッフル） */
+const PLANET_ARRIVAL_QUEUE_KEY = "englishShootingPlanetArrivalQueue";
 /**
  * @typedef {{ planetName: string, alienName: string, profile: string, artHtml: string }} ArrivalPlanet
  */
@@ -126,6 +128,83 @@ const ARRIVAL_PLANETS = /** @type {ArrivalPlanet[]} */ ([
       '<ellipse cx="0" cy="4" rx="18" ry="16" fill="#8899cc" stroke="#556" stroke-width="0.8"/>' +
       '<ellipse cx="-7" cy="2" rx="5" ry="4" fill="#334" opacity="0.5"/><ellipse cx="7" cy="2" rx="5" ry="4" fill="#334" opacity="0.5"/>' +
       '<ellipse cx="-10" cy="14" rx="6" ry="3" fill="#aab8e0"/><ellipse cx="10" cy="14" rx="6" ry="3" fill="#aab8e0"/>' +
+      "</g></svg>",
+  },
+  {
+    planetName: "ペコペコ星",
+    alienName: "ペコペコ星人",
+    profile:
+      "ペコペコ星人は、いつもお腹が空いていて、1日10回くらいごはんを食べる。",
+    artHtml:
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180" aria-hidden="true">' +
+      '<defs><radialGradient id="apek" cx="40%" cy="38%" r="68%"><stop offset="0" stop-color="#ffe8c8"/><stop offset="0.45" stop-color="#ffb86c"/><stop offset="1" stop-color="#d97830"/></radialGradient></defs>' +
+      '<ellipse cx="100" cy="90" rx="54" ry="46" fill="url(#apek)" stroke="#ffd0a0" stroke-width="1.3"/>' +
+      '<ellipse cx="100" cy="88" rx="22" ry="8" fill="rgba(255,255,255,0.25)"/>' +
+      '<path d="M78 102 Q100 118 122 102" fill="none" stroke="#a85820" stroke-width="2" stroke-linecap="round"/>' +
+      '<g transform="translate(100,48)">' +
+      '<ellipse cx="0" cy="10" rx="24" ry="22" fill="#ffd4a8" stroke="#c87840" stroke-width="1"/>' +
+      '<ellipse cx="-10" cy="8" rx="7" ry="8" fill="white"/><circle cx="-10" cy="8" r="3" fill="#222"/>' +
+      '<ellipse cx="10" cy="8" rx="7" ry="8" fill="white"/><circle cx="10" cy="8" r="3" fill="#222"/>' +
+      '<ellipse cx="0" cy="22" rx="10" ry="6" fill="#ff8890"/>' +
+      '<path d="M-14 4 L-22 -6 L-10 -2 Z" fill="#ffb070"/>' +
+      '<path d="M14 4 L22 -6 L10 -2 Z" fill="#ffb070"/>' +
+      "</g></svg>",
+  },
+  {
+    planetName: "フワフワ星",
+    alienName: "フワフワ星人",
+    profile:
+      "フワフワ星人は、重力が苦手で、いつも少し浮いている。よく迷子になる。",
+    artHtml:
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180" aria-hidden="true">' +
+      '<defs><radialGradient id="afuw" cx="50%" cy="42%" r="72%"><stop offset="0" stop-color="#ffffff"/><stop offset="0.4" stop-color="#e8d8ff"/><stop offset="1" stop-color="#c8a8f0"/></radialGradient></defs>' +
+      '<ellipse cx="100" cy="92" rx="50" ry="40" fill="url(#afuw)" stroke="#e0c8ff" stroke-width="1.2" opacity="0.95"/>' +
+      '<ellipse cx="100" cy="85" rx="46" ry="32" fill="rgba(255,255,255,0.4)"/>' +
+      '<text x="100" y="38" text-anchor="middle" font-size="14" fill="#b090d0" opacity="0.7">?</text>' +
+      '<g transform="translate(100,48)">' +
+      '<ellipse cx="0" cy="0" rx="20" ry="18" fill="#f5e8ff" stroke="#b898e0" stroke-width="0.9"/>' +
+      '<circle cx="-7" cy="-2" r="5" fill="white"/><circle cx="-7" cy="-2" r="2" fill="#333"/>' +
+      '<circle cx="7" cy="-2" r="5" fill="white"/><circle cx="7" cy="-2" r="2" fill="#333"/>' +
+      '<ellipse cx="0" cy="10" rx="8" ry="4" fill="#ffd0e8"/>' +
+      '<ellipse cx="0" cy="-14" rx="14" ry="6" fill="rgba(255,255,255,0.65)" stroke="#ddd" stroke-width="0.5"/>' +
+      "</g></svg>",
+  },
+  {
+    planetName: "ガタガタ星",
+    alienName: "ガタガタ星人",
+    profile:
+      "ガタガタ星人は、緊張しやすく、いつもプルプル震えている。でも意外と優しい。",
+    artHtml:
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180" aria-hidden="true">' +
+      '<defs><radialGradient id="agat" cx="42%" cy="36%" r="65%"><stop offset="0" stop-color="#e8f0ff"/><stop offset="0.5" stop-color="#9cb4e8"/><stop offset="1" stop-color="#5a7098"/></radialGradient></defs>' +
+      '<ellipse cx="100" cy="90" rx="52" ry="46" fill="url(#agat)" stroke="#a8c0e0" stroke-width="1.2"/>' +
+      '<line x1="70" y1="70" x2="68" y2="108" stroke="rgba(80,100,140,0.35)" stroke-width="1.2"/>' +
+      '<line x1="130" y1="72" x2="132" y2="106" stroke="rgba(80,100,140,0.35)" stroke-width="1.2"/>' +
+      '<g transform="translate(100,52)">' +
+      '<ellipse cx="0" cy="8" rx="20" ry="19" fill="#b8c8e8" stroke="#6078a0" stroke-width="1"/>' +
+      '<ellipse cx="-8" cy="4" rx="6" ry="7" fill="white"/><ellipse cx="-8" cy="4" rx="2.5" ry="3" fill="#222"/>' +
+      '<ellipse cx="8" cy="4" rx="6" ry="7" fill="white"/><ellipse cx="8" cy="4" rx="2.5" ry="3" fill="#222"/>' +
+      '<path d="M-8 16 Q0 12 8 16" fill="none" stroke="#405070" stroke-width="1"/>' +
+      '<ellipse cx="-14" cy="14" rx="4" ry="3" fill="#ffd0e0"/><ellipse cx="14" cy="14" rx="4" ry="3" fill="#ffd0e0"/>' +
+      "</g></svg>",
+  },
+  {
+    planetName: "コロコロ星",
+    alienName: "コロコロ星人",
+    profile:
+      "コロコロ星人は、歩くのが面倒で、どこへ行くにも転がって移動する。",
+    artHtml:
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180" aria-hidden="true">' +
+      '<defs><radialGradient id="akor" cx="45%" cy="40%" r="70%"><stop offset="0" stop-color="#fff4d8"/><stop offset="0.45" stop-color="#f0c878"/><stop offset="1" stop-color="#c89840"/></radialGradient></defs>' +
+      '<circle cx="100" cy="88" r="48" fill="url(#akor)" stroke="#e8c060" stroke-width="1.3"/>' +
+      '<ellipse cx="100" cy="88" rx="52" ry="18" fill="none" stroke="rgba(200,150,60,0.35)" transform="rotate(-12 100 88)"/>' +
+      '<ellipse cx="100" cy="88" rx="46" ry="14" fill="none" stroke="rgba(200,150,60,0.25)" transform="rotate(8 100 88)"/>' +
+      '<g transform="translate(100,88)">' +
+      '<circle cx="0" cy="0" r="22" fill="#9ad878" stroke="#3a7020" stroke-width="1"/>' +
+      '<circle cx="-8" cy="-4" r="6" fill="white"/><circle cx="-8" cy="-4" r="2.5" fill="#222"/>' +
+      '<circle cx="8" cy="-4" r="6" fill="white"/><circle cx="8" cy="-4" r="2.5" fill="#222"/>' +
+      '<path d="M-6 8 Q0 12 6 8" fill="none" stroke="#205010" stroke-width="1"/>' +
+      '<circle cx="0" cy="0" r="24" fill="none" stroke="#5a9030" stroke-width="0.6" stroke-dasharray="4 3" opacity="0.6"/>' +
       "</g></svg>",
   },
 ]);
@@ -227,12 +306,71 @@ function playArrivalChime() {
 }
 
 /**
- * 累計正解が ARRIVAL_MILESTONE の倍数のときのオーバーレイ
- * @param {number} totalCorrect
+ * 惑星インデックス 0..n-1 をシャッフルした配列を返す
+ * @returns {number[]}
  */
-function openPlanetArrivalOverlay(totalCorrect) {
-  const idx =
-    Math.floor(totalCorrect / ARRIVAL_MILESTONE - 1) % ARRIVAL_PLANETS.length;
+function shufflePlanetArrivalIndices() {
+  const n = ARRIVAL_PLANETS.length;
+  return shuffleArray([...Array(n).keys()]);
+}
+
+/**
+ * 到着オーバーレイを開くたびに 1 件進める。一周すると新しいシャッフルへ（直前と同じ惑星から始めないよう再抽選）
+ * @returns {number}
+ */
+function consumeNextArrivalPlanetIndex() {
+  const n = ARRIVAL_PLANETS.length;
+  if (n <= 0) return 0;
+  /** @type {{ order: number[], pos: number } | null} */
+  let st = null;
+  try {
+    const raw = localStorage.getItem(PLANET_ARRIVAL_QUEUE_KEY);
+    if (raw) {
+      const p = JSON.parse(raw);
+      if (
+        p &&
+        Array.isArray(p.order) &&
+        p.order.length === n &&
+        typeof p.pos === "number" &&
+        p.pos >= 0 &&
+        p.pos <= n &&
+        new Set(p.order.map((x) => Number(x))).size === n &&
+        p.order.every((x) => {
+          const k = Number(x);
+          return Number.isInteger(k) && k >= 0 && k < n;
+        })
+      ) {
+        st = { order: p.order.map((x) => Number(x)), pos: p.pos | 0 };
+      }
+    }
+  } catch (_) {}
+  if (!st) {
+    st = { order: shufflePlanetArrivalIndices(), pos: 0 };
+  }
+  if (st.pos >= n) {
+    const lastPlanet = st.order[n - 1];
+    let ord = shufflePlanetArrivalIndices();
+    let guard = 0;
+    while (n > 1 && ord[0] === lastPlanet && guard++ < 48) {
+      ord = shufflePlanetArrivalIndices();
+    }
+    st.order = ord;
+    st.pos = 0;
+  }
+  const idx = st.order[st.pos];
+  st.pos += 1;
+  try {
+    localStorage.setItem(PLANET_ARRIVAL_QUEUE_KEY, JSON.stringify(st));
+  } catch (_) {}
+  return idx;
+}
+
+/**
+ * 累計正解が ARRIVAL_MILESTONE の倍数のときのオーバーレイ
+ * @param {number} _totalCorrect 累計正解（呼び出し元との整合用。惑星はキューで決定）
+ */
+function openPlanetArrivalOverlay(_totalCorrect) {
+  const idx = consumeNextArrivalPlanetIndex();
   const p = ARRIVAL_PLANETS[idx];
   if (!p) return;
   const overlay = document.getElementById("planet-arrival-overlay");
