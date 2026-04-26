@@ -1,122 +1,2102 @@
 [
-  { "word": "apple", "meaning": "りんご", "meaning_kana": "りんご", "example": "I eat an apple.", "level": 1 },
-  { "word": "book", "meaning": "本", "meaning_kana": "ほん", "example": "This is a book.", "level": 1 },
-  { "word": "cat", "meaning": "猫", "meaning_kana": "ねこ", "example": "I have a cat.", "level": 1 },
-  { "word": "dog", "meaning": "犬", "meaning_kana": "いぬ", "example": "The dog runs.", "level": 1 },
-  { "word": "egg", "meaning": "卵", "meaning_kana": "たまご", "example": "I like eggs.", "level": 1 },
-  { "word": "fish", "meaning": "魚", "meaning_kana": "さかな", "example": "Fish swim in water.", "level": 1 },
-  { "word": "girl", "meaning": "女の子", "meaning_kana": "おんなのこ", "example": "The girl reads.", "level": 1 },
-  { "word": "hand", "meaning": "手", "meaning_kana": "て", "example": "Wash your hands.", "level": 1 },
-  { "word": "ice", "meaning": "氷", "meaning_kana": "こおり", "example": "Ice is cold.", "level": 1 },
-  { "word": "jump", "meaning": "跳ぶ", "meaning_kana": "とぶ", "example": "I can jump high.", "level": 1 },
-  { "word": "king", "meaning": "王さま", "meaning_kana": "おうさま", "example": "The king is kind.", "level": 1 },
-  { "word": "lion", "meaning": "ライオン", "meaning_kana": "らいおん", "example": "A lion is strong.", "level": 1 },
-  { "word": "moon", "meaning": "月", "meaning_kana": "つき", "example": "The moon is bright.", "level": 1 },
-  { "word": "nest", "meaning": "巣", "meaning_kana": "す", "example": "Birds make a nest.", "level": 1 },
-  { "word": "orange", "meaning": "オレンジ", "meaning_kana": "おれんじ", "example": "This is an orange.", "level": 1 },
-  { "word": "pen", "meaning": "ペン", "meaning_kana": "ぺん", "example": "I write with a pen.", "level": 1 },
-  { "word": "queen", "meaning": "女王", "meaning_kana": "じょおう", "example": "The queen smiles.", "level": 1 },
-  { "word": "rain", "meaning": "雨", "meaning_kana": "あめ", "example": "Rain falls today.", "level": 1 },
-  { "word": "sun", "meaning": "太陽", "meaning_kana": "たいよう", "example": "The sun is hot.", "level": 1 },
-  { "word": "tree", "meaning": "木", "meaning_kana": "き", "example": "This is a big tree.", "level": 1 },
-  { "word": "bread", "meaning": "パン", "meaning_kana": "ぱん", "example": "I eat bread.", "level": 5 },
-  { "word": "milk", "meaning": "牛乳", "meaning_kana": "ぎゅうにゅう", "example": "I drink milk.", "level": 5 },
-  { "word": "water", "meaning": "水", "meaning_kana": "みず", "example": "Water is cold.", "level": 5 },
-  { "word": "rice", "meaning": "米", "meaning_kana": "こめ", "example": "I like rice.", "level": 5 },
-  { "word": "meat", "meaning": "肉", "meaning_kana": "にく", "example": "We cook meat.", "level": 5 },
-  { "word": "cake", "meaning": "ケーキ", "meaning_kana": "けーき", "example": "This cake is sweet.", "level": 5 },
-  { "word": "candy", "meaning": "キャンディ", "meaning_kana": "きゃんでぃ", "example": "The candy is red.", "level": 5 },
-  { "word": "cookie", "meaning": "クッキー", "meaning_kana": "くっきー", "example": "I eat a cookie.", "level": 5 },
-  { "word": "soup", "meaning": "スープ", "meaning_kana": "すーぷ", "example": "The soup is hot.", "level": 5 },
-  { "word": "tea", "meaning": "お茶", "meaning_kana": "おちゃ", "example": "I drink tea.", "level": 5 },
-  { "word": "banana", "meaning": "バナナ", "meaning_kana": "ばなな", "example": "A banana is yellow.", "level": 5 },
-  { "word": "grape", "meaning": "ぶどう", "meaning_kana": "ぶどう", "example": "Grapes are good.", "level": 5 },
-  { "word": "salad", "meaning": "サラダ", "meaning_kana": "さらだ", "example": "I make salad.", "level": 5 },
-  { "word": "cup", "meaning": "コップ", "meaning_kana": "こっぷ", "example": "A cup of tea.", "level": 5 },
-  { "word": "plate", "meaning": "皿", "meaning_kana": "さら", "example": "Food is on the plate.", "level": 5 },
-  { "word": "bowl", "meaning": "どんぶり", "meaning_kana": "どんぶり", "example": "Rice is in a bowl.", "level": 5 },
-  { "word": "fork", "meaning": "フォーク", "meaning_kana": "ふぉーく", "example": "I use a fork.", "level": 5 },
-  { "word": "knife", "meaning": "ナイフ", "meaning_kana": "ないふ", "example": "A knife is sharp.", "level": 5 },
-  { "word": "spoon", "meaning": "スプーン", "meaning_kana": "すぷーん", "example": "I use a spoon.", "level": 5 },
-  { "word": "kitchen", "meaning": "台所", "meaning_kana": "だいどころ", "example": "We cook in the kitchen.", "level": 5 },
-  { "word": "boy", "meaning": "男の子", "meaning_kana": "おとこのこ", "example": "The boy is tall.", "level": 5 },
-  { "word": "man", "meaning": "男", "meaning_kana": "おとこ", "example": "A man is here.", "level": 5 },
-  { "word": "baby", "meaning": "赤ちゃん", "meaning_kana": "あかちゃん", "example": "The baby is cute.", "level": 5 },
-  { "word": "family", "meaning": "家族", "meaning_kana": "かぞく", "example": "I love my family.", "level": 5 },
-  { "word": "friend", "meaning": "友だち", "meaning_kana": "ともだち", "example": "She is my friend.", "level": 5 },
-  { "word": "mother", "meaning": "母", "meaning_kana": "はは", "example": "My mother cooks.", "level": 5 },
-  { "word": "father", "meaning": "父", "meaning_kana": "ちち", "example": "My father works.", "level": 5 },
-  { "word": "teacher", "meaning": "先生", "meaning_kana": "せんせい", "example": "The teacher is kind.", "level": 5 },
-  { "word": "bird", "meaning": "鳥", "meaning_kana": "とり", "example": "A bird is singing.", "level": 5 },
-  { "word": "horse", "meaning": "馬", "meaning_kana": "うま", "example": "The horse is fast.", "level": 5 },
-  { "word": "bear", "meaning": "熊", "meaning_kana": "くま", "example": "A bear is big.", "level": 5 },
-  { "word": "cow", "meaning": "牛", "meaning_kana": "うし", "example": "A cow says moo.", "level": 5 },
-  { "word": "pig", "meaning": "豚", "meaning_kana": "ぶた", "example": "A pig is pink.", "level": 5 },
-  { "word": "duck", "meaning": "鴨", "meaning_kana": "かも", "example": "The duck is on the water.", "level": 5 },
-  { "word": "chicken", "meaning": "にわとり", "meaning_kana": "にわとり", "example": "The chicken is loud.", "level": 5 },
-  { "word": "rabbit", "meaning": "うさぎ", "meaning_kana": "うさぎ", "example": "A rabbit eats carrots.", "level": 5 },
-  { "word": "sheep", "meaning": "ヒツジ", "meaning_kana": "ひつじ", "example": "A sheep is soft.", "level": 5 },
-  { "word": "mouse", "meaning": "ねずみ", "meaning_kana": "ねずみ", "example": "A mouse is small.", "level": 5 },
-  { "word": "bee", "meaning": "蜂", "meaning_kana": "はち", "example": "A bee makes honey.", "level": 5 },
-  { "word": "elephant", "meaning": "象", "meaning_kana": "ぞう", "example": "An elephant is big.", "level": 5 },
-  { "word": "monkey", "meaning": "猿", "meaning_kana": "さる", "example": "A monkey likes bananas.", "level": 5 },
-  { "word": "panda", "meaning": "パンダ", "meaning_kana": "ぱんだ", "example": "A panda is cute.", "level": 5 },
-  { "word": "tiger", "meaning": "虎", "meaning_kana": "とら", "example": "A tiger is strong.", "level": 5 },
-  { "word": "run", "meaning": "走る", "meaning_kana": "はしる", "example": "I run every day.", "level": 5 },
-  { "word": "walk", "meaning": "歩く", "meaning_kana": "あるく", "example": "I walk to school.", "level": 5 },
-  { "word": "sit", "meaning": "座る", "meaning_kana": "すわる", "example": "Please sit down.", "level": 5 },
-  { "word": "stand", "meaning": "立つ", "meaning_kana": "たつ", "example": "I stand by the door.", "level": 5 },
-  { "word": "sleep", "meaning": "眠る", "meaning_kana": "ねむる", "example": "Babies sleep a lot.", "level": 5 },
-  { "word": "read", "meaning": "読む", "meaning_kana": "よむ", "example": "I read books.", "level": 5 },
-  { "word": "write", "meaning": "書く", "meaning_kana": "かく", "example": "I write a letter.", "level": 5 },
-  { "word": "draw", "meaning": "絵をかく", "meaning_kana": "えをかく", "example": "I draw a tree.", "level": 5 },
-  { "word": "sing", "meaning": "歌う", "meaning_kana": "うたう", "example": "I sing a song.", "level": 5 },
-  { "word": "swim", "meaning": "泳ぐ", "meaning_kana": "およぐ", "example": "Fish swim fast.", "level": 5 },
-  { "word": "play", "meaning": "遊ぶ", "meaning_kana": "あそぶ", "example": "Children play outside.", "level": 5 },
-  { "word": "wash", "meaning": "洗う", "meaning_kana": "あらう", "example": "I wash my hands.", "level": 5 },
-  { "word": "cook", "meaning": "料理する", "meaning_kana": "りょうりする", "example": "My mom cooks dinner.", "level": 5 },
-  { "word": "open", "meaning": "開ける", "meaning_kana": "あける", "example": "Open the door.", "level": 5 },
-  { "word": "close", "meaning": "閉める", "meaning_kana": "しめる", "example": "Close the window.", "level": 5 },
-  { "word": "work", "meaning": "働く", "meaning_kana": "はたらく", "example": "My father works hard.", "level": 5 },
-  { "word": "help", "meaning": "助ける", "meaning_kana": "たすける", "example": "I help my sister.", "level": 5 },
-  { "word": "drink", "meaning": "飲む", "meaning_kana": "のむ", "example": "I drink juice.", "level": 5 },
-  { "word": "eat", "meaning": "食べる", "meaning_kana": "たべる", "example": "I eat lunch.", "level": 5 },
-  { "word": "school", "meaning": "学校", "meaning_kana": "がっこう", "example": "I go to school.", "level": 5 },
-  { "word": "home", "meaning": "家", "meaning_kana": "いえ", "example": "I go home at five.", "level": 5 },
-  { "word": "room", "meaning": "部屋", "meaning_kana": "へや", "example": "This is my room.", "level": 5 },
-  { "word": "bed", "meaning": "ベッド", "meaning_kana": "べっど", "example": "I sleep in my bed.", "level": 5 },
-  { "word": "door", "meaning": "ドア", "meaning_kana": "どあ", "example": "Close the door, please.", "level": 5 },
-  { "word": "window", "meaning": "窓", "meaning_kana": "まど", "example": "Open the window.", "level": 5 },
-  { "word": "car", "meaning": "車", "meaning_kana": "くるま", "example": "A car is red.", "level": 5 },
-  { "word": "bus", "meaning": "バス", "meaning_kana": "ばす", "example": "The bus is late.", "level": 5 },
-  { "word": "train", "meaning": "電車", "meaning_kana": "でんしゃ", "example": "A train is long.", "level": 5 },
-  { "word": "ball", "meaning": "ボール", "meaning_kana": "ぼーる", "example": "I play with a ball.", "level": 5 },
-  { "word": "map", "meaning": "地図", "meaning_kana": "ちず", "example": "I look at a map.", "level": 5 },
-  { "word": "box", "meaning": "箱", "meaning_kana": "はこ", "example": "A box is brown.", "level": 5 },
-  { "word": "bag", "meaning": "かばん", "meaning_kana": "かばん", "example": "My bag is big.", "level": 5 },
-  { "word": "key", "meaning": "かぎ", "meaning_kana": "かぎ", "example": "I have a key.", "level": 5 },
-  { "word": "clock", "meaning": "時計", "meaning_kana": "とけい", "example": "A clock shows time.", "level": 5 },
-  { "word": "hat", "meaning": "帽子", "meaning_kana": "ぼうし", "example": "I wear a hat.", "level": 5 },
-  { "word": "chair", "meaning": "椅子", "meaning_kana": "いす", "example": "Sit on a chair.", "level": 5 },
-  { "word": "table", "meaning": "テーブル", "meaning_kana": "てーぶる", "example": "Put it on the table.", "level": 5 },
-  { "word": "desk", "meaning": "机", "meaning_kana": "つくえ", "example": "Books are on the desk.", "level": 5 },
-  { "word": "phone", "meaning": "電話", "meaning_kana": "でんわ", "example": "The phone rings.", "level": 5 },
-  { "word": "light", "meaning": "明かり", "meaning_kana": "あかり", "example": "Turn on the light.", "level": 5 },
-  { "word": "cloud", "meaning": "雲", "meaning_kana": "くも", "example": "A cloud is white.", "level": 5 },
-  { "word": "star", "meaning": "星", "meaning_kana": "ほし", "example": "A star is bright at night.", "level": 5 },
-  { "word": "snow", "meaning": "雪", "meaning_kana": "ゆき", "example": "Snow is white.", "level": 5 },
-  { "word": "sea", "meaning": "海", "meaning_kana": "うみ", "example": "The sea is blue.", "level": 5 },
-  { "word": "grass", "meaning": "草", "meaning_kana": "くさ", "example": "The grass is green.", "level": 5 },
-  { "word": "flower", "meaning": "花", "meaning_kana": "はな", "example": "A flower is pretty.", "level": 5 },
-  { "word": "big", "meaning": "大きい", "meaning_kana": "おおきい", "example": "An elephant is big.", "level": 5 },
-  { "word": "small", "meaning": "小さい", "meaning_kana": "ちいさい", "example": "A mouse is small.", "level": 5 },
-  { "word": "hot", "meaning": "熱い", "meaning_kana": "あつい", "example": "The soup is hot.", "level": 5 },
-  { "word": "cold", "meaning": "冷たい", "meaning_kana": "つめたい", "example": "The ice is cold.", "level": 5 },
-  { "word": "new", "meaning": "新しい", "meaning_kana": "あたらしい", "example": "I have a new bag.", "level": 5 },
-  { "word": "old", "meaning": "古い", "meaning_kana": "ふるい", "example": "This is an old house.", "level": 5 },
-  { "word": "red", "meaning": "赤い", "meaning_kana": "あかい", "example": "A rose is red.", "level": 5 },
-  { "word": "blue", "meaning": "青い", "meaning_kana": "あおい", "example": "The sea looks blue.", "level": 5 },
-  { "word": "white", "meaning": "白い", "meaning_kana": "しろい", "example": "Snow is white.", "level": 5 },
-  { "word": "black", "meaning": "黒い", "meaning_kana": "くろい", "example": "The cat is black.", "level": 5 },
-  { "word": "easy", "meaning": "簡単", "meaning_kana": "かんたん", "example": "The test is easy.", "level": 5 }
+  {
+    "word": "apple",
+    "meaning": "りんご",
+    "meaning_kana": "りんご",
+    "example": "I eat an apple.",
+    "level": 1
+  },
+  {
+    "word": "book",
+    "meaning": "本",
+    "meaning_kana": "ほん",
+    "example": "This is a book.",
+    "level": 1
+  },
+  {
+    "word": "cat",
+    "meaning": "猫",
+    "meaning_kana": "ねこ",
+    "example": "I have a cat.",
+    "level": 1
+  },
+  {
+    "word": "dog",
+    "meaning": "犬",
+    "meaning_kana": "いぬ",
+    "example": "The dog runs.",
+    "level": 1
+  },
+  {
+    "word": "egg",
+    "meaning": "卵",
+    "meaning_kana": "たまご",
+    "example": "I like eggs.",
+    "level": 1
+  },
+  {
+    "word": "fish",
+    "meaning": "魚",
+    "meaning_kana": "さかな",
+    "example": "Fish swim in water.",
+    "level": 1
+  },
+  {
+    "word": "girl",
+    "meaning": "女の子",
+    "meaning_kana": "おんなのこ",
+    "example": "The girl reads.",
+    "level": 1
+  },
+  {
+    "word": "hand",
+    "meaning": "手",
+    "meaning_kana": "て",
+    "example": "Wash your hands.",
+    "level": 1
+  },
+  {
+    "word": "ice",
+    "meaning": "氷",
+    "meaning_kana": "こおり",
+    "example": "Ice is cold.",
+    "level": 1
+  },
+  {
+    "word": "jump",
+    "meaning": "跳ぶ",
+    "meaning_kana": "とぶ",
+    "example": "I can jump high.",
+    "level": 1
+  },
+  {
+    "word": "king",
+    "meaning": "王さま",
+    "meaning_kana": "おうさま",
+    "example": "The king is kind.",
+    "level": 1
+  },
+  {
+    "word": "lion",
+    "meaning": "ライオン",
+    "meaning_kana": "らいおん",
+    "example": "A lion is strong.",
+    "level": 1
+  },
+  {
+    "word": "moon",
+    "meaning": "月",
+    "meaning_kana": "つき",
+    "example": "The moon is bright.",
+    "level": 1
+  },
+  {
+    "word": "nest",
+    "meaning": "巣",
+    "meaning_kana": "す",
+    "example": "Birds make a nest.",
+    "level": 1
+  },
+  {
+    "word": "orange",
+    "meaning": "オレンジ",
+    "meaning_kana": "おれんじ",
+    "example": "This is an orange.",
+    "level": 1
+  },
+  {
+    "word": "pen",
+    "meaning": "ペン",
+    "meaning_kana": "ぺん",
+    "example": "I write with a pen.",
+    "level": 1
+  },
+  {
+    "word": "queen",
+    "meaning": "女王",
+    "meaning_kana": "じょおう",
+    "example": "The queen smiles.",
+    "level": 1
+  },
+  {
+    "word": "rain",
+    "meaning": "雨",
+    "meaning_kana": "あめ",
+    "example": "Rain falls today.",
+    "level": 1
+  },
+  {
+    "word": "sun",
+    "meaning": "太陽",
+    "meaning_kana": "たいよう",
+    "example": "The sun is hot.",
+    "level": 1
+  },
+  {
+    "word": "tree",
+    "meaning": "木",
+    "meaning_kana": "き",
+    "example": "This is a big tree.",
+    "level": 1
+  },
+  {
+    "word": "bread",
+    "meaning": "パン",
+    "meaning_kana": "ぱん",
+    "example": "I eat bread.",
+    "level": 5
+  },
+  {
+    "word": "milk",
+    "meaning": "牛乳",
+    "meaning_kana": "ぎゅうにゅう",
+    "example": "I drink milk.",
+    "level": 5
+  },
+  {
+    "word": "water",
+    "meaning": "水",
+    "meaning_kana": "みず",
+    "example": "Water is cold.",
+    "level": 5
+  },
+  {
+    "word": "rice",
+    "meaning": "米",
+    "meaning_kana": "こめ",
+    "example": "I like rice.",
+    "level": 5
+  },
+  {
+    "word": "meat",
+    "meaning": "肉",
+    "meaning_kana": "にく",
+    "example": "We cook meat.",
+    "level": 5
+  },
+  {
+    "word": "cake",
+    "meaning": "ケーキ",
+    "meaning_kana": "けーき",
+    "example": "This cake is sweet.",
+    "level": 5
+  },
+  {
+    "word": "candy",
+    "meaning": "キャンディ",
+    "meaning_kana": "きゃんでぃ",
+    "example": "The candy is red.",
+    "level": 5
+  },
+  {
+    "word": "cookie",
+    "meaning": "クッキー",
+    "meaning_kana": "くっきー",
+    "example": "I eat a cookie.",
+    "level": 5
+  },
+  {
+    "word": "soup",
+    "meaning": "スープ",
+    "meaning_kana": "すーぷ",
+    "example": "The soup is hot.",
+    "level": 5
+  },
+  {
+    "word": "tea",
+    "meaning": "お茶",
+    "meaning_kana": "おちゃ",
+    "example": "I drink tea.",
+    "level": 5
+  },
+  {
+    "word": "banana",
+    "meaning": "バナナ",
+    "meaning_kana": "ばなな",
+    "example": "A banana is yellow.",
+    "level": 5
+  },
+  {
+    "word": "grape",
+    "meaning": "ぶどう",
+    "meaning_kana": "ぶどう",
+    "example": "Grapes are good.",
+    "level": 5
+  },
+  {
+    "word": "salad",
+    "meaning": "サラダ",
+    "meaning_kana": "さらだ",
+    "example": "I make salad.",
+    "level": 5
+  },
+  {
+    "word": "cup",
+    "meaning": "コップ",
+    "meaning_kana": "こっぷ",
+    "example": "A cup of tea.",
+    "level": 5
+  },
+  {
+    "word": "plate",
+    "meaning": "皿",
+    "meaning_kana": "さら",
+    "example": "Food is on the plate.",
+    "level": 5
+  },
+  {
+    "word": "bowl",
+    "meaning": "どんぶり",
+    "meaning_kana": "どんぶり",
+    "example": "Rice is in a bowl.",
+    "level": 5
+  },
+  {
+    "word": "fork",
+    "meaning": "フォーク",
+    "meaning_kana": "ふぉーく",
+    "example": "I use a fork.",
+    "level": 5
+  },
+  {
+    "word": "knife",
+    "meaning": "ナイフ",
+    "meaning_kana": "ないふ",
+    "example": "A knife is sharp.",
+    "level": 5
+  },
+  {
+    "word": "spoon",
+    "meaning": "スプーン",
+    "meaning_kana": "すぷーん",
+    "example": "I use a spoon.",
+    "level": 5
+  },
+  {
+    "word": "kitchen",
+    "meaning": "台所",
+    "meaning_kana": "だいどころ",
+    "example": "We cook in the kitchen.",
+    "level": 5
+  },
+  {
+    "word": "boy",
+    "meaning": "男の子",
+    "meaning_kana": "おとこのこ",
+    "example": "The boy is tall.",
+    "level": 5
+  },
+  {
+    "word": "man",
+    "meaning": "男",
+    "meaning_kana": "おとこ",
+    "example": "A man is here.",
+    "level": 5
+  },
+  {
+    "word": "baby",
+    "meaning": "赤ちゃん",
+    "meaning_kana": "あかちゃん",
+    "example": "The baby is cute.",
+    "level": 5
+  },
+  {
+    "word": "family",
+    "meaning": "家族",
+    "meaning_kana": "かぞく",
+    "example": "I love my family.",
+    "level": 5
+  },
+  {
+    "word": "friend",
+    "meaning": "友だち",
+    "meaning_kana": "ともだち",
+    "example": "She is my friend.",
+    "level": 5
+  },
+  {
+    "word": "mother",
+    "meaning": "母",
+    "meaning_kana": "はは",
+    "example": "My mother cooks.",
+    "level": 5
+  },
+  {
+    "word": "father",
+    "meaning": "父",
+    "meaning_kana": "ちち",
+    "example": "My father works.",
+    "level": 5
+  },
+  {
+    "word": "teacher",
+    "meaning": "先生",
+    "meaning_kana": "せんせい",
+    "example": "The teacher is kind.",
+    "level": 5
+  },
+  {
+    "word": "bird",
+    "meaning": "鳥",
+    "meaning_kana": "とり",
+    "example": "A bird is singing.",
+    "level": 5
+  },
+  {
+    "word": "horse",
+    "meaning": "馬",
+    "meaning_kana": "うま",
+    "example": "The horse is fast.",
+    "level": 5
+  },
+  {
+    "word": "bear",
+    "meaning": "熊",
+    "meaning_kana": "くま",
+    "example": "A bear is big.",
+    "level": 5
+  },
+  {
+    "word": "cow",
+    "meaning": "牛",
+    "meaning_kana": "うし",
+    "example": "A cow says moo.",
+    "level": 5
+  },
+  {
+    "word": "pig",
+    "meaning": "豚",
+    "meaning_kana": "ぶた",
+    "example": "A pig is pink.",
+    "level": 5
+  },
+  {
+    "word": "duck",
+    "meaning": "鴨",
+    "meaning_kana": "かも",
+    "example": "The duck is on the water.",
+    "level": 5
+  },
+  {
+    "word": "chicken",
+    "meaning": "にわとり",
+    "meaning_kana": "にわとり",
+    "example": "The chicken is loud.",
+    "level": 5
+  },
+  {
+    "word": "rabbit",
+    "meaning": "うさぎ",
+    "meaning_kana": "うさぎ",
+    "example": "A rabbit eats carrots.",
+    "level": 5
+  },
+  {
+    "word": "sheep",
+    "meaning": "ヒツジ",
+    "meaning_kana": "ひつじ",
+    "example": "A sheep is soft.",
+    "level": 5
+  },
+  {
+    "word": "mouse",
+    "meaning": "ねずみ",
+    "meaning_kana": "ねずみ",
+    "example": "A mouse is small.",
+    "level": 5
+  },
+  {
+    "word": "bee",
+    "meaning": "蜂",
+    "meaning_kana": "はち",
+    "example": "A bee makes honey.",
+    "level": 5
+  },
+  {
+    "word": "elephant",
+    "meaning": "象",
+    "meaning_kana": "ぞう",
+    "example": "An elephant is big.",
+    "level": 5
+  },
+  {
+    "word": "monkey",
+    "meaning": "猿",
+    "meaning_kana": "さる",
+    "example": "A monkey likes bananas.",
+    "level": 5
+  },
+  {
+    "word": "panda",
+    "meaning": "パンダ",
+    "meaning_kana": "ぱんだ",
+    "example": "A panda is cute.",
+    "level": 5
+  },
+  {
+    "word": "tiger",
+    "meaning": "虎",
+    "meaning_kana": "とら",
+    "example": "A tiger is strong.",
+    "level": 5
+  },
+  {
+    "word": "run",
+    "meaning": "走る",
+    "meaning_kana": "はしる",
+    "example": "I run every day.",
+    "level": 5
+  },
+  {
+    "word": "walk",
+    "meaning": "歩く",
+    "meaning_kana": "あるく",
+    "example": "I walk to school.",
+    "level": 5
+  },
+  {
+    "word": "sit",
+    "meaning": "座る",
+    "meaning_kana": "すわる",
+    "example": "Please sit down.",
+    "level": 5
+  },
+  {
+    "word": "stand",
+    "meaning": "立つ",
+    "meaning_kana": "たつ",
+    "example": "I stand by the door.",
+    "level": 5
+  },
+  {
+    "word": "sleep",
+    "meaning": "眠る",
+    "meaning_kana": "ねむる",
+    "example": "Babies sleep a lot.",
+    "level": 5
+  },
+  {
+    "word": "read",
+    "meaning": "読む",
+    "meaning_kana": "よむ",
+    "example": "I read books.",
+    "level": 5
+  },
+  {
+    "word": "write",
+    "meaning": "書く",
+    "meaning_kana": "かく",
+    "example": "I write a letter.",
+    "level": 5
+  },
+  {
+    "word": "draw",
+    "meaning": "絵をかく",
+    "meaning_kana": "えをかく",
+    "example": "I draw a tree.",
+    "level": 5
+  },
+  {
+    "word": "sing",
+    "meaning": "歌う",
+    "meaning_kana": "うたう",
+    "example": "I sing a song.",
+    "level": 5
+  },
+  {
+    "word": "swim",
+    "meaning": "泳ぐ",
+    "meaning_kana": "およぐ",
+    "example": "Fish swim fast.",
+    "level": 5
+  },
+  {
+    "word": "play",
+    "meaning": "遊ぶ",
+    "meaning_kana": "あそぶ",
+    "example": "Children play outside.",
+    "level": 5
+  },
+  {
+    "word": "wash",
+    "meaning": "洗う",
+    "meaning_kana": "あらう",
+    "example": "I wash my hands.",
+    "level": 5
+  },
+  {
+    "word": "cook",
+    "meaning": "料理する",
+    "meaning_kana": "りょうりする",
+    "example": "My mom cooks dinner.",
+    "level": 5
+  },
+  {
+    "word": "open",
+    "meaning": "開ける",
+    "meaning_kana": "あける",
+    "example": "Open the door.",
+    "level": 5
+  },
+  {
+    "word": "close",
+    "meaning": "閉める",
+    "meaning_kana": "しめる",
+    "example": "Close the window.",
+    "level": 5
+  },
+  {
+    "word": "work",
+    "meaning": "働く",
+    "meaning_kana": "はたらく",
+    "example": "My father works hard.",
+    "level": 5
+  },
+  {
+    "word": "help",
+    "meaning": "助ける",
+    "meaning_kana": "たすける",
+    "example": "I help my sister.",
+    "level": 5
+  },
+  {
+    "word": "drink",
+    "meaning": "飲む",
+    "meaning_kana": "のむ",
+    "example": "I drink juice.",
+    "level": 5
+  },
+  {
+    "word": "eat",
+    "meaning": "食べる",
+    "meaning_kana": "たべる",
+    "example": "I eat lunch.",
+    "level": 5
+  },
+  {
+    "word": "school",
+    "meaning": "学校",
+    "meaning_kana": "がっこう",
+    "example": "I go to school.",
+    "level": 5
+  },
+  {
+    "word": "home",
+    "meaning": "家",
+    "meaning_kana": "いえ",
+    "example": "I go home at five.",
+    "level": 5
+  },
+  {
+    "word": "room",
+    "meaning": "部屋",
+    "meaning_kana": "へや",
+    "example": "This is my room.",
+    "level": 5
+  },
+  {
+    "word": "bed",
+    "meaning": "ベッド",
+    "meaning_kana": "べっど",
+    "example": "I sleep in my bed.",
+    "level": 5
+  },
+  {
+    "word": "door",
+    "meaning": "ドア",
+    "meaning_kana": "どあ",
+    "example": "Close the door, please.",
+    "level": 5
+  },
+  {
+    "word": "window",
+    "meaning": "窓",
+    "meaning_kana": "まど",
+    "example": "Open the window.",
+    "level": 5
+  },
+  {
+    "word": "car",
+    "meaning": "車",
+    "meaning_kana": "くるま",
+    "example": "A car is red.",
+    "level": 5
+  },
+  {
+    "word": "bus",
+    "meaning": "バス",
+    "meaning_kana": "ばす",
+    "example": "The bus is late.",
+    "level": 5
+  },
+  {
+    "word": "train",
+    "meaning": "電車",
+    "meaning_kana": "でんしゃ",
+    "example": "A train is long.",
+    "level": 5
+  },
+  {
+    "word": "ball",
+    "meaning": "ボール",
+    "meaning_kana": "ぼーる",
+    "example": "I play with a ball.",
+    "level": 5
+  },
+  {
+    "word": "map",
+    "meaning": "地図",
+    "meaning_kana": "ちず",
+    "example": "I look at a map.",
+    "level": 5
+  },
+  {
+    "word": "box",
+    "meaning": "箱",
+    "meaning_kana": "はこ",
+    "example": "A box is brown.",
+    "level": 5
+  },
+  {
+    "word": "bag",
+    "meaning": "かばん",
+    "meaning_kana": "かばん",
+    "example": "My bag is big.",
+    "level": 5
+  },
+  {
+    "word": "key",
+    "meaning": "かぎ",
+    "meaning_kana": "かぎ",
+    "example": "I have a key.",
+    "level": 5
+  },
+  {
+    "word": "clock",
+    "meaning": "時計",
+    "meaning_kana": "とけい",
+    "example": "A clock shows time.",
+    "level": 5
+  },
+  {
+    "word": "hat",
+    "meaning": "帽子",
+    "meaning_kana": "ぼうし",
+    "example": "I wear a hat.",
+    "level": 5
+  },
+  {
+    "word": "chair",
+    "meaning": "椅子",
+    "meaning_kana": "いす",
+    "example": "Sit on a chair.",
+    "level": 5
+  },
+  {
+    "word": "table",
+    "meaning": "テーブル",
+    "meaning_kana": "てーぶる",
+    "example": "Put it on the table.",
+    "level": 5
+  },
+  {
+    "word": "desk",
+    "meaning": "机",
+    "meaning_kana": "つくえ",
+    "example": "Books are on the desk.",
+    "level": 5
+  },
+  {
+    "word": "phone",
+    "meaning": "電話",
+    "meaning_kana": "でんわ",
+    "example": "The phone rings.",
+    "level": 5
+  },
+  {
+    "word": "light",
+    "meaning": "明かり",
+    "meaning_kana": "あかり",
+    "example": "Turn on the light.",
+    "level": 5
+  },
+  {
+    "word": "cloud",
+    "meaning": "雲",
+    "meaning_kana": "くも",
+    "example": "A cloud is white.",
+    "level": 5
+  },
+  {
+    "word": "star",
+    "meaning": "星",
+    "meaning_kana": "ほし",
+    "example": "A star is bright at night.",
+    "level": 5
+  },
+  {
+    "word": "snow",
+    "meaning": "雪",
+    "meaning_kana": "ゆき",
+    "example": "Snow is white.",
+    "level": 5
+  },
+  {
+    "word": "sea",
+    "meaning": "海",
+    "meaning_kana": "うみ",
+    "example": "The sea is blue.",
+    "level": 5
+  },
+  {
+    "word": "grass",
+    "meaning": "草",
+    "meaning_kana": "くさ",
+    "example": "The grass is green.",
+    "level": 5
+  },
+  {
+    "word": "flower",
+    "meaning": "花",
+    "meaning_kana": "はな",
+    "example": "A flower is pretty.",
+    "level": 5
+  },
+  {
+    "word": "big",
+    "meaning": "大きい",
+    "meaning_kana": "おおきい",
+    "example": "An elephant is big.",
+    "level": 5
+  },
+  {
+    "word": "small",
+    "meaning": "小さい",
+    "meaning_kana": "ちいさい",
+    "example": "A mouse is small.",
+    "level": 5
+  },
+  {
+    "word": "hot",
+    "meaning": "熱い",
+    "meaning_kana": "あつい",
+    "example": "The soup is hot.",
+    "level": 5
+  },
+  {
+    "word": "cold",
+    "meaning": "冷たい",
+    "meaning_kana": "つめたい",
+    "example": "The ice is cold.",
+    "level": 5
+  },
+  {
+    "word": "new",
+    "meaning": "新しい",
+    "meaning_kana": "あたらしい",
+    "example": "I have a new bag.",
+    "level": 5
+  },
+  {
+    "word": "old",
+    "meaning": "古い",
+    "meaning_kana": "ふるい",
+    "example": "This is an old house.",
+    "level": 5
+  },
+  {
+    "word": "red",
+    "meaning": "赤い",
+    "meaning_kana": "あかい",
+    "example": "A rose is red.",
+    "level": 5
+  },
+  {
+    "word": "blue",
+    "meaning": "青い",
+    "meaning_kana": "あおい",
+    "example": "The sea looks blue.",
+    "level": 5
+  },
+  {
+    "word": "white",
+    "meaning": "白い",
+    "meaning_kana": "しろい",
+    "example": "Snow is white.",
+    "level": 5
+  },
+  {
+    "word": "black",
+    "meaning": "黒い",
+    "meaning_kana": "くろい",
+    "example": "The cat is black.",
+    "level": 5
+  },
+  {
+    "word": "easy",
+    "meaning": "簡単",
+    "meaning_kana": "かんたん",
+    "example": "The test is easy.",
+    "level": 5
+  },
+  {
+    "word": "animal",
+    "meaning": "動物",
+    "meaning_kana": "どうぶつ",
+    "example": "I like this animal.",
+    "level": 5
+  },
+  {
+    "word": "morning",
+    "meaning": "朝",
+    "meaning_kana": "あさ",
+    "example": "I eat breakfast in the morning.",
+    "level": 5
+  },
+  {
+    "word": "night",
+    "meaning": "夜",
+    "meaning_kana": "よる",
+    "example": "The stars shine at night.",
+    "level": 5
+  },
+  {
+    "word": "today",
+    "meaning": "今日",
+    "meaning_kana": "きょう",
+    "example": "Today is sunny.",
+    "level": 5
+  },
+  {
+    "word": "tomorrow",
+    "meaning": "明日",
+    "meaning_kana": "あした",
+    "example": "School starts tomorrow.",
+    "level": 5
+  },
+  {
+    "word": "yesterday",
+    "meaning": "昨日",
+    "meaning_kana": "きのう",
+    "example": "It rained yesterday.",
+    "level": 5
+  },
+  {
+    "word": "Monday",
+    "meaning": "月曜日",
+    "meaning_kana": "げつようび",
+    "example": "Monday is busy.",
+    "level": 5
+  },
+  {
+    "word": "Tuesday",
+    "meaning": "火曜日",
+    "meaning_kana": "かようび",
+    "example": "We have music on Tuesday.",
+    "level": 5
+  },
+  {
+    "word": "Wednesday",
+    "meaning": "水曜日",
+    "meaning_kana": "すいようび",
+    "example": "Wednesday is fun.",
+    "level": 5
+  },
+  {
+    "word": "Thursday",
+    "meaning": "木曜日",
+    "meaning_kana": "もくようび",
+    "example": "Thursday comes after Wednesday.",
+    "level": 5
+  },
+  {
+    "word": "Friday",
+    "meaning": "金曜日",
+    "meaning_kana": "きんようび",
+    "example": "Friday is the last school day.",
+    "level": 5
+  },
+  {
+    "word": "Saturday",
+    "meaning": "土曜日",
+    "meaning_kana": "どようび",
+    "example": "I play soccer on Saturday.",
+    "level": 5
+  },
+  {
+    "word": "Sunday",
+    "meaning": "日曜日",
+    "meaning_kana": "にちようび",
+    "example": "We rest on Sunday.",
+    "level": 5
+  },
+  {
+    "word": "park",
+    "meaning": "公園",
+    "meaning_kana": "こうえん",
+    "example": "Children play in the park.",
+    "level": 5
+  },
+  {
+    "word": "zoo",
+    "meaning": "動物園",
+    "meaning_kana": "どうぶつえん",
+    "example": "We saw pandas at the zoo.",
+    "level": 5
+  },
+  {
+    "word": "library",
+    "meaning": "図書館",
+    "meaning_kana": "としょかん",
+    "example": "I read books in the library.",
+    "level": 5
+  },
+  {
+    "word": "hospital",
+    "meaning": "病院",
+    "meaning_kana": "びょういん",
+    "example": "A doctor works at the hospital.",
+    "level": 5
+  },
+  {
+    "word": "shop",
+    "meaning": "店",
+    "meaning_kana": "みせ",
+    "example": "My mother goes to the shop.",
+    "level": 5
+  },
+  {
+    "word": "station",
+    "meaning": "駅",
+    "meaning_kana": "えき",
+    "example": "The train stops at the station.",
+    "level": 5
+  },
+  {
+    "word": "street",
+    "meaning": "通り",
+    "meaning_kana": "とおり",
+    "example": "Cars run on the street.",
+    "level": 5
+  },
+  {
+    "word": "building",
+    "meaning": "建物",
+    "meaning_kana": "たてもの",
+    "example": "This building is tall.",
+    "level": 5
+  },
+  {
+    "word": "wall",
+    "meaning": "壁",
+    "meaning_kana": "かべ",
+    "example": "The wall is white.",
+    "level": 5
+  },
+  {
+    "word": "floor",
+    "meaning": "床",
+    "meaning_kana": "ゆか",
+    "example": "The floor is clean.",
+    "level": 5
+  },
+  {
+    "word": "bathroom",
+    "meaning": "浴室",
+    "meaning_kana": "よくしつ",
+    "example": "I take a bath in the bathroom.",
+    "level": 5
+  },
+  {
+    "word": "garden",
+    "meaning": "庭",
+    "meaning_kana": "にわ",
+    "example": "Flowers grow in the garden.",
+    "level": 5
+  },
+  {
+    "word": "sister",
+    "meaning": "姉または妹",
+    "meaning_kana": "あね・いもうと",
+    "example": "My sister sings well.",
+    "level": 5
+  },
+  {
+    "word": "brother",
+    "meaning": "兄または弟",
+    "meaning_kana": "あに・おとうと",
+    "example": "My brother likes baseball.",
+    "level": 5
+  },
+  {
+    "word": "grandfather",
+    "meaning": "祖父",
+    "meaning_kana": "そふ",
+    "example": "My grandfather tells stories.",
+    "level": 5
+  },
+  {
+    "word": "grandmother",
+    "meaning": "祖母",
+    "meaning_kana": "そぼ",
+    "example": "My grandmother cooks soup.",
+    "level": 5
+  },
+  {
+    "word": "uncle",
+    "meaning": "おじ",
+    "meaning_kana": "おじ",
+    "example": "My uncle drives a car.",
+    "level": 5
+  },
+  {
+    "word": "aunt",
+    "meaning": "おば",
+    "meaning_kana": "おば",
+    "example": "My aunt likes flowers.",
+    "level": 5
+  },
+  {
+    "word": "cousin",
+    "meaning": "いとこ",
+    "meaning_kana": "いとこ",
+    "example": "My cousin lives in Osaka.",
+    "level": 5
+  },
+  {
+    "word": "student",
+    "meaning": "生徒",
+    "meaning_kana": "せいと",
+    "example": "I am a student at this school.",
+    "level": 5
+  },
+  {
+    "word": "doctor",
+    "meaning": "医者",
+    "meaning_kana": "いしゃ",
+    "example": "The doctor helps sick people.",
+    "level": 5
+  },
+  {
+    "word": "nurse",
+    "meaning": "看護師",
+    "meaning_kana": "かんごし",
+    "example": "The nurse smiles kindly.",
+    "level": 5
+  },
+  {
+    "word": "driver",
+    "meaning": "運転手",
+    "meaning_kana": "うんてんしゅ",
+    "example": "The bus driver is kind.",
+    "level": 5
+  },
+  {
+    "word": "farmer",
+    "meaning": "農家",
+    "meaning_kana": "のうか",
+    "example": "The farmer grows rice.",
+    "level": 5
+  },
+  {
+    "word": "singer",
+    "meaning": "歌手",
+    "meaning_kana": "かしゅ",
+    "example": "The singer has a pretty voice.",
+    "level": 5
+  },
+  {
+    "word": "neighbor",
+    "meaning": "近所の人",
+    "meaning_kana": "きんじょのひと",
+    "example": "Our neighbor has a dog.",
+    "level": 5
+  },
+  {
+    "word": "talk",
+    "meaning": "話す",
+    "meaning_kana": "はなす",
+    "example": "I talk with my friend.",
+    "level": 5
+  },
+  {
+    "word": "listen",
+    "meaning": "聞く（注意して聞く）",
+    "meaning_kana": "きく",
+    "example": "Please listen to the teacher.",
+    "level": 5
+  },
+  {
+    "word": "look",
+    "meaning": "見る",
+    "meaning_kana": "みる",
+    "example": "Look at this picture.",
+    "level": 5
+  },
+  {
+    "word": "see",
+    "meaning": "見える",
+    "meaning_kana": "みえる",
+    "example": "I see a bird.",
+    "level": 5
+  },
+  {
+    "word": "hear",
+    "meaning": "聞こえる",
+    "meaning_kana": "きこえる",
+    "example": "I hear music.",
+    "level": 5
+  },
+  {
+    "word": "think",
+    "meaning": "考える",
+    "meaning_kana": "かんがえる",
+    "example": "I think this is fun.",
+    "level": 5
+  },
+  {
+    "word": "like",
+    "meaning": "好む",
+    "meaning_kana": "このむ",
+    "example": "I like summer vacation.",
+    "level": 5
+  },
+  {
+    "word": "love",
+    "meaning": "愛する・大好きだ",
+    "meaning_kana": "あいする",
+    "example": "I love my family.",
+    "level": 5
+  },
+  {
+    "word": "want",
+    "meaning": "欲しい・したい",
+    "meaning_kana": "ほしい",
+    "example": "I want a new bag.",
+    "level": 5
+  },
+  {
+    "word": "need",
+    "meaning": "必要だ",
+    "meaning_kana": "ひつようだ",
+    "example": "Plants need water.",
+    "level": 5
+  },
+  {
+    "word": "know",
+    "meaning": "知っている",
+    "meaning_kana": "しっている",
+    "example": "I know his name.",
+    "level": 5
+  },
+  {
+    "word": "learn",
+    "meaning": "学ぶ",
+    "meaning_kana": "まなぶ",
+    "example": "I learn English at school.",
+    "level": 5
+  },
+  {
+    "word": "study",
+    "meaning": "勉強する",
+    "meaning_kana": "べんきょうする",
+    "example": "I study every evening.",
+    "level": 5
+  },
+  {
+    "word": "teach",
+    "meaning": "教える",
+    "meaning_kana": "おしえる",
+    "example": "Teachers teach children.",
+    "level": 5
+  },
+  {
+    "word": "buy",
+    "meaning": "買う",
+    "meaning_kana": "かう",
+    "example": "I buy bread at the shop.",
+    "level": 5
+  },
+  {
+    "word": "sell",
+    "meaning": "売る",
+    "meaning_kana": "うる",
+    "example": "The shop sells fruit.",
+    "level": 5
+  },
+  {
+    "word": "take",
+    "meaning": "取る",
+    "meaning_kana": "とる",
+    "example": "Please take this bag.",
+    "level": 5
+  },
+  {
+    "word": "give",
+    "meaning": "与える",
+    "meaning_kana": "あたえる",
+    "example": "I give a gift to my friend.",
+    "level": 5
+  },
+  {
+    "word": "put",
+    "meaning": "置く",
+    "meaning_kana": "おく",
+    "example": "Put the book on the desk.",
+    "level": 5
+  },
+  {
+    "word": "cut",
+    "meaning": "切る",
+    "meaning_kana": "きる",
+    "example": "Be careful when you cut paper.",
+    "level": 5
+  },
+  {
+    "word": "make",
+    "meaning": "作る",
+    "meaning_kana": "つくる",
+    "example": "I make a cake.",
+    "level": 5
+  },
+  {
+    "word": "use",
+    "meaning": "使う",
+    "meaning_kana": "つかう",
+    "example": "I use a pencil.",
+    "level": 5
+  },
+  {
+    "word": "find",
+    "meaning": "見つける",
+    "meaning_kana": "みつける",
+    "example": "I find my key.",
+    "level": 5
+  },
+  {
+    "word": "meet",
+    "meaning": "会う",
+    "meaning_kana": "あう",
+    "example": "I meet my cousin.",
+    "level": 5
+  },
+  {
+    "word": "visit",
+    "meaning": "訪れる",
+    "meaning_kana": "おとずれる",
+    "example": "We visit the zoo.",
+    "level": 5
+  },
+  {
+    "word": "answer",
+    "meaning": "答える",
+    "meaning_kana": "こたえる",
+    "example": "I answer the question.",
+    "level": 5
+  },
+  {
+    "word": "ask",
+    "meaning": "尋ねる",
+    "meaning_kana": "たずねる",
+    "example": "Students ask the teacher.",
+    "level": 5
+  },
+  {
+    "word": "call",
+    "meaning": "呼ぶ",
+    "meaning_kana": "よぶ",
+    "example": "I call my grandmother.",
+    "level": 5
+  },
+  {
+    "word": "wait",
+    "meaning": "待つ",
+    "meaning_kana": "まつ",
+    "example": "I wait for the bus.",
+    "level": 5
+  },
+  {
+    "word": "try",
+    "meaning": "試す",
+    "meaning_kana": "ためす",
+    "example": "I try my best.",
+    "level": 5
+  },
+  {
+    "word": "fly",
+    "meaning": "飛ぶ",
+    "meaning_kana": "とぶ",
+    "example": "Birds fly in the sky.",
+    "level": 5
+  },
+  {
+    "word": "dance",
+    "meaning": "踊る",
+    "meaning_kana": "おどる",
+    "example": "They dance at the party.",
+    "level": 5
+  },
+  {
+    "word": "wear",
+    "meaning": "着る",
+    "meaning_kana": "きる",
+    "example": "I wear a warm coat.",
+    "level": 5
+  },
+  {
+    "word": "send",
+    "meaning": "送る",
+    "meaning_kana": "おくる",
+    "example": "I send a letter.",
+    "level": 5
+  },
+  {
+    "word": "smile",
+    "meaning": "微笑む",
+    "meaning_kana": "ほほえむ",
+    "example": "She smiles every day.",
+    "level": 5
+  },
+  {
+    "word": "cry",
+    "meaning": "泣く",
+    "meaning_kana": "なく",
+    "example": "The baby cries.",
+    "level": 5
+  },
+  {
+    "word": "laugh",
+    "meaning": "笑う",
+    "meaning_kana": "わらう",
+    "example": "Friends laugh together.",
+    "level": 5
+  },
+  {
+    "word": "climb",
+    "meaning": "登る",
+    "meaning_kana": "のぼる",
+    "example": "Monkeys climb trees.",
+    "level": 5
+  },
+  {
+    "word": "carry",
+    "meaning": "運ぶ",
+    "meaning_kana": "はこぶ",
+    "example": "I carry a heavy bag.",
+    "level": 5
+  },
+  {
+    "word": "yellow",
+    "meaning": "黄色い",
+    "meaning_kana": "きいろい",
+    "example": "The banana is yellow.",
+    "level": 5
+  },
+  {
+    "word": "green",
+    "meaning": "緑の",
+    "meaning_kana": "みどりの",
+    "example": "The grass is green.",
+    "level": 5
+  },
+  {
+    "word": "brown",
+    "meaning": "茶色い",
+    "meaning_kana": "ちゃいろい",
+    "example": "The box is brown.",
+    "level": 5
+  },
+  {
+    "word": "pink",
+    "meaning": "ピンクの",
+    "meaning_kana": "ぴんくの",
+    "example": "The flower is pink.",
+    "level": 5
+  },
+  {
+    "word": "purple",
+    "meaning": "紫の",
+    "meaning_kana": "むらさきの",
+    "example": "Grapes are purple.",
+    "level": 5
+  },
+  {
+    "word": "gray",
+    "meaning": "灰色の",
+    "meaning_kana": "はいいろの",
+    "example": "The sky looks gray.",
+    "level": 5
+  },
+  {
+    "word": "foot",
+    "meaning": "足",
+    "meaning_kana": "あし",
+    "example": "My foot hurts.",
+    "level": 5
+  },
+  {
+    "word": "leg",
+    "meaning": "脚",
+    "meaning_kana": "あし",
+    "example": "The dog has short legs.",
+    "level": 5
+  },
+  {
+    "word": "arm",
+    "meaning": "腕",
+    "meaning_kana": "うで",
+    "example": "I wave my arm.",
+    "level": 5
+  },
+  {
+    "word": "face",
+    "meaning": "顔",
+    "meaning_kana": "かお",
+    "example": "I wash my face.",
+    "level": 5
+  },
+  {
+    "word": "eye",
+    "meaning": "目",
+    "meaning_kana": "め",
+    "example": "The cat has big eyes.",
+    "level": 5
+  },
+  {
+    "word": "ear",
+    "meaning": "耳",
+    "meaning_kana": "みみ",
+    "example": "An elephant has big ears.",
+    "level": 5
+  },
+  {
+    "word": "nose",
+    "meaning": "鼻",
+    "meaning_kana": "はな",
+    "example": "Touch your nose.",
+    "level": 5
+  },
+  {
+    "word": "mouth",
+    "meaning": "口",
+    "meaning_kana": "くち",
+    "example": "Open your mouth, please.",
+    "level": 5
+  },
+  {
+    "word": "head",
+    "meaning": "頭",
+    "meaning_kana": "あたま",
+    "example": "I nod my head.",
+    "level": 5
+  },
+  {
+    "word": "hair",
+    "meaning": "髪",
+    "meaning_kana": "かみ",
+    "example": "Her hair is long.",
+    "level": 5
+  },
+  {
+    "word": "tooth",
+    "meaning": "歯",
+    "meaning_kana": "は",
+    "example": "I brush my teeth.",
+    "level": 5
+  },
+  {
+    "word": "neck",
+    "meaning": "首",
+    "meaning_kana": "くび",
+    "example": "The giraffe has a long neck.",
+    "level": 5
+  },
+  {
+    "word": "back",
+    "meaning": "背中",
+    "meaning_kana": "せなか",
+    "example": "I carry a bag on my back.",
+    "level": 5
+  },
+  {
+    "word": "stomach",
+    "meaning": "おなか",
+    "meaning_kana": "おなか",
+    "example": "I feel hungry in my stomach.",
+    "level": 5
+  },
+  {
+    "word": "wind",
+    "meaning": "風",
+    "meaning_kana": "かぜ",
+    "example": "The wind is strong today.",
+    "level": 5
+  },
+  {
+    "word": "weather",
+    "meaning": "天気",
+    "meaning_kana": "てんき",
+    "example": "The weather is nice.",
+    "level": 5
+  },
+  {
+    "word": "river",
+    "meaning": "川",
+    "meaning_kana": "かわ",
+    "example": "Fish swim in the river.",
+    "level": 5
+  },
+  {
+    "word": "lake",
+    "meaning": "湖",
+    "meaning_kana": "みずうみ",
+    "example": "The lake is quiet.",
+    "level": 5
+  },
+  {
+    "word": "mountain",
+    "meaning": "山",
+    "meaning_kana": "やま",
+    "example": "We climb the mountain.",
+    "level": 5
+  },
+  {
+    "word": "forest",
+    "meaning": "森",
+    "meaning_kana": "もり",
+    "example": "Bears live in the forest.",
+    "level": 5
+  },
+  {
+    "word": "island",
+    "meaning": "島",
+    "meaning_kana": "しま",
+    "example": "Japan is an island country.",
+    "level": 5
+  },
+  {
+    "word": "noodle",
+    "meaning": "麺",
+    "meaning_kana": "めん",
+    "example": "I eat noodle soup.",
+    "level": 5
+  },
+  {
+    "word": "pizza",
+    "meaning": "ピザ",
+    "meaning_kana": "ぴざ",
+    "example": "Pizza is hot.",
+    "level": 5
+  },
+  {
+    "word": "hamburger",
+    "meaning": "ハンバーガー",
+    "meaning_kana": "はんばーがー",
+    "example": "I eat a hamburger.",
+    "level": 5
+  },
+  {
+    "word": "juice",
+    "meaning": "ジュース",
+    "meaning_kana": "じゅーす",
+    "example": "Orange juice is sweet.",
+    "level": 5
+  },
+  {
+    "word": "coffee",
+    "meaning": "コーヒー",
+    "meaning_kana": "こーひー",
+    "example": "My father drinks coffee.",
+    "level": 5
+  },
+  {
+    "word": "cheese",
+    "meaning": "チーズ",
+    "meaning_kana": "ちーず",
+    "example": "I like cheese on bread.",
+    "level": 5
+  },
+  {
+    "word": "butter",
+    "meaning": "バター",
+    "meaning_kana": "ばたー",
+    "example": "I put butter on toast.",
+    "level": 5
+  },
+  {
+    "word": "shirt",
+    "meaning": "シャツ",
+    "meaning_kana": "しゃつ",
+    "example": "I wear a clean shirt.",
+    "level": 5
+  },
+  {
+    "word": "skirt",
+    "meaning": "スカート",
+    "meaning_kana": "すかーと",
+    "example": "She wears a blue skirt.",
+    "level": 5
+  },
+  {
+    "word": "shoe",
+    "meaning": "靴",
+    "meaning_kana": "くつ",
+    "example": "My shoes are new.",
+    "level": 5
+  },
+  {
+    "word": "sock",
+    "meaning": "靴下",
+    "meaning_kana": "くつした",
+    "example": "I wear warm socks.",
+    "level": 5
+  },
+  {
+    "word": "coat",
+    "meaning": "コート",
+    "meaning_kana": "こーと",
+    "example": "I wear a coat in winter.",
+    "level": 5
+  },
+  {
+    "word": "dress",
+    "meaning": "ワンピース",
+    "meaning_kana": "わんぴーす",
+    "example": "She buys a new dress.",
+    "level": 5
+  },
+  {
+    "word": "sweater",
+    "meaning": "セーター",
+    "meaning_kana": "せーたー",
+    "example": "This sweater is soft.",
+    "level": 5
+  },
+  {
+    "word": "pants",
+    "meaning": "ズボン",
+    "meaning_kana": "ずぼん",
+    "example": "These pants are long.",
+    "level": 5
+  },
+  {
+    "word": "jacket",
+    "meaning": "ジャケット",
+    "meaning_kana": "じゃけっと",
+    "example": "I wear a light jacket.",
+    "level": 5
+  },
+  {
+    "word": "gloves",
+    "meaning": "手袋",
+    "meaning_kana": "てぶくろ",
+    "example": "I wear gloves in winter.",
+    "level": 5
+  },
+  {
+    "word": "soccer",
+    "meaning": "サッカー",
+    "meaning_kana": "さっかー",
+    "example": "We play soccer after school.",
+    "level": 5
+  },
+  {
+    "word": "baseball",
+    "meaning": "野球",
+    "meaning_kana": "やきゅう",
+    "example": "Baseball is popular in Japan.",
+    "level": 5
+  },
+  {
+    "word": "tennis",
+    "meaning": "テニス",
+    "meaning_kana": "てにす",
+    "example": "She plays tennis on Sunday.",
+    "level": 5
+  },
+  {
+    "word": "volleyball",
+    "meaning": "バレーボール",
+    "meaning_kana": "ばれーぼーる",
+    "example": "We practice volleyball.",
+    "level": 5
+  },
+  {
+    "word": "swimming",
+    "meaning": "水泳",
+    "meaning_kana": "すいえい",
+    "example": "I like swimming in summer.",
+    "level": 5
+  },
+  {
+    "word": "interesting",
+    "meaning": "おもしろい",
+    "meaning_kana": "おもしろい",
+    "example": "This book is interesting.",
+    "level": 5
+  },
+  {
+    "word": "difficult",
+    "meaning": "難しい",
+    "meaning_kana": "むずかしい",
+    "example": "This test is difficult.",
+    "level": 5
+  },
+  {
+    "word": "favorite",
+    "meaning": "いちばん好きな",
+    "meaning_kana": "いちばんすきな",
+    "example": "Blue is my favorite color.",
+    "level": 5
+  },
+  {
+    "word": "happy",
+    "meaning": "幸せな・うれしい",
+    "meaning_kana": "しあわせな",
+    "example": "I feel happy today.",
+    "level": 5
+  },
+  {
+    "word": "sad",
+    "meaning": "悲しい",
+    "meaning_kana": "かなしい",
+    "example": "The movie is sad.",
+    "level": 5
+  },
+  {
+    "word": "angry",
+    "meaning": "怒っている",
+    "meaning_kana": "おこっている",
+    "example": "He looks angry.",
+    "level": 5
+  },
+  {
+    "word": "tired",
+    "meaning": "疲れた",
+    "meaning_kana": "つかれた",
+    "example": "I am tired after running.",
+    "level": 5
+  },
+  {
+    "word": "hungry",
+    "meaning": "お腹がすいた",
+    "meaning_kana": "おなかがすいた",
+    "example": "I am hungry now.",
+    "level": 5
+  },
+  {
+    "word": "sick",
+    "meaning": "病気の",
+    "meaning_kana": "びょうきの",
+    "example": "She is sick today.",
+    "level": 5
+  },
+  {
+    "word": "afraid",
+    "meaning": "こわがっている",
+    "meaning_kana": "こわがっている",
+    "example": "I am afraid of thunder.",
+    "level": 5
+  },
+  {
+    "word": "weak",
+    "meaning": "弱い",
+    "meaning_kana": "よわい",
+    "example": "This tea is weak.",
+    "level": 5
+  },
+  {
+    "word": "beautiful",
+    "meaning": "美しい",
+    "meaning_kana": "うつくしい",
+    "example": "The flower is beautiful.",
+    "level": 5
+  },
+  {
+    "word": "same",
+    "meaning": "同じ",
+    "meaning_kana": "おなじ",
+    "example": "We wear the same hats.",
+    "level": 5
+  },
+  {
+    "word": "different",
+    "meaning": "違う",
+    "meaning_kana": "ちがう",
+    "example": "We are in different classes.",
+    "level": 5
+  },
+  {
+    "word": "long",
+    "meaning": "長い",
+    "meaning_kana": "ながい",
+    "example": "The river is long.",
+    "level": 5
+  },
+  {
+    "word": "tall",
+    "meaning": "背が高い",
+    "meaning_kana": "せがたかい",
+    "example": "My father is tall.",
+    "level": 5
+  },
+  {
+    "word": "young",
+    "meaning": "若い",
+    "meaning_kana": "わかい",
+    "example": "She is young.",
+    "level": 5
+  },
+  {
+    "word": "slow",
+    "meaning": "遅い",
+    "meaning_kana": "おそい",
+    "example": "The turtle is slow.",
+    "level": 5
+  },
+  {
+    "word": "fast",
+    "meaning": "速い",
+    "meaning_kana": "はやい",
+    "example": "A rabbit is fast.",
+    "level": 5
+  },
+  {
+    "word": "busy",
+    "meaning": "忙しい",
+    "meaning_kana": "いそがしい",
+    "example": "My mother is busy.",
+    "level": 5
+  },
+  {
+    "word": "kind",
+    "meaning": "やさしい",
+    "meaning_kana": "やさしい",
+    "example": "Our teacher is very kind.",
+    "level": 5
+  },
+  {
+    "word": "nice",
+    "meaning": "すてきな",
+    "meaning_kana": "すてきな",
+    "example": "It is a nice day.",
+    "level": 5
+  },
+  {
+    "word": "clean",
+    "meaning": "きれいな",
+    "meaning_kana": "きれいな",
+    "example": "My room is clean.",
+    "level": 5
+  },
+  {
+    "word": "dirty",
+    "meaning": "汚れた",
+    "meaning_kana": "よごれた",
+    "example": "My shoes are dirty.",
+    "level": 5
+  },
+  {
+    "word": "full",
+    "meaning": "いっぱいの",
+    "meaning_kana": "いっぱいの",
+    "example": "The glass is full.",
+    "level": 5
+  },
+  {
+    "word": "empty",
+    "meaning": "空の",
+    "meaning_kana": "からの",
+    "example": "The box is empty.",
+    "level": 5
+  },
+  {
+    "word": "safe",
+    "meaning": "安全な",
+    "meaning_kana": "あんぜんな",
+    "example": "This park is safe.",
+    "level": 5
+  },
+  {
+    "word": "dangerous",
+    "meaning": "危険な",
+    "meaning_kana": "きけんな",
+    "example": "Fire is dangerous.",
+    "level": 5
+  },
+  {
+    "word": "English",
+    "meaning": "英語",
+    "meaning_kana": "えいご",
+    "example": "I study English every day.",
+    "level": 5
+  },
+  {
+    "word": "music",
+    "meaning": "音楽",
+    "meaning_kana": "おんがく",
+    "example": "I like music class.",
+    "level": 5
+  },
+  {
+    "word": "art",
+    "meaning": "美術",
+    "meaning_kana": "びじゅつ",
+    "example": "I draw pictures in art class.",
+    "level": 5
+  },
+  {
+    "word": "science",
+    "meaning": "理科",
+    "meaning_kana": "りか",
+    "example": "We learn about plants in science.",
+    "level": 5
+  },
+  {
+    "word": "math",
+    "meaning": "数学",
+    "meaning_kana": "すうがく",
+    "example": "I like math puzzles.",
+    "level": 5
+  },
+  {
+    "word": "club",
+    "meaning": "クラブ",
+    "meaning_kana": "くらぶ",
+    "example": "I join the music club.",
+    "level": 5
+  },
+  {
+    "word": "team",
+    "meaning": "チーム",
+    "meaning_kana": "ちーむ",
+    "example": "Our team wins the game.",
+    "level": 5
+  },
+  {
+    "word": "class",
+    "meaning": "クラス",
+    "meaning_kana": "くらす",
+    "example": "My class has many students.",
+    "level": 5
+  },
+  {
+    "word": "umbrella",
+    "meaning": "傘",
+    "meaning_kana": "かさ",
+    "example": "I use an umbrella in the rain.",
+    "level": 5
+  },
+  {
+    "word": "camera",
+    "meaning": "カメラ",
+    "meaning_kana": "かめら",
+    "example": "Father takes photos with a camera.",
+    "level": 5
+  },
+  {
+    "word": "piano",
+    "meaning": "ピアノ",
+    "meaning_kana": "ぴあの",
+    "example": "She plays the piano.",
+    "level": 5
+  },
+  {
+    "word": "guitar",
+    "meaning": "ギター",
+    "meaning_kana": "ぎたー",
+    "example": "He plays the guitar.",
+    "level": 5
+  },
+  {
+    "word": "picture",
+    "meaning": "絵",
+    "meaning_kana": "え",
+    "example": "I draw a picture of a cat.",
+    "level": 5
+  },
+  {
+    "word": "photo",
+    "meaning": "写真",
+    "meaning_kana": "しゃしん",
+    "example": "This is a photo of my family.",
+    "level": 5
+  },
+  {
+    "word": "ticket",
+    "meaning": "切符",
+    "meaning_kana": "きっぷ",
+    "example": "I buy a train ticket.",
+    "level": 5
+  },
+  {
+    "word": "gift",
+    "meaning": "贈り物",
+    "meaning_kana": "おくりもの",
+    "example": "I give a gift to my mother.",
+    "level": 5
+  },
+  {
+    "word": "wallet",
+    "meaning": "財布",
+    "meaning_kana": "さいふ",
+    "example": "My wallet is brown.",
+    "level": 5
+  },
+  {
+    "word": "money",
+    "meaning": "お金",
+    "meaning_kana": "おかね",
+    "example": "I save money.",
+    "level": 5
+  },
+  {
+    "word": "eraser",
+    "meaning": "消しゴム",
+    "meaning_kana": "けしごむ",
+    "example": "I use an eraser.",
+    "level": 5
+  },
+  {
+    "word": "pencil",
+    "meaning": "鉛筆",
+    "meaning_kana": "えんぴつ",
+    "example": "I write with a pencil.",
+    "level": 5
+  },
+  {
+    "word": "ruler",
+    "meaning": "定規",
+    "meaning_kana": "じょうぎ",
+    "example": "I draw a line with a ruler.",
+    "level": 5
+  },
+  {
+    "word": "notebook",
+    "meaning": "ノート",
+    "meaning_kana": "のーと",
+    "example": "I write notes in my notebook.",
+    "level": 5
+  },
+  {
+    "word": "dictionary",
+    "meaning": "辞書",
+    "meaning_kana": "じしょ",
+    "example": "I look up words in a dictionary.",
+    "level": 5
+  },
+  {
+    "word": "paper",
+    "meaning": "紙",
+    "meaning_kana": "かみ",
+    "example": "I fold the paper.",
+    "level": 5
+  },
+  {
+    "word": "tape",
+    "meaning": "テープ",
+    "meaning_kana": "てーぷ",
+    "example": "I use tape on the box.",
+    "level": 5
+  }
 ]
