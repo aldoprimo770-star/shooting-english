@@ -1041,6 +1041,37 @@ function drawOutlinedLabel(text, x, y) {
 }
 
 /**
+ * textAlign が center のとき、縁取り込みの見かけ幅でキャンバス左右にはみ出さないよう描画中心をずらす
+ * @param {number} cx
+ * @param {string} text
+ * @param {number} canvasW
+ * @returns {number}
+ */
+function clampCenteredLabelX(cx, text, canvasW) {
+  const s = canvasW / DEFAULT_CANVAS_W;
+  const strokePad = Math.max(2, 4 * s);
+  const w = ctx.measureText(text).width + strokePad * 2;
+  const half = w / 2;
+  const edge = 3;
+  if (half * 2 >= canvasW - edge * 2) {
+    return canvasW / 2;
+  }
+  return Math.min(canvasW - edge - half, Math.max(edge + half, cx));
+}
+
+/**
+ * 日本語の意味を行に分割（フォントサイズに応じた文字数）
+ * @param {string} meaning
+ * @param {number} fontPx
+ * @returns {string[]}
+ */
+function splitMeaningLines(meaning, fontPx) {
+  const m = String(meaning);
+  const maxChars = fontPx > 20 ? 8 : 9;
+  return m.length > maxChars + 1 ? [m.slice(0, maxChars), m.slice(maxChars)] : [m];
+}
+
+/**
  * 出題英単語の表示を currentQuestionWord から毎フレーム再描画（DOM 更新の取りこぼし対策）
  */
 function drawGameQuestionWordCanvasOverlay() {
@@ -1478,18 +1509,27 @@ function drawPlanet(t) {
   ctx.lineWidth = 1;
   ctx.stroke();
 
-  const fontPx = Math.max(12, Math.floor(getCanvasW() / 20));
-  ctx.font = `${fontPx}px "Segoe UI", Meiryo, sans-serif`;
+  const W = getCanvasW();
+  const edgePad = 4;
+  let fontPx = Math.max(12, Math.floor(W / 20));
   ctx.textAlign = "center";
-  const maxChars = fontPx > 20 ? 8 : 9;
-  const lines =
-    t.meaning.length > maxChars + 1
-      ? [t.meaning.slice(0, maxChars), t.meaning.slice(maxChars)]
-      : [t.meaning];
+  let lines = splitMeaningLines(t.meaning, fontPx);
+  const strokePad = Math.max(2, 4 * (W / DEFAULT_CANVAS_W));
+  for (let iter = 0; iter < 14; iter++) {
+    ctx.font = `${fontPx}px "Segoe UI", Meiryo, sans-serif`;
+    const widest = Math.max(
+      ...lines.map((ln) => ctx.measureText(String(ln)).width + strokePad * 2)
+    );
+    if (widest <= W - edgePad * 2) break;
+    fontPx = Math.max(9, fontPx - 1);
+    lines = splitMeaningLines(t.meaning, fontPx);
+  }
+  ctx.font = `${fontPx}px "Segoe UI", Meiryo, sans-serif`;
   const lineH = fontPx * 1.15;
   const mid = lines.length === 1 ? fontPx * 0.25 : 0;
   lines.forEach((line, j) => {
-    drawOutlinedLabel(line, t.cx, t.cy + j * lineH + mid);
+    const lx = clampCenteredLabelX(t.cx, line, W);
+    drawOutlinedLabel(line, lx, t.cy + j * lineH + mid);
   });
   ctx.textAlign = "left";
 }
