@@ -583,6 +583,57 @@ function wirePlanetArrivalOverlay() {
   btn.addEventListener("click", closePlanetArrivalOverlay);
 }
 
+/**
+ * 星マップから到達済み惑星プロフィールを表示
+ * @param {number} idx
+ */
+function openPlanetProfileOverlay(idx) {
+  if (!Number.isInteger(idx) || idx < 0 || idx >= ARRIVAL_PLANETS.length) return;
+  if (!(userData.arrivalPlanetsVisited || []).includes(idx)) return;
+  const p = ARRIVAL_PLANETS[idx];
+  if (!p) return;
+  const overlay = document.getElementById("planet-profile-overlay");
+  if (!overlay) return;
+  const h = document.getElementById("planet-profile-headline");
+  const an = document.getElementById("planet-profile-alien-name");
+  const pr = document.getElementById("planet-profile-text");
+  const art = document.getElementById("planet-profile-art");
+  if (h) h.textContent = `${p.planetName} のプロフィール`;
+  if (an) an.textContent = p.alienName;
+  if (pr) pr.textContent = p.profile;
+  if (art) art.innerHTML = p.artHtml;
+  overlay.classList.remove("hidden");
+  overlay.setAttribute("aria-hidden", "false");
+  const btn = document.getElementById("btn-planet-profile-close");
+  if (btn) btn.focus();
+}
+
+function closePlanetProfileOverlay() {
+  const overlay = document.getElementById("planet-profile-overlay");
+  if (!overlay) return;
+  overlay.classList.add("hidden");
+  overlay.setAttribute("aria-hidden", "true");
+}
+
+function wirePlanetProfileOverlay() {
+  const overlay = document.getElementById("planet-profile-overlay");
+  const closeBtn = document.getElementById("btn-planet-profile-close");
+  if (!overlay || !closeBtn || closeBtn.dataset.wired === "1") return;
+  closeBtn.dataset.wired = "1";
+  closeBtn.addEventListener("click", closePlanetProfileOverlay);
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) {
+      closePlanetProfileOverlay();
+    }
+  });
+  overlay.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      closePlanetProfileOverlay();
+    }
+  });
+}
+
 /** 正解/ミス時の画面フラッシュ */
 /** @type {"green" | "red" | null} */
 let flashColor = null;
@@ -954,6 +1005,22 @@ function renderStarMap() {
     node.className = "planet-node";
     if (visited.has(i)) {
       node.classList.add("cleared");
+      node.classList.add("planet-node--clickable");
+      node.setAttribute("role", "button");
+      node.setAttribute("tabindex", "0");
+      node.setAttribute(
+        "aria-label",
+        `${p.planetName}のプロフィールを見る`
+      );
+      node.addEventListener("click", () => {
+        openPlanetProfileOverlay(i);
+      });
+      node.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openPlanetProfileOverlay(i);
+        }
+      });
     }
     if (fromQueue != null) {
       if (i === fromQueue) {
@@ -2172,6 +2239,7 @@ function wireEvents() {
   initBackgroundStars();
   wireLearnSpeech();
   wirePlanetArrivalOverlay();
+  wirePlanetProfileOverlay();
 
   document.getElementById("btn-start").addEventListener("click", () => {
     loadUserData();

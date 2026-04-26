@@ -801,6 +801,21 @@ body {
   flex: 0 0 auto;
 }
 
+.planet-node--clickable {
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 4px 3px;
+}
+
+.planet-node--clickable:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.planet-node--clickable:focus-visible {
+  outline: 2px solid rgba(108, 240, 255, 0.7);
+  outline-offset: 2px;
+}
+
 .planet-node .planet-dot {
   width: 20px;
   height: 20px;
@@ -1215,6 +1230,33 @@ body {
 
 .planet-arrival-overlay.hidden {
   display: none !important;
+}
+
+.planet-profile-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 101;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: radial-gradient(
+      ellipse 90% 70% at 50% 30%,
+      rgba(30, 24, 66, 0.94) 0%,
+      rgba(6, 8, 24, 0.97) 100%
+    ),
+    rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  overflow: auto;
+}
+
+.planet-profile-overlay.hidden {
+  display: none !important;
+}
+
+.planet-profile-card {
+  border-color: rgba(108, 240, 255, 0.35);
+  box-shadow: 0 0 40px rgba(108, 240, 255, 0.12), 0 20px 50px rgba(0, 0, 0, 0.5);
 }
 
 .planet-arrival-sparkles {

@@ -258,7 +258,30 @@
     </div>
   </div>
 
+  <!-- 星マップから到達済み惑星のプロフィールを開くオーバーレイ -->
+  <div
+    id="planet-profile-overlay"
+    class="planet-profile-overlay hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="planet-profile-headline"
+    aria-hidden="true"
+  >
+    <div class="planet-arrival-sparkles" aria-hidden="true">
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
+    <div class="planet-arrival-card planet-profile-card">
+      <p id="planet-profile-headline" class="planet-arrival-headline">—</p>
+      <div id="planet-profile-art" class="planet-arrival-art"></div>
+      <h3 id="planet-profile-alien-name" class="planet-arrival-alien-name">—</h3>
+      <p id="planet-profile-text" class="planet-arrival-profile">—</p>
+      <button type="button" class="btn primary btn--fun" id="btn-planet-profile-close">
+        とじる
+      </button>
+    </div>
+  </div>
+
   <script src="words-embed.js?v=2" defer></script>
-  <script src="app.js?v=46" defer></script>
+  <script src="app.js?v=47" defer></script>
 </body>
 </html>
