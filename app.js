@@ -1052,7 +1052,7 @@ function updateProgressUI() {
   const elText = document.getElementById("progress-text");
   if (elBar) elBar.style.width = `${pct}%`;
   if (elText) {
-    elText.textContent = `正解累計 ${c} 回 ・ 目安 ${pct}% ／ 語彙 ${total} 語`;
+    elText.textContent = `正解累計 ${c} 回 ・ ${pct}% ／ 語彙 ${total} 語`;
   }
   renderStarMap();
 }
