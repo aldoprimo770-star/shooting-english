@@ -84,7 +84,7 @@ let missCountThisGame = 0;
 const DEFAULT_CANVAS_W = 640;
 const DEFAULT_CANVAS_H = 480;
 
-/** 累計正解が 50,100,150… のときに表示（6惑星をシャッフル順で一周するまで重複なし） */
+/** 累計正解が 50,100,150… のときに表示（8惑星をシャッフル順で一周するまで重複なし） */
 const ARRIVAL_MILESTONE = 50;
 /** 惑星到着の出順（未出を使い切ってから再シャッフル） */
 const PLANET_ARRIVAL_QUEUE_KEY = "englishShootingPlanetArrivalQueue";
@@ -206,6 +206,49 @@ const ARRIVAL_PLANETS = /** @type {ArrivalPlanet[]} */ ([
       '<path d="M-6 8 Q0 12 6 8" fill="none" stroke="#205010" stroke-width="1"/>' +
       '<circle cx="0" cy="0" r="24" fill="none" stroke="#5a9030" stroke-width="0.6" stroke-dasharray="4 3" opacity="0.6"/>' +
       "</g></svg>",
+  },
+  {
+    planetName: "キラキラ星",
+    alienName: "キラキラ星人",
+    profile:
+      "キラキラ星人は、自分が主役だと思っていて、常にポーズを決めている。",
+    artHtml:
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180" aria-hidden="true">' +
+      '<defs><radialGradient id="akir" cx="40%" cy="32%" r="70%"><stop offset="0" stop-color="#fff8ff"/><stop offset="0.4" stop-color="#ffd0f0"/><stop offset="1" stop-color="#c860a0"/></radialGradient><filter id="fkir"><feGaussianBlur stdDeviation="0.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>' +
+      '<ellipse cx="100" cy="90" rx="54" ry="48" fill="url(#akir)" stroke="#ffb8e0" stroke-width="1.4" filter="url(#fkir)"/>' +
+      '<polygon points="40,50 50,30 60,50" fill="#fff6a8" stroke="#e8c040" stroke-width="0.8" opacity="0.9"/>' +
+      '<polygon points="140,42 150,25 160,45" fill="#fff6a8" stroke="#e8c040" stroke-width="0.8" opacity="0.9"/>' +
+      '<g transform="translate(100,50) rotate(-4)">' +
+      '<ellipse cx="0" cy="12" rx="22" ry="24" fill="#7ec8a8" stroke="#2a8050" stroke-width="1"/>' +
+      '<circle cx="-8" cy="6" r="5" fill="white"/><circle cx="-8" cy="6" r="2" fill="#222"/>' +
+      '<circle cx="8" cy="6" r="5" fill="white"/><circle cx="8" cy="6" r="2" fill="#222"/>' +
+      '<path d="M-4 20 Q0 24 4 20" fill="none" stroke="#0a5a2a" stroke-width="1"/>' +
+      '<line x1="-20" y1="0" x2="-8" y2="10" stroke="#2a8a5a" stroke-width="2.2" stroke-linecap="round"/>' +
+      '<line x1="8" y1="10" x2="20" y2="0" stroke="#2a8a5a" stroke-width="2.2" stroke-linecap="round"/>' +
+      "<line x1='-2' y1='-2' x2='2' y2='2' stroke='rgba(255,80,200,0.4)'/></g>" +
+      '<g fill="#fff" opacity="0.95"><circle cx="32" cy="100" r="2"/><circle cx="168" cy="96" r="1.5"/><circle cx="145" cy="55" r="1.2"/></g>' +
+      "</svg>",
+  },
+  {
+    planetName: "ドタバタ星",
+    alienName: "ドタバタ星人",
+    profile:
+      "ドタバタ星人は、いつも急いでいるが、だいたい何も間に合っていない。",
+    artHtml:
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180" aria-hidden="true">' +
+      '<defs><radialGradient id="adot" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="#f8f0e0"/><stop offset="0.5" stop-color="#e8b868"/><stop offset="1" stop-color="#a86828"/></radialGradient></defs>' +
+      '<ellipse cx="100" cy="92" rx="56" ry="46" fill="url(#adot)" stroke="#d4a040" stroke-width="1.2"/>' +
+      '<path d="M30 100 Q60 40 100 100 T170 100" fill="none" stroke="rgba(200,100,50,0.2)" stroke-width="3" stroke-dasharray="6 8"/>' +
+      '<g transform="translate(100,56) rotate(8)">' +
+      '<ellipse cx="0" cy="10" rx="20" ry="18" fill="#6ec0e8" stroke="#2a6a9a" stroke-width="0.9"/>' +
+      '<circle cx="-7" cy="4" r="5" fill="white"/><circle cx="-7" cy="4" r="2" fill="#222"/>' +
+      '<circle cx="7" cy="4" r="5" fill="white"/><circle cx="7" cy="4" r="2" fill="#222"/>' +
+      '<ellipse cx="0" cy="3" rx="3" ry="1.2" fill="#2a2a2a" opacity="0.25"/>' +
+      '<line x1="-6" y1="18" x2="-20" y2="28" stroke="#2a6a9a" stroke-width="2.2" stroke-linecap="round"/>' +
+      '<line x1="6" y1="18" x2="20" y2="28" stroke="#2a6a9a" stroke-width="2.2" stroke-linecap="round"/>' +
+      "<ellipse cx='-18' cy='-8' rx='4' ry='2' fill='none' stroke='#c84040' stroke-width='0.8' transform='rotate(-20 -18 -8)'/></g>" +
+      '<g stroke="rgba(255,200,100,0.5)" fill="none" stroke-width="1.2" stroke-linecap="round"><path d="M55 72 L40 60"/><path d="M70 64 L60 50"/><path d="M150 70 L168 55"/></g>' +
+      "</svg>",
   },
 ]);
 
