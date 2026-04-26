@@ -43,6 +43,10 @@ let canvas;
 let ctx;
 let gameLoopId = null;
 let gameActive = false;
+/** 累計正解50の倍数：惑星到達オーバーレイ表示中はゲーム進行を止める */
+let planetArrivalOpen = false;
+/** オーバーを閉じたあと `nextQuestion` を呼ぶ */
+let planetArrivalNeedsNext = false;
 /** スマホ用 touch リスナーは canvas に1回だけ */
 let gameTouchControlsBound = false;
 /** 指を動かしたスワイプ。true のあいだは「タップ発射」しない */
@@ -77,6 +81,52 @@ let missCountThisGame = 0;
 /** デスクトップ等でベース解像度が必要なときの参照（スマホは主に `canvas.width/height`） */
 const DEFAULT_CANVAS_W = 640;
 const DEFAULT_CANVAS_H = 480;
+
+/** 累計正解が 50,100,150… のときに表示（2種を交互）。120語想定でまずは2惑星 */
+const ARRIVAL_MILESTONE = 50;
+/**
+ * @typedef {{ planetName: string, alienName: string, profile: string, artHtml: string }} ArrivalPlanet
+ */
+const ARRIVAL_PLANETS = /** @type {ArrivalPlanet[]} */ ([
+  {
+    planetName: "ピカピカ星",
+    alienName: "ピカピカ星人",
+    profile:
+      "ピカピカ星人は、光るのが大好きで、いつも誰が一番輝いているか競っている。",
+    artHtml:
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180" aria-hidden="true">' +
+      '<defs><radialGradient id="apk" cx="40%" cy="35%" r="65%"><stop offset="0" stop-color="#fff8b0"/><stop offset="0.45" stop-color="#ffd84a"/><stop offset="1" stop-color="#c87810"/></radialGradient><filter id="aglow"><feGaussianBlur stdDeviation="1.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>' +
+      '<ellipse cx="100" cy="88" rx="52" ry="48" fill="url(#apk)" stroke="#ffe8a0" stroke-width="1.5" filter="url(#aglow)"/>' +
+      '<ellipse cx="100" cy="88" rx="70" ry="14" fill="none" stroke="rgba(255,255,200,0.35)" transform="rotate(-8 100 88)"/>' +
+      '<ellipse cx="100" cy="88" rx="78" ry="10" fill="none" stroke="rgba(255,220,120,0.2)" transform="rotate(6 100 88)"/>' +
+      '<circle cx="55" cy="55" r="3" fill="#fff"/><circle cx="145" cy="48" r="2.5" fill="#fff"/><circle cx="160" cy="75" r="2" fill="#fff"/>' +
+      '<g transform="translate(100,52)">' +
+      '<ellipse cx="0" cy="8" rx="22" ry="20" fill="#7ddea8" stroke="#2a8a5a" stroke-width="1"/>' +
+      '<circle cx="-8" cy="6" r="6" fill="white"/><circle cx="-8" cy="6" r="2.5" fill="#222"/>' +
+      '<circle cx="8" cy="6" r="6" fill="white"/><circle cx="8" cy="6" r="2.5" fill="#222"/>' +
+      '<path d="M-6 18 Q0 24 6 18" fill="none" stroke="#0a5a3a" stroke-width="1"/>' +
+      '<polygon points="-4,-8 0,-16 4,-8" fill="#ffe066"/>' +
+      "</g></svg>",
+  },
+  {
+    planetName: "モクモク星",
+    alienName: "モクモク星人",
+    profile:
+      "モクモク星人は、あまりしゃべらず、もくもくと働く。たまに寝る。",
+    artHtml:
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180" aria-hidden="true">' +
+      '<defs><radialGradient id="amk" cx="45%" cy="40%" r="70%"><stop offset="0" stop-color="#f0f4ff"/><stop offset="0.5" stop-color="#a8b8e8"/><stop offset="1" stop-color="#5a6a9a"/></radialGradient></defs>' +
+      '<ellipse cx="100" cy="95" rx="58" ry="44" fill="url(#amk)" stroke="#c8d4ff" stroke-width="1.2"/>' +
+      '<ellipse cx="70" cy="78" rx="28" ry="22" fill="rgba(255,255,255,0.35)"/>' +
+      '<ellipse cx="130" cy="82" rx="32" ry="24" fill="rgba(255,255,255,0.28)"/>' +
+      '<ellipse cx="100" cy="70" rx="36" ry="20" fill="rgba(255,255,255,0.22)"/>' +
+      '<g transform="translate(100,58)">' +
+      '<ellipse cx="0" cy="4" rx="18" ry="16" fill="#8899cc" stroke="#556" stroke-width="0.8"/>' +
+      '<ellipse cx="-7" cy="2" rx="5" ry="4" fill="#334" opacity="0.5"/><ellipse cx="7" cy="2" rx="5" ry="4" fill="#334" opacity="0.5"/>' +
+      '<ellipse cx="-10" cy="14" rx="6" ry="3" fill="#aab8e0"/><ellipse cx="10" cy="14" rx="6" ry="3" fill="#aab8e0"/>' +
+      "</g></svg>",
+  },
+]);
 
 /** 発射音: プロジェクト直下に `shoot.mp3` を置く（任意） */
 const shootSound = new Audio("shoot.mp3");
@@ -147,6 +197,77 @@ function playHitResultSound(isCorrect) {
     o1.stop(t0 + 0.2);
     o2.stop(t0 + 0.2);
   }
+}
+
+/** 惑星到着演出の短いファンファーレ */
+function playArrivalChime() {
+  const ctx = getHitSfxAudioContext();
+  if (!ctx) return;
+  if (ctx.state === "suspended") {
+    void ctx.resume();
+  }
+  const t0 = ctx.currentTime;
+  const notes = [523.25, 659.25, 783.99, 1046.5];
+  notes.forEach((hz, i) => {
+    const start = t0 + i * 0.06;
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = "triangle";
+    o.frequency.setValueAtTime(hz, start);
+    o.connect(g);
+    g.connect(ctx.destination);
+    g.gain.setValueAtTime(0, start);
+    g.gain.linearRampToValueAtTime(0.1, start + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, start + 0.18);
+    o.start(start);
+    o.stop(start + 0.2);
+  });
+}
+
+/**
+ * 累計正解が ARRIVAL_MILESTONE の倍数のときのオーバーレイ
+ * @param {number} totalCorrect
+ */
+function openPlanetArrivalOverlay(totalCorrect) {
+  const idx =
+    Math.floor(totalCorrect / ARRIVAL_MILESTONE - 1) % ARRIVAL_PLANETS.length;
+  const p = ARRIVAL_PLANETS[idx];
+  if (!p) return;
+  const overlay = document.getElementById("planet-arrival-overlay");
+  if (!overlay) return;
+  const h = document.getElementById("planet-arrival-headline");
+  const an = document.getElementById("planet-arrival-alien-name");
+  const pr = document.getElementById("planet-arrival-profile");
+  const art = document.getElementById("planet-arrival-art");
+  if (h) h.textContent = `${p.planetName}に到着！`;
+  if (an) an.textContent = p.alienName;
+  if (pr) pr.textContent = p.profile;
+  if (art) art.innerHTML = p.artHtml;
+  overlay.classList.remove("hidden");
+  overlay.setAttribute("aria-hidden", "false");
+  playArrivalChime();
+  const btn = document.getElementById("btn-planet-arrival-continue");
+  if (btn) btn.focus();
+}
+
+function closePlanetArrivalOverlay() {
+  const overlay = document.getElementById("planet-arrival-overlay");
+  if (overlay) {
+    overlay.classList.add("hidden");
+    overlay.setAttribute("aria-hidden", "true");
+  }
+  planetArrivalOpen = false;
+  if (planetArrivalNeedsNext) {
+    planetArrivalNeedsNext = false;
+    nextQuestion();
+  }
+}
+
+function wirePlanetArrivalOverlay() {
+  const btn = document.getElementById("btn-planet-arrival-continue");
+  if (!btn || btn.dataset.wired === "1") return;
+  btn.dataset.wired = "1";
+  btn.addEventListener("click", closePlanetArrivalOverlay);
 }
 
 /** 正解/ミス時の画面フラッシュ */
@@ -933,6 +1054,14 @@ function startGame() {
     return;
   }
 
+  planetArrivalOpen = false;
+  planetArrivalNeedsNext = false;
+  const po = document.getElementById("planet-arrival-overlay");
+  if (po) {
+    po.classList.add("hidden");
+    po.setAttribute("aria-hidden", "true");
+  }
+
   canvas = document.getElementById("game-canvas");
   applyGameCanvasDimensions();
   ctx = /** @type {CanvasRenderingContext2D} */ (canvas.getContext("2d"));
@@ -1031,6 +1160,13 @@ function onHitTarget(t) {
     userData.cumulativeCorrect = (userData.cumulativeCorrect || 0) + 1;
     saveUserData();
     updateProgressUI();
+    const newTotal = userData.cumulativeCorrect;
+    if (newTotal > 0 && newTotal % ARRIVAL_MILESTONE === 0) {
+      planetArrivalOpen = true;
+      planetArrivalNeedsNext = true;
+      openPlanetArrivalOverlay(newTotal);
+      return;
+    }
   } else {
     if (currentQuestionWord) {
       addMistakeWord(currentQuestionWord.word);
@@ -1207,6 +1343,12 @@ function drawRocket(x, groundY) {
 
 function gameLoop() {
   if (!gameActive) return;
+  if (planetArrivalOpen) {
+    if (gameActive) {
+      gameLoopId = requestAnimationFrame(gameLoop);
+    }
+    return;
+  }
 
   const W = getCanvasW();
   const H = getCanvasH();
@@ -1527,6 +1669,7 @@ function wireLearnSpeech() {
 function wireEvents() {
   initBackgroundStars();
   wireLearnSpeech();
+  wirePlanetArrivalOverlay();
 
   document.getElementById("btn-start").addEventListener("click", () => {
     loadUserData();
@@ -1550,6 +1693,13 @@ function wireEvents() {
   });
   document.getElementById("btn-game-home").addEventListener("click", () => {
     gameActive = false;
+    planetArrivalOpen = false;
+    planetArrivalNeedsNext = false;
+    const po = document.getElementById("planet-arrival-overlay");
+    if (po) {
+      po.classList.add("hidden");
+      po.setAttribute("aria-hidden", "true");
+    }
     stopEnglishSpeech();
     if (gameLoopId) cancelAnimationFrame(gameLoopId);
     gameLoopId = null;

@@ -10,7 +10,7 @@
     href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=4" />
 </head>
 <body>
   <div id="stars" aria-hidden="true"></div>
@@ -231,7 +231,30 @@
     </div>
   </section>
 
+  <!-- 累計正解50の倍数で表示する「惑星到達」オーバーレイ -->
+  <div
+    id="planet-arrival-overlay"
+    class="planet-arrival-overlay hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="planet-arrival-headline"
+    aria-hidden="true"
+  >
+    <div class="planet-arrival-sparkles" aria-hidden="true">
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
+    <div class="planet-arrival-card">
+      <p id="planet-arrival-headline" class="planet-arrival-headline">—</p>
+      <div id="planet-arrival-art" class="planet-arrival-art"></div>
+      <h3 id="planet-arrival-alien-name" class="planet-arrival-alien-name">—</h3>
+      <p id="planet-arrival-profile" class="planet-arrival-profile">—</p>
+      <button type="button" class="btn primary btn--fun" id="btn-planet-arrival-continue">
+        つづける
+      </button>
+    </div>
+  </div>
+
   <script src="words-embed.js?v=2" defer></script>
-  <script src="app.js?v=39" defer></script>
+  <script src="app.js?v=40" defer></script>
 </body>
 </html>
